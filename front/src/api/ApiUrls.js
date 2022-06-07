@@ -1,10 +1,10 @@
 export default {
-  categories: 'http://localhost/project-potato/api/public/api/categories',
-  items: 'http://localhost/project-potato/api/public/api/items',
-  sources: 'http://localhost/project-potato/api/public/api/sources',
-  users: 'http://localhost/project-potato/api/public/api/users',
+  categories: 'http://localhost:8081/api/categories',
+  items: 'http://localhost:8081/api/items',
+  sources: 'http://localhost:8081/api/sources',
+  users: 'http://localhost:8081/api/users',
   auth: {
-    base: 'http://localhost/project-potato/api/public/api/auth',
+    base: 'http://localhost:8081/api/auth',
     register: '/register',
     login: '/login',
     logout: '/logout',

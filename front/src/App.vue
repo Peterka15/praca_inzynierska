@@ -16,7 +16,7 @@ api.post(x => console.log(x), "http://localhost:8000/api/login", {email: "janusz
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
   }
 }
 </script>
