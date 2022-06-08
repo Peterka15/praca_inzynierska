@@ -1,66 +1,88 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
     public function register(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8'
-        ]);
+        $validationRules = [
+            User::NAME => 'required|string|max:255',
+            User::EMAIL => 'required|string|email|max:255|unique:users',
+            User::PASSWORD => 'required|string|min:8'
+        ];
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
+        if (!$this->validateRequestData($request, $validationRules)) {
+            return $this->errorResponse($this->validationErrors);
         }
 
-        $user = User::create([
-                                 'name' => $request->name,
-                                 'email' => $request->email,
-                                 'password' => Hash::make($request->password)
-                             ]);
+        $requestData = $request->all();
+        $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = User::create($requestData);
 
-        return response()
-            ->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer',]);
+        return $this->successResponse($this->getResponseData($user, null));
     }
 
     public function login(Request $request): JsonResponse
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()
-                ->json(['message' => 'Unauthorized'], 401);
+        $validationRules = [
+            User::EMAIL => 'required|string|email|max:255|exists:App\Models\User,email',
+            User::PASSWORD => 'required|string|min:8'
+        ];
+
+        if (!$this->validateRequestData($request, $validationRules)) {
+            return $this->errorResponse($this->validationErrors);
         }
 
-        $user = User::where('email', $request['email'])->firstOrFail();
+        $requestData = $request->all();
 
+        if (!Auth::attempt(['email' => $requestData[User::EMAIL], 'password' => $requestData[User::PASSWORD]])) {
+            return $this->errorResponse(['password' => ['Wrong password.']], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = User::where(User::EMAIL, $request[User::EMAIL])->firstOrFail();
+        $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-                                    'message' => 'Hi ' . $user->name . ', welcome to home',
-                                    'access_token' => $token,
-                                    'token_type' => 'Bearer'
-                                ]);
+        return $this->successResponse($this->getResponseData($user, $token));
     }
 
-    // method for user logout and delete token
-    public function logout(): array
+    public function refresh(): JsonResponse
     {
-        auth()->user()->tokens()->delete();
+        $this->currentUser->tokens()->delete();
+        $token = $this->currentUser->createToken('auth_token')->plainTextToken;
+
+        return $this->successResponse($this->getResponseData($this->currentUser, $token));
+    }
+
+    public function logout(): JsonResponse
+    {
+        $this->currentUser->tokens()->delete();
+
+        return $this->successResponse();
+    }
+
+    private function getResponseData(User $user, ?string $token): array
+    {
+        if (!$token) {
+            return ['user' => new UserResource($user)];
+        }
 
         return [
-            'message' => 'You have successfully logged out and the token was successfully deleted'
+            'user' => new UserResource($user),
+            'access_token' => $token,
+            'expires_in' => ((int)env('TOKEN_EXPIRE_DELAY_MINUTES')) * 60
         ];
     }
 }

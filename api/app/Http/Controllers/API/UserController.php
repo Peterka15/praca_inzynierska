@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
@@ -7,68 +8,86 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function index(): JsonResponse
     {
-        $data = User::latest()->get();
-        return response()->json([UserResource::collection($data), 'Users fetched.']);
+        $users = User::latest()->get();
+
+        return $this->successResponse(UserResource::collection($users));
+    }
+
+    public function getCurrent(): JsonResponse
+    {
+        return $this->successResponse(new UserResource($this->currentUser));
     }
 
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            User::NAME => 'string|max:255|required',
+            User::EMAIL => 'string|email|max:255|unique:users|required',
+            User::PASSWORD => 'string|min:8|required',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return $this->errorResponse($validator->errors());
         }
 
-        $user = User::create(['name' => $request->name]);
+        $requestData = $request->all();
 
-        return response()->json(['User created successfully.', new UserResource($user)]);
+        if (isset($requestData[User::PASSWORD])) {
+            $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
+        }
+
+        $user = User::create($requestData);
+        $user->save();
+
+        return $this->successResponse(new UserResource($user));
     }
 
     public function show(int $id): JsonResponse
     {
-        $program = User::find($id);
+        $user = User::find($id);
 
-        if (is_null($program)) {
-            return response()->json('Data not found', 404);
+        if (is_null($user)) {
+            return $this->notFoundResponse();
         }
 
-        return response()->json([new UserResource($program)]);
+        return $this->successResponse(new UserResource($user));
     }
-
 
     public function update(Request $request, User $user): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'string|min:5'
+            User::NAME => 'string|max:255',
+            User::EMAIL => 'string|email|max:255|unique:users',
+            User::PASSWORD => 'string|min:8',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return $this->errorResponse($validator->errors());
         }
 
-        $user->name = $request->name;
-        if (isset ($request->email)) {
+        $requestData = $request->all();
 
-            $user->email = $request->email;
+        if (isset($requestData[User::PASSWORD])) {
+            $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
         }
+
+        $user->fill($requestData);
         $user->save();
 
-        return response()->json(['User updated successfully.', new UserResource($user)]);
+        return $this->successResponse(new UserResource($user));
     }
 
     public function destroy(User $user): JsonResponse
     {
         $user->delete();
 
-        return response()->json('User deleted successfully');
+        return $this->successResponse();
     }
 }

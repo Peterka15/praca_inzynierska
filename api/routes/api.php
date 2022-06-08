@@ -1,18 +1,28 @@
 <?php
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\ArticlesController;
+use App\Http\Controllers\API\CommentsController;
+use App\Http\Controllers\API\TagsController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
-Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-//Protecting Routes
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
+Route::resource('articles', ArticlesController::class)->only(['index', 'show']);
+Route::resource('tags', TagsController::class)->only(['index', 'show']);
+Route::resource('comments', CommentsController::class)->only(['store']);
 
-    Route::resource('users', App\Http\Controllers\API\UserController::class);
 
-    Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
+Route::group(['middleware' => ['auth:sanctum']], static function () {
+    Route::resource('articles', ArticlesController::class)->except(['index', 'show']);
+    Route::resource('tags', TagsController::class)->except(['index', 'show']);
+    Route::resource('comments', CommentsController::class)->except(['store']);
+
+    Route::resource('users', UserController::class);
+    Route::get('/profile', [UserController::class, 'getCurrent']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });

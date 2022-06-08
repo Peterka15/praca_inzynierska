@@ -1,31 +1,30 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Contracts\Support\Arrayable;
+use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use JsonSerializable;
 
-/**
- * @property mixed $id
- * @property mixed $email
- * @property mixed $name
- */
 class UserResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
-     *
-     * @param  Request  $request
-     * @return array|Arrayable|JsonSerializable
+     * @param Request $request
+     * @return array
      */
     public function toArray($request): array
     {
+        /** @var User $user */
+        $user = $this;
+
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email
+            User::ID => $user->id,
+            User::NAME => $user->name,
+            User::EMAIL => $user->email,
+            User::CREATED_AT => $user->created_at,
+            User::UPDATED_AT => $user->updated_at
         ];
     }
 }

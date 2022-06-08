@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => env('TOKEN_EXPIRE_DELAY_MINUTES'),
 
     /*
     |--------------------------------------------------------------------------
