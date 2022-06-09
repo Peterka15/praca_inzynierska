@@ -15,7 +15,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "ext-http": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",

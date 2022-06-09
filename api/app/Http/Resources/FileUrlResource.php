@@ -7,7 +7,7 @@ use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class FileUrlResource extends JsonResource
 {
     /**
      * @param Request $request
@@ -19,13 +19,7 @@ class FileResource extends JsonResource
         $file = $this;
 
         return [
-            File::ID => $file->id,
-            File::UUID => $file->uuid,
-            File::USER_ID => $file->user_id,
-            File::NAME => $file->name,
-            File::MIME_TYPE => $file->mime_type,
-            File::CREATED_AT => $file->created_at,
-            File::UPDATED_AT => $file->updated_at
+            'url' => $file->path(),
         ];
     }
 }

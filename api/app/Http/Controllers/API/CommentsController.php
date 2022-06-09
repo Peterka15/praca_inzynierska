@@ -16,7 +16,7 @@ class CommentsController extends Controller
         $validationRules = [
             Comment::AUTHOR => 'required|string',
             Comment::CONTENT => 'required|string',
-            Comment::ARTICLE_ID => 'required|numeric|exists:App\Models\Articles,id'
+            Comment::ARTICLE_ID => 'required|numeric|exists:App\Models\Article,id'
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {
@@ -34,7 +34,7 @@ class CommentsController extends Controller
         $validationRules = [
             Comment::AUTHOR => 'string',
             Comment::CONTENT => 'string',
-            Comment::ARTICLE_ID => 'numeric|exists:App\Models\Articles,id'
+            Comment::ARTICLE_ID => 'numeric|exists:App\Models\Article,id'
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {

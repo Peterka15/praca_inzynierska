@@ -15,6 +15,7 @@ class CreateImagesTable extends Migration
         Schema::create(Image::TABLE_NAME, static function (Blueprint $table) {
             $table->id();
             $table->uuid(Image::UUID);
+            $table->string(Image::MIME_TYPE);
             $table->foreignId(Image::ARTICLE_ID)->references(Article::ID)->on(Article::TABLE_NAME);
             $table->timestamps();
         });

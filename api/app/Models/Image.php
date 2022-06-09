@@ -24,6 +24,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Image whereUpdatedAt($value)
  * @method static Builder|Image whereUuid($value)
  * @mixin \Eloquent
+ * @property string $extension
+ * @method static Builder|Image whereExtension($value)
+ * @property string $mime_type
+ * @method static Builder|Image whereMimeType($value)
  */
 final class Image extends ApiModel
 {
@@ -33,10 +37,12 @@ final class Image extends ApiModel
 
     public const ARTICLE_ID = 'article_id';
     public const UUID = 'uuid';
+    public const MIME_TYPE = 'mime_type';
 
     protected $fillable = [
         self::ARTICLE_ID,
         self::UUID,
+        self::MIME_TYPE,
         self::CREATED_AT,
         self::UPDATED_AT,
     ];
@@ -45,4 +51,9 @@ final class Image extends ApiModel
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime'
     ];
+
+    public function path(): string
+    {
+        return env('APP_URL') . "/api/images/$this->uuid";
+    }
 }

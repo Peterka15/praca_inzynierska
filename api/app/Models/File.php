@@ -28,6 +28,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|File whereUserId($value)
  * @method static Builder|File whereUuid($value)
  * @mixin \Eloquent
+ * @property string $mime_type
+ * @method static Builder|File whereMimeType($value)
  */
 final class File extends ApiModel
 {
@@ -38,13 +40,13 @@ final class File extends ApiModel
     public const USER_ID = 'user_id';
     public const UUID = 'uuid';
     public const NAME = 'name';
-    public const EXTENSION = 'extension';
+    public const MIME_TYPE = 'mime_type';
 
     protected $fillable = [
         self::USER_ID,
         self::UUID,
         self::NAME,
-        self::EXTENSION,
+        self::MIME_TYPE,
         self::CREATED_AT,
         self::UPDATED_AT,
     ];
@@ -53,4 +55,9 @@ final class File extends ApiModel
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime'
     ];
+
+    public function path(): string
+    {
+        return env('APP_URL') . "/api/files/$this->uuid";
+    }
 }
