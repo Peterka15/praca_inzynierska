@@ -1,22 +1,23 @@
 <template>
   <div id="app">
 <!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
-    <Mainpage></Mainpage>
-<!--    <LoginScreen v-else :authInstance="auth"/>-->
+<!--    <Mainpage></Mainpage>-->
+  <Loginscreen></Loginscreen>
   </div>
 </template>
 
 <script>
 
 import authInstance from '@/Model/AuthInstance';
-import Mainpage from '@/views/Mainpage';
+// import Mainpage from '@/views/Mainpage';
+import Loginscreen from "@/views/Loginscreen";
 // import LoginScreen from '@/components/LoginScreen';
 
 export default {
   name: 'App',
   components: {
-   Mainpage,
-
+   // Mainpage,
+    Loginscreen,
   },
 
   data () {

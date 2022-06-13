@@ -346,10 +346,9 @@ $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
 }
 
 .left_column {
-    background: red;
-    border-radius: 7px;
-
-
+    background: #A1203A;
+    padding: 10px;
+    color: lightgray;
 }
 .right_column {
     background: dimgray;
@@ -564,4 +563,29 @@ body{
     color: #ffffff;
     width: 100%;
     padding: 20px;
+}
+
+///loginscreen box
+.center{
+    height: 266px;
+    position: relative;
+    padding: 50px;
+    background: gray;
+}
+
+.centerp {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shadow {
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         3px 3px 5px 6px #ccc;
+}
+.logininput{
+    padding: 7px;
 }
