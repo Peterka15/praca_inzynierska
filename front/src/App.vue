@@ -1,33 +1,39 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
+    <Mainpage></Mainpage>
+<!--    <LoginScreen v-else :authInstance="auth"/>-->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import api from './api/Api'
 
-api.post(x => console.log(x), "http://localhost:8000/api/login", {email: "janusze6969", password: "murzynek"})
-//api.get(x => console.log(x),"http://localhost:8000/api/users")
-
+import authInstance from '@/Model/AuthInstance';
+import Mainpage from '@/views/Mainpage';
+// import LoginScreen from '@/components/LoginScreen';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-  }
-}
+   Mainpage,
+
+  },
+
+  data () {
+    return {
+      auth: authInstance
+    };
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  margin-top: 56px;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
