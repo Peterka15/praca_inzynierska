@@ -1,23 +1,25 @@
 <template>
   <div id="app">
 <!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
-<!--    <Mainpage></Mainpage>-->
-  <Loginscreen></Loginscreen>
+<!--  <Mainpage></Mainpage>-->
+<!-- <Loginscreen></Loginscreen>-->
+    <Teachingmaterials></Teachingmaterials>
   </div>
 </template>
 
 <script>
 
 import authInstance from '@/Model/AuthInstance';
-// import Mainpage from '@/views/Mainpage';
-import Loginscreen from "@/views/Loginscreen";
-// import LoginScreen from '@/components/LoginScreen';
+ // import Mainpage from '@/views/Mainpage';
+// import Loginscreen from "@/views/Loginscreen";
+import Teachingmaterials from "@/views/Teachingmaterials";
 
 export default {
   name: 'App',
   components: {
-   // Mainpage,
-    Loginscreen,
+    // Mainpage,
+    // Loginscreen,
+    Teachingmaterials
   },
 
   data () {

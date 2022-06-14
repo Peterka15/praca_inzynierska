@@ -589,3 +589,60 @@ body{
 .logininput{
     padding: 7px;
 }
+
+////Teachingmaterials
+
+.m_boxcenter{
+    height: 82px;
+    position: relative;
+    padding: 24px;
+    background: #a1203a;
+}
+.m_boxcenterp {
+    margin: 8px;
+    position: absolute;
+    top: 15%;
+    left: 17%;
+    transform: translate(-50%, -50%);
+    }
+.m_boxfont{
+    color: lightgray;
+}
+
+.center_box{
+    height: 5cm;
+    position: relative;
+    padding: 531px;
+    background: gray;
+    width: 2px;
+}
+
+.center_boxp{
+    margin: 0;
+    position: absolute;
+    top: 96%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.addbutton{
+    margin: -154px;
+    position: absolute;
+    top: 19%;
+    left: 20%
+}
+.addbuttonp{
+    height: 36px;
+}
+
+.table{
+    margin: -212px;
+    position: absolute;
+    top: 34%;
+    left: 20%;
+}
+
+.tablep{
+    height: 16cm;
+}
+
