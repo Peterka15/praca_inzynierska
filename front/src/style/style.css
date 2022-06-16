@@ -257,7 +257,6 @@
 
 .right_column {
   background: dimgray;
-  border-radius: 7px;
 }
 .right_column .list_object {
   background: #aaa;
@@ -416,13 +415,29 @@ body {
 .blue {
   background: blue;
   color: white;
-  border-radius: 7px;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 .green {
   background: green;
   color: white;
   border-radius: 3px;
+  padding: 4px;
+}
+
+.red {
+  background: red;
+  color: white;
+  border-radius: 3px;
+  padding: 4px;
+}
+
+.orange {
+  background: orange;
+  color: white;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 .panel {
@@ -526,6 +541,11 @@ body {
   height: 36px;
 }
 
+.line {
+  margin: -423px;
+  border-top: 7px solid #a1203a;
+}
+
 .table {
   margin: -212px;
   position: absolute;
@@ -535,6 +555,107 @@ body {
 
 .tablep {
   height: 16cm;
+}
+
+.article_box {
+  height: auto;
+  position: relative;
+  background: #D9D9D9;
+  width: 969px;
+  margin: auto;
+  margin-top: 20px;
+  text-align: left;
+  padding: 32px;
+}
+
+.title {
+  color: #A1203A;
+  font-family: Roboto Light;
+  font-size: 3rem;
+  padding: 24px;
+}
+
+.article_text {
+  font-family: Arial;
+  font-size: 1.2rem;
+  padding: 22px;
+  margin-top: -17px;
+  text-align: justify;
+}
+
+.article_boxp {
+  margin: 0;
+  position: absolute;
+  top: 96%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.add_comment_box {
+  height: auto;
+  position: relative;
+  background: #C6C2C2;
+  width: 725px;
+  margin: auto;
+  margin-top: 59px;
+  padding: 20px;
+}
+
+.article_tagposition {
+  text-align: right;
+  margin-right: 16px;
+  padding: 1px;
+}
+
+.name_form {
+  padding: 10px;
+  text-align: left;
+  margin-left: 60px;
+}
+
+.name_formp {
+  width: 378px;
+  padding: 9px;
+}
+
+.comment_box {
+  font-family: arial;
+  font-size: 1rem;
+  padding: 20px;
+  width: 378px;
+}
+
+.comments_box {
+  height: auto;
+  position: relative;
+  background: #D9D9D9;
+  width: 969px;
+  margin: auto;
+  margin-top: 20px;
+  text-align: left;
+  padding: 32px;
+}
+
+.commentator_name {
+  color: #A1203A;
+  font-family: arial;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.comment_text {
+  font-family: arial;
+  font-size: 14px;
+  padding: 10px;
+  margin-left: 35px;
+}
+
+.comment {
+  background: white;
+  padding: 10px;
+  border-radius: 7px;
+  width: 634px;
+  margin-bottom: 15px;
 }
 
 /*# sourceMappingURL=style.css.map */

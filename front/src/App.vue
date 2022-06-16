@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-<!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
-<!--  <Mainpage></Mainpage>-->
-<!-- <Loginscreen></Loginscreen>-->
-    <Teachingmaterials></Teachingmaterials>
+    <!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
+    <!--  <Mainpage></Mainpage>-->
+    <!-- <Loginscreen></Loginscreen>-->
+<!--    <Teachingmaterials></Teachingmaterials>-->
+    <Article></Article>
   </div>
 </template>
 
 <script>
 
 import authInstance from '@/Model/AuthInstance';
- // import Mainpage from '@/views/Mainpage';
+// import Mainpage from '@/views/Mainpage';
 // import Loginscreen from "@/views/Loginscreen";
-import Teachingmaterials from "@/views/Teachingmaterials";
+// import Teachingmaterials from "@/views/Teachingmaterials";
+import Article from "@/views/Article";
 
 export default {
   name: 'App',
   components: {
+    Article,
     // Mainpage,
     // Loginscreen,
-    Teachingmaterials
+    // Teachingmaterials,
+
   },
 
-  data () {
+  data() {
     return {
       auth: authInstance
     };
