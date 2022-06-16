@@ -4,7 +4,8 @@
     <!--  <Mainpage></Mainpage>-->
     <!-- <Loginscreen></Loginscreen>-->
 <!--    <Teachingmaterials></Teachingmaterials>-->
-    <Article></Article>
+<!--    <Article></Article>-->
+    <Addarticle></Addarticle>
   </div>
 </template>
 
@@ -14,15 +15,16 @@ import authInstance from '@/Model/AuthInstance';
 // import Mainpage from '@/views/Mainpage';
 // import Loginscreen from "@/views/Loginscreen";
 // import Teachingmaterials from "@/views/Teachingmaterials";
-import Article from "@/views/Article";
-
+// import Article from "@/views/Article";
+import Addarticle from "@/views/Addarticle";
 export default {
   name: 'App',
   components: {
-    Article,
+    // Article,
     // Mainpage,
     // Loginscreen,
     // Teachingmaterials,
+    Addarticle
 
   },
 

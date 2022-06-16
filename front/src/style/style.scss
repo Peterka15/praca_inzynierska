@@ -805,3 +805,36 @@ body {
     margin-bottom: 15px;
 }
 
+///////////////add article
+
+.workspace{
+    height: 547px;
+    position: relative;
+    background: #828282;
+    width: 1411px;
+    margin: auto;
+    margin-top: 20px;
+    text-align: left;
+    padding: 32px;
+}
+
+.workspacep{
+    margin: 0;
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.addphotos{
+    padding: 10px;
+    margin-left: 60px;
+    margin-top: 10px;
+}
+
+.add_article_button{
+    padding: 10px;
+    margin-left: 500px;
+    margin-top: 200px;
+}
+
