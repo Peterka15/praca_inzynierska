@@ -25,7 +25,7 @@
     </div>
 
     <div class="m_boxcenter m_boxcenterp shadow">
-      <h3 class="m_boxfont">Nowy artykuł</h3>
+      <h3 class="m_boxfont">NOWY ARTYKUŁ</h3>
     </div>
     <div class="workspace workspacep">
       <b-container>
@@ -62,8 +62,10 @@
             </div>
 
             <div class="add_article_button">
-              <b-button style="background: #A1203A">Dodaj Artykuł</b-button>
+              <b-button  variant="primary" style="margin-bottom: 10px">Dodaj Artykuł</b-button>
+              <b-button style="background: red">Usuń artykuł</b-button>
             </div>
+
 
 
           </b-col>

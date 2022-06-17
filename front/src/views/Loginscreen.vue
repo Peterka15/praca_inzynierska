@@ -24,7 +24,11 @@
       </b-navbar>
     </div>
 
-  <div class="center centerp shadow">
+    <div class="m_boxcenter m_boxcenterp shadow">
+      <h3 class="m_boxfont">LOGOWANIE</h3>
+    </div>
+
+    <div class="center centerp shadow">
     <div>
       <h3 class="left_column">OSP LATARNIA GNIEZNO</h3>
     </div>

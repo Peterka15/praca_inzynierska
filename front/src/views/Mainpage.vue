@@ -98,12 +98,17 @@
               <b-img src="
 https://picsum.photos/1024/400/?image=41"
                      fluid alt="Responsive image"></b-img>
+
               <div class="text">
                 <h3>Headline</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet
                   nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</p>
                 <p><span class="blue">New!</span> <span class="green">More Later!</span></p>
+                <div>
+                  <a href="url" style="color: red">Edytuj</a>
+                </div>
               </div>
+
             </div>
 
             <div class="list_object parent">
@@ -114,6 +119,7 @@ https://picsum.photos/1024/400/?image=41"
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet
                   nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</p>
                 <p><span class="blue">New!</span> <span class="green">More Later!</span></p>
+                <a href="url" style="color: red">Edytuj</a>
               </div>
             </div>
 
@@ -125,6 +131,7 @@ https://picsum.photos/1024/400/?image=41"
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet
                   nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</p>
                 <p><span class="blue">New!</span> <span class="green">More Later!</span></p>
+                <a href="url" style="color: red">Edytuj</a>
               </div>
             </div>
 
@@ -136,6 +143,7 @@ https://picsum.photos/1024/400/?image=41"
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet
                   nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet.</p>
                 <p><span class="blue">New!</span> <span class="green">More Later!</span></p>
+                <a href="url" style="color: red">Edytuj</a>
               </div>
             </div>
 
