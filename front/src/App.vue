@@ -4,7 +4,7 @@
       <Mainpage></Mainpage>
 <!--     <Loginscreen></Loginscreen>-->
 <!--    <Teachingmaterials></Teachingmaterials>-->
-<!--    <Article></Article>-->
+<!--    <Article_old></Article_old>-->
 <!--    <Addarticle></Addarticle>-->
 <!--    <Register></Register>-->
 
@@ -18,13 +18,13 @@ import authInstance from '@/Model/AuthInstance';
 import Mainpage from '@/views/Mainpage';
 // import Loginscreen from "@/views/Loginscreen";
 // import Teachingmaterials from "@/views/Teachingmaterials";
-// import Article from "@/views/Article";
+// import Article_old from "@/views/Article_old";
 // import Register from "@/views/Register";
 // import Addarticle from "@/views/Addarticle";
 export default {
   name: 'App',
   components: {
-    // Article,
+    // Article_old,
     Mainpage,
     // Loginscreen,
     // Teachingmaterials,

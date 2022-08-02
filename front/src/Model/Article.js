@@ -1,72 +1,57 @@
+import Model from "@/Model/Model";
+import ApiUrls from "@/api/ApiUrls";
 
-export default class Article {
-  id;
-  author_id;
-  title;
-  content;
-  created_at;
-  updated_at;
+export default class Article extends Model {
+  endpoint = ApiUrls.articles;
+
+  /** @var {string} */
   author;
-  comments;
-  comments_count;
+  /** @var {string} */
+  title;
+  /** @var {string} */
+  content;
+
   images;
-  images_count;
+  /** @var {string} */
+  comments;
+  /** @var {string} */
   tags;
-  tags_count;
+  /** @var {string} */
+  created_at;
+  /** @var {string} */
+  updated_at;
 
-  /**
-   * Create new object
-   * @param {number} author_id
-   * @param {string} title
-   * @param {string} content
-   * @param {string} author
-   * @param {string} comments
-   * @param {string} images
-   * @param {string} tags
-   *
-   * @return Article
-   */
-  static create(name, email, password, role) {
-    return (new Article()).populate(null, name, email, password, role);
-  }
+  constructor(title = '', author = '', content = '') {
+    super();
 
-
-  /**
-   * Populate object with data
-   * @param {?number} id
-   * @param {number} author_id
-   * @param {string} title
-   * @param {number}  article_id
-   * @param {string} content
-   * @param {?string} created_at
-   * @param {?string} updated_at
-   * @param {string} author
-   * @param {string} comments
-   * @param {number} comments_count
-   * @param {string} images
-   * @param {number} images_count
-   * @param {string} tags
-   * @param {number} tags_count
-   *
-   * @return Article
-   */
-
-  populate(id, author_id,  article_id, title, content, created_at = null, updated_at = null, author, comments, comments_count, images, images_count, tags, tags_count) {
-    this.id = id;
-    this.article_id = article_id;
+    this.title = title;
     this.author = author;
     this.content = content;
-    this.created_at = created_at;
-    this.updated_at = updated_at;
-    this.comments = comments;
-    this.comments_count = comments_count;
-    this.images = images;
-    this.images_count = images_count;
-    this.tags = tags;
-    this.tags_count = tags_count;
+  }
+
+  /** @return Article */
+  hydrate(data) {
+    this.id = data.id ?? 0;
+    this.title = data.title;
+    this.author = data.author;
+    this.content = data.content;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at;
+    this.comments = data.comments;
+    this.images = data.images;
+    this.tags = data.tags;
 
     return this;
+  }
 
-
+  /** @return {{author: string, title: string, content: string}} */
+  dehydrate() {
+    return (
+      {
+        title: this.title,
+        author: this.author,
+        content: this.content,
+      }
+    );
   }
 }
