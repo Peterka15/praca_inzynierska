@@ -128,7 +128,7 @@
 
             <div class="comment">
               <p class="commentator_name" > Adolf Kittler</p>
-              <p class="comment_text"> Guten Tag, Ja ja!</p>
+              <p class="comment_text"> Guten Tag_old, Ja ja!</p>
 
             </div>
 

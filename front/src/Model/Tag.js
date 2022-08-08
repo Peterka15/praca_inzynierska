@@ -1,26 +1,32 @@
-export default class Tag {
-  id;
-  name;
-  articles;
-  articles_count;
+import Model from "@/Model/Model";
+import ApiUrls from "@/api/ApiUrls";
 
-  /**
-   * Create new object
-   * @param {string} name
-   * @param {string} articles
-   * @param {number} articles_count
-   * @return Tag
-   */
-  static create(name, articles, articles_count) {
-    return (new Tag()).populate(null, name, articles, articles_count);
+export default class Tag extends Model {
+  endpoint = ApiUrls.articles;
+
+  /** @var {string} */
+  name;
+
+  constructor(name = '') {
+    super();
+
+    this.title = name;
   }
 
-  populate(id, name, articles, articles_count) {
-    this.id = id;
-    this.name = name;
-    this.articles = articles;
-    this.articles_count = articles_count;
+  /** @return Article */
+  hydrate(data) {
+    this.id = data.id ;
+    this.name = data.name;
 
     return this;
+  }
+
+  /** @return {{author: string, title: string, content: string}} */
+  dehydrate() {
+    return (
+      {
+        name: this.name,
+      }
+    );
   }
 }

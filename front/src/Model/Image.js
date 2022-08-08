@@ -1,51 +1,43 @@
-export default class Image {
- id;
- uuid;
- article_id;
- created_at;
- updated_at;
- extension;
- mime_type;
+import Model from "@/Model/Model";
+import ApiUrls from "@/api/ApiUrls";
 
- /**
-  * Create new object
-  * @param {string} uuid
-  * @param {number} article_id
-  * @param {string} extension
-  * @param {string} mime_type
-  *
-  * @return Image
-  */
- static create(uuid, article_id, extension, mime_type) {
-  return (new Image()).populate(null, uuid, article_id, extension, mime_type);
- }
+export default class Image extends Model {
+  endpoint = ApiUrls.articles;
 
- /**
-  * Populate object with data
-  * @param {string} uuid
-  * @param {number} article_id
-  * @param {?string} created_at
-  * @param {?string} updated_at
-  * @param {string} extension
-  * @param {string} mime_type
+  /** @var {string} */
+  uuid;
+  /** @var {number} */
+  article_id;
+  /** @var {string} */
+  created_at;
+  /** @var {string} */
+  updated_at;
 
-  *
-  * @return Image
-  */
+  constructor(uuid = '', article_id = 0) {
+    super();
 
- populate(id, uuid, article_id, created_at, updated_at, extension, mime_type) {
-  this.id = id;
-  this.uuid = uuid
-  this.article_id = article_id;
-  this.created_at = created_at;
-  this.updated_at = updated_at;
-  this.extension = extension;
-  this.mime_type = mime_type;
+    this.uuid = uuid;
+    this.article_id = article_id;
+  }
 
-  return this;
+  /** @return Image */
+  hydrate(data) {
+    this.id = data.id;
+    this.uuid = data.uuid;
+    this.article_id = data.article_id;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at;
 
+    return this;
+  }
 
- }
-
-
+  /** @return {{author: string, title: string, content: string}} */
+  dehydrate() {
+    return (
+      {
+        uuid: this.uuid,
+        article_id: this.article_id,
+      }
+    );
+  }
 }

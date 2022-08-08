@@ -1,60 +1,53 @@
-export default class File {
-  id;
+import Model from "@/Model/Model";
+import ApiUrls from "@/api/ApiUrls";
+
+export default class File extends Model {
+  endpoint = ApiUrls.articles;
+
+  /** @var {number} */
   uuid;
+  /** @var {number} */
   user_id;
+  /** @var {string} */
   name;
-  extension;
-  created_at;
-  updated_at;
+  /** @var {string} */
   mime_type;
+  /** @var {string} */
+  created_at;
+  /** @var {string} */
+  updated_at;
 
+  constructor(uuid = '', user_id = '', name = '', mime_type = '',) {
+    super();
 
-
-  /**
-   * Create new object
-   * @param {string} uuid
-   * @param {number} user_id;
-   * @param {string} name;
-   * @param {string} extension;
-   * @param {string} mime_type;
-   *
-   * @return File
-   */
-  static create(vvid, user_id, name, extension,mime_type) {
-    return (new File()).populate(null, vvid, user_id, name, extension, mime_type);
-  }
-
-  /**
-   * Populate object with data
-   * @param {?number} id
-   * @param {string} uuid
-   * @param {number} user_id;
-   * @param {string} name;
-   * @param {string} extension;
-   * * @param {?string} created_at;
-   * * @param {?string} updated_at;
-   * @param {string} mime_type;
-   *
-   * @return File
-   */
-
-  populate(id, vvid, user_id, name,extension,created_at,updated_up, mime_type) {
-    this.id = id;
-    this.vvid = vvid;
+    this.uuid = uuid;
     this.user_id = user_id;
     this.name = name;
-    this.extension = extension;
-    this.created_at = created_at;
-    this.updated_at = updated_up;
     this.mime_type = mime_type;
-
-    return this;
-
-
   }
 
+  /** @return File */
+  hydrate(data) {
+    this.id = data.id;
+    this.uuid = data.uuid;
+    this.user_id = data.user_id;
+    this.name = data.name;
+    this.mime_type = data.mime_type;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at;
 
+    return this;
+  }
 
-
-
+  /** @return {{author: string, title: string, content: string}} */
+  dehydrate() {
+    return (
+      {
+        uuid: this.uuid,
+        user_id: this.user_id,
+        name: this.name,
+        mime_type: this.mime_type,
+      }
+    );
+  }
 }

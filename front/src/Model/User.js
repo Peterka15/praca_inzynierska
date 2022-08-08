@@ -1,38 +1,51 @@
-export default class User {
-  id;
+import Model from './Model';
+import ApiUrls from "@/api/ApiUrls";
+import Bridge, {BridgeRequestMethod} from "@/api/Bridge";
+
+export default class User extends Model {
+  endpoint = ApiUrls.users;
+
+  /** @var {string} */
   name;
+  /** @var {string} */
   email;
-  password;
-  created_at
-  updated_at;
+  /** @var {string} */
+  password = '';
+  /** @var {string} */
+  created_at = '';
+  /** @var {string} */
+  updated_at = '';
 
-  /**
-   * Create new object
-   * @param {string} name
-   * @param {string} email
-   * @param {string} password
-   * @return User
-   */
+  constructor(name = '', email = '') {
+    super();
 
-  static create (name, email,password ){
-    return (new User()).populate(null, name, email, password);
-  }
-  /**
-   * Populate object with data
-   * @param {?number} id
-   * @param {string} name
-   * @param {string} email
-   * @param {string} password
-   * @param {?string} created_at
-   * @param {?string} updated_at
-   * @return User
-   */
-  populate (id, name, email, password,created_at, updated_at = null) {
-    this.id = id;
     this.name = name;
     this.email = email;
-    this.password = password;
-    this.created_at = created_at;
-    this.updated_at = updated_at;
+  }
+
+  /** @return User */
+  hydrate(data) {
+    this.id = data.id;
+    this.name = data.name;
+    this.email = data.email;
+    this.password = data.password;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at;
+
+    return this;
+  }
+
+  dehydrate(method) {
+    return (
+      (method === BridgeRequestMethod.POST)
+        ? {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        } : {
+          name: this.name,
+          email: this.email,
+        }
+    );
   }
 }
