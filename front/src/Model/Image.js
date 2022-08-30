@@ -31,7 +31,7 @@ export default class Image extends Model {
     return this;
   }
 
-  /** @return {{author: string, title: string, content: string}} */
+  /** @return {{uuid: string, article_id: number}} */
   dehydrate() {
     return (
       {

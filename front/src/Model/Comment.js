@@ -35,7 +35,7 @@ export default class Comment extends Model {
     return this;
   }
 
-  /** @return {{author: string, title: string, content: string}} */
+  /** @return {{article_id: number, author: string, content: string}} */
   dehydrate() {
     return (
       {
