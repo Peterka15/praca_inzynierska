@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Loginscreen from "@/views/Loginscreen";
 import Mainpage from "@/views/Mainpage";
 import Article from "@/views/Article";
+import Teachingmaterials from "@/views/Teachingmaterials";
+import Addarticle from "@/views/Addarticle";
 
 Vue.use(VueRouter)
 
@@ -21,7 +23,17 @@ const routes = [
     path: '/article/:articleId',
     name: 'article',
     component: Article
-  }
+  },
+  {
+    path: '/addarticle',
+    name: 'addarticle',
+    component: Addarticle
+  },
+  {
+    path: '/materials',
+    name: 'materials',
+    component: Teachingmaterials
+  },
 ]
 
 const router = new VueRouter({

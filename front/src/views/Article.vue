@@ -1,34 +1,12 @@
 <template>
   <div>
-    <div class="fixed-top">
-      <b-navbar type="dark" variant="dark">
-        <b-navbar-nav>
-          <b-nav-item href="#">Strona Główna</b-nav-item>
-
-          <!-- Navbar dropdowns -->
-          <b-nav-item-dropdown text="Kategorie Artykułów" right>
-            <b-dropdown-item href="#">Pożar</b-dropdown-item>
-            <b-dropdown-item href="#">Wypadek</b-dropdown-item>
-            <b-dropdown-item href="#">Jubileusz</b-dropdown-item>
-            <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown text="Użytkownik" right>
-            <b-dropdown-item
-                href="https://useme.com/static/images/avatar/empty-neutral.svg?1626173373"></b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item href="#">Nowy artykuł</b-nav-item>
-          <b-nav-item href="#">Materiały szkoleniowe</b-nav-item>
-        </b-navbar-nav>
-      </b-navbar>
-    </div>
+    <Navbar></Navbar>
 
     <b-container>
       <b-row class="background">
         <b-col cols="2" class="panel">
           <h1 class="logo">
-            <a href="#">OSP LATARNIA <span>GNIEZNO <b-img
+            <a href="http://localhost:8080/">OSP LATARNIA <span>GNIEZNO <b-img
                 src="https://i.picsum.photos/id/517/70/50.jpg?hmac=TlaHUUrNdx_l1_ussq_mE2F90F-Alr7pKaHCoPjdBmg" fluid
                 alt="Fluid image"></b-img></span></a>
 

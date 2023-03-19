@@ -1,28 +1,6 @@
 <template>
   <div>
-    <div class="fixed-top">
-      <b-navbar type="dark" variant="dark">
-        <b-navbar-nav>
-          <b-nav-item href="#">Strona Główna</b-nav-item>
-
-          <!-- Navbar dropdowns -->
-          <b-nav-item-dropdown text="Kategorie Artykułów" right>
-            <b-dropdown-item href="#">Pożar</b-dropdown-item>
-            <b-dropdown-item href="#">Wypadek</b-dropdown-item>
-            <b-dropdown-item href="#">Jubileusz</b-dropdown-item>
-            <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown text="Użytkownik" right>
-            <b-dropdown-item
-                href="https://useme.com/static/images/avatar/empty-neutral.svg?1626173373"></b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item href="#">Nowy artykuł</b-nav-item>
-          <b-nav-item href="#">Materiały szkoleniowe</b-nav-item>
-        </b-navbar-nav>
-      </b-navbar>
-    </div>
+    <navbar></navbar>
 
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">NOWY ARTYKUŁ</h3>
@@ -81,10 +59,11 @@
 <script>
 import './../style/style.css';
 import {VueEditor} from "vue2-editor";
+import Navbar from '/src/components/Navbar.vue';
 
 export default {
   name: 'Mainpage',
-  components: {VueEditor},
+  components: {VueEditor, Navbar},
 
   data() {
       return {
