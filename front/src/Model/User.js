@@ -48,4 +48,9 @@ export default class User extends Model {
         }
     );
   }
+
+  /** @return {Promise<User>} */
+  static fetchCurrentUser() {
+    return Bridge.getData(ApiUrls.profile).then((user) => (new User()).hydrate(user));
+  }
 }

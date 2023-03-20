@@ -1,3 +1,48 @@
+<script>
+import './../style/style.css';
+import Article from "@/Model/Article";
+import CommentComponent from "@/components/CommentComponent";
+import Navbar from "@/components/Navbar";
+import dataStorage from "@/Data/DataStorageInstance";
+
+export default {
+  name: 'Article',
+
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    CommentComponent,
+    Navbar
+  },
+
+  data() {
+    return {
+      isLoaded: false,
+      isError: false,
+      article: null
+    }
+  },
+
+  created() {
+    const articleId = parseInt(this.$route.params.articleId);
+
+    dataStorage.getArticle(1)
+
+    Article.get(articleId)
+        .then(article => {
+          console.log("DONE. ", article)
+          this.isLoaded = true;
+          this.isError = false;
+          this.article = article;
+        })
+        .catch(() => {
+          console.log("ERROR. ")
+          this.isLoaded = true;
+          this.isError = true
+        });
+  }
+}
+</script>
+
 <template>
   <div>
     <Navbar></Navbar>
@@ -25,58 +70,20 @@
           </div>
         </b-col>
         <b-col cols="10" class="right_column">
-          <div>
-            <b-carousel
-                id="carousel-1"
-                v-model="slide"
-                :interval="10000"
-                controls
-                indicators
-                img-width="800"
-                img-height="100"
-                style="text-shadow: 1px 1px 2px #333;"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd"
-            >
+          <div style="height: 200px"/>
 
-              <b-carousel-slide
-                  img-src="https://i.picsum.photos/id/223/1920/300.jpg?hmac=WHk_C8Q9apgeqRz-NbmdP9pFqArBQKgpmOjQB8dpoB0"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                  img-src="https://i.picsum.photos/id/185/1920/300.jpg?hmac=xQ87hpfVXHZ21qFNIak9k9R4W2L2adbOlxMHxcomqAQ"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                  img-src="https://i.picsum.photos/id/779/1920/300.jpg?hmac=tYHyZfumksUfZTt6_GcB15lsM-O--jclzafxEFme6fU"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                  img-src="https://i.picsum.photos/id/961/1920/300.jpg?hmac=k2LeFHUn9sWF-ld554GK_5eWtDxi8JAILduwEQDlaQI"
-              ></b-carousel-slide>
-            </b-carousel>
-          </div>
           <div class="article_box shadow">
-            <div>
-              <h3 class="title">Zawody strażackie na szczeblu powiatowym w Gnieznie</h3>
-            </div>
-            <div>
-              <p class="article_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at mollis dolor,
-                vitae varius dolor. Vestibulum congue bibendum porta. Etiam interdum varius purus eget aliquam. Morbi
-                nisi magna, tincidunt sed magna eu, ultricies vulputate lacus. Vestibulum ante ipsum primis in faucibus
-                orci luctus et ultrices posuere cubilia curae; In sollicitudin euismod congue. Maecenas sit amet neque
-                eu velit tempus facilisis non a arcu. Fusce ex ex, commodo nec auctor vitae, semper at tortor. Duis non
-                nibh vel urna vehicula ultricies.</p>
-              <p class="article_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at mollis dolor,
-                vitae varius dolor. Vestibulum congue bibendum porta. Etiam interdum varius purus eget aliquam. Morbi
-                nisi magna, tincidunt sed magna eu, ultricies vulputate lacus. Vestibulum ante ipsum primis in faucibus
-                orci luctus et ultrices posuere cubilia curae; In sollicitudin euismod congue. Maecenas sit amet neque
-                eu velit tempus facilisis non a arcu. Fusce ex ex, commodo nec auctor vitae, semper at tortor. Duis non
-                nibh vel urna vehicula ultricies.</p>
-            </div>
-            <div class="article_tagposition">
-              <p><span class="blue">New!</span> <span class="green">More Later!</span> <span class="red">dupa</span>
-                <span class="orange">janusz</span></p>
+            <div v-if="!this.isLoaded">Loading...</div>
+            <div v-else-if="this.isError">ERROR!</div>
+            <div v-else>
+              <div>
+                <h3 class="title">{{ this.article.title }}</h3>
+              </div>
+              <div v-html="this.article.content"></div>
+              <div class="article_tagposition">
+                <p><span class="blue">New!</span> <span class="green">More Later!</span> <span class="red">dupa</span>
+                  <span class="orange">janusz</span></p>
+              </div>
             </div>
           </div>
 
@@ -88,9 +95,7 @@
               <input class="name_formp" type="text" id="fname" name="fname" placeholder="Imię i Nazwisko"><br>
             </div>
             <div class="name_form">
-<textarea name="comments" id="comments" class="comment_box" placeholder="Pole na komentarz">
-
-</textarea>
+              <textarea name="comments" id="comments" class="comment_box" placeholder="Pole na komentarz"></textarea>
               <div style="padding: 8px">
                 <b-button variant="primary">Dodaj</b-button>
               </div>
@@ -98,42 +103,19 @@
           </div>
 
           <div class="comments_box shadow">
-            <div class="comment">
-              <p class="commentator_name" > Jan Kowalski</p>
-              <p class="comment_text"> Bardzo dobrze chłopcy, oby do przodu!</p>
-
+            <div v-if="!this.isLoaded">Loading...</div>
+            <div v-else-if="this.isError">ERROR!</div>
+            <div v-else>
+              <CommentComponent
+                  v-for="comment in this.article.comments"
+                  :key="comment.id"
+                  :comment="comment"
+              />
             </div>
-
-            <div class="comment">
-              <p class="commentator_name" > Adolf Kittler</p>
-              <p class="comment_text"> Guten Tag_old, Ja ja!</p>
-
-            </div>
-
-            <div class="comment">
-              <p class="commentator_name" > Łysy z brazzers</p>
-              <p class="comment_text"> Very nice, gniezno, good job</p>
-
-            </div>
-
-            <div>
-
-            </div>
-
           </div>
-
-
         </b-col>
       </b-row>
     </b-container>
 
   </div>
 </template>
-
-<script>
-import './../style/style.css';
-
-export default {
-  name: 'Mainpage',
-}
-</script>

@@ -1,53 +1,28 @@
 <template>
   <div id="app">
-    <!--    <Main v-if="auth.loggedIn === false"/> &lt;!&ndash;//było true&ndash;&gt;-->
-      <Mainpage></Mainpage>
-<!--     <Loginscreen></Loginscreen>-->
-<!--    <Teachingmaterials></Teachingmaterials>-->
-<!--    <Article_old></Article_old>-->
-<!--    <Addarticle></Addarticle>-->
-<!--    <Register></Register>-->
-
-
+    <router-view/>
   </div>
 </template>
 
-<script>
-
-import authInstance from '@/Model/AuthInstance';
-import Mainpage from '@/views/Mainpage';
-// import Loginscreen from "@/views/Loginscreen";
-// import Teachingmaterials from "@/views/Teachingmaterials";
-// import Article_old from "@/views/Article_old";
-// import Register from "@/views/Register";
-// import Addarticle from "@/views/Addarticle";
-export default {
-  name: 'App',
-  components: {
-    // Article_old,
-    Mainpage,
-    // Loginscreen,
-    // Teachingmaterials,
-    // Addarticle,
-    // Register
-
-  },
-
-  data() {
-    return {
-      auth: authInstance
-    };
-  },
-};
-</script>
-
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 56px;
   color: #2c3e50;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

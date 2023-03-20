@@ -22,12 +22,9 @@ export default class ArticleTag {
    *
    * @return ArticleTag
    */
-
   populate(id, tag_id, article_id) {
     this.id = id;
     this.tag_id = tag_id;
     this.article_id = article_id;
-
-
   }
 }

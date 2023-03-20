@@ -53,12 +53,20 @@ export default class Auth {
             callbackFn(false);
           });
       } else {
+        this.user = null;
+        this.loggedIn = false;
+        this.wasSessionRestoreAttempted = true;
+
         localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
         localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);
 
         callbackFn(false);
       }
     } else {
+      this.user = null;
+      this.loggedIn = false;
+      this.wasSessionRestoreAttempted = true;
+
       localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
       localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);
 
@@ -101,8 +109,8 @@ export default class Auth {
   }
 
   logout() {
-    this.loggedIn = false;
     this.user = null;
+    this.loggedIn = false;
 
     localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
     localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);

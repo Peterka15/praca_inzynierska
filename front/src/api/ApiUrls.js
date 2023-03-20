@@ -1,3 +1,5 @@
+export const baseApiUrl = 'http://localhost:8000/api';
+
 export default {
   articles: 'articles',
   users: 'users',
@@ -5,11 +7,12 @@ export default {
   comments: 'comments',
   images: 'images',
   files: 'files',
+  profile: 'profile',
   auth: {
-    base: 'http://localhost:8080/api/auth',
-    register: '/register',
-    login: '/login',
-    logout: '/logout',
-    refresh: '/refresh'
+    base: 'auth',
+    register: 'register',
+    login: 'login',
+    logout: 'logout',
+    refresh: 'refresh'
   }
 };

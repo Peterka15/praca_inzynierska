@@ -10,18 +10,18 @@ export default class Tag extends Model {
   constructor(name = '') {
     super();
 
-    this.title = name;
+    this.name = name;
   }
 
-  /** @return Article */
+  /** @return Tag */
   hydrate(data) {
-    this.id = data.id ;
+    this.id = data.id;
     this.name = data.name;
 
     return this;
   }
 
-  /** @return {{author: string, title: string, content: string}} */
+  /** @return {{name: string}} */
   dehydrate() {
     return (
       {

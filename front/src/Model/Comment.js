@@ -15,7 +15,7 @@ export default class Comment extends Model {
   /** @var {string} */
   updated_at;
 
-  constructor(article_id='', author='', content='') {
+  constructor(article_id = 0, author = '', content = '') {
     super();
 
     this.article_id = article_id;

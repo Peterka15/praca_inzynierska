@@ -2,16 +2,16 @@ import ApiResponseError from "@/api/ApiResponseError";
 import {baseApiUrl} from "@/api/ApiUrls";
 
 export const BridgeRequestMethod = {
-    GET: 'get',
-    POST: 'post',
-    PUT: 'put',
-    DELETE: 'delete'
+  GET: 'get',
+  POST: 'post',
+  PUT: 'put',
+  DELETE: 'delete'
 }
 
 export default class Bridge {
   static authorizationToken = '';
 
-  static getHeaders () {
+  static getHeaders() {
     return {
       Accept: 'application/json',
       'Content-type': 'application/json',
@@ -19,7 +19,7 @@ export default class Bridge {
     };
   }
 
-  static makeRequest (
+  static makeRequest(
     method,
     url,
     headers,
@@ -43,20 +43,21 @@ export default class Bridge {
 
     return fetch(request)
       .then((response) => this.handleErrors(response))
-  .then((response) => response.text())
-  .then((responseString) => (responseString ? JSON.parse(responseString) : {}))
-  .then((responseObject) => {
-      console.log('[Bridge] Success', responseObject);
+      .then((response) => response.text())
+      .then((responseString) => (responseString ? JSON.parse(responseString) : {}))
+      .then((responseObject) => {
+        console.log('[Bridge] Success', responseObject);
 
-      return responseObject;
-    });
+        return responseObject;
+      });
   }
 
-  static getData (
+  static getData(
     endpoint,
     id = null,
     args = null
   ) {
+    console.log(endpoint, id, args);
     let url = this.getUrl(endpoint);
 
     if (id !== null) {
@@ -74,7 +75,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.GET, url, this.getHeaders(), null);
   }
 
-  static postData (
+  static postData(
     endpoint,
     data
   ) {
@@ -83,7 +84,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.POST, url, this.getHeaders(), data);
   }
 
-  static putData (
+  static putData(
     endpoint,
     id,
     data
@@ -94,7 +95,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.PUT, url, this.getHeaders(), data);
   }
 
-  static deleteData (
+  static deleteData(
     endpoint,
     id
   ) {
@@ -104,15 +105,15 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.DELETE, url, this.getHeaders(), null);
   }
 
-  static setBearerToken (authorizationToken = '') {
+  static setBearerToken(authorizationToken = '') {
     this.authorizationToken = `Bearer ${authorizationToken}`;
   }
 
-  static getUrl (endpoint) {
+  static getUrl(endpoint) {
     return `${baseApiUrl}/${endpoint}`;
   }
 
-  static handleErrors (response) {
+  static handleErrors(response) {
     if (!response.ok) {
       throw new ApiResponseError(response);
     }
