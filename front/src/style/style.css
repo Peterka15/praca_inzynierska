@@ -7,6 +7,10 @@
   overflow: hidden;
 }
 
+.container {
+  margin-top: 3rem;
+}
+
 #main_view {
   color: #fff;
 }
@@ -258,9 +262,10 @@
 .right_column {
   background: dimgray;
 }
-.right_column .list_object {
+.right_column .main_page_article {
   background: #aaa;
   margin-block: 20px;
+  min-height: 200px;
 }
 
 .background {
@@ -413,10 +418,15 @@ body {
 }
 
 .blue {
-  background: blue;
+  background: #788a9e;
   color: white;
-  border-radius: 3px;
-  padding: 4px;
+  border-radius: 9px;
+  padding: 5px;
+  margin: 4px;
+}
+
+.blue:hover {
+  background-color: #a11d28;
 }
 
 .green {

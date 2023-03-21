@@ -6,6 +6,8 @@ export default class Image extends Model {
 
   /** @var {string} */
   uuid;
+  /** @var {string} */
+  url;
   /** @var {number} */
   article_id;
   /** @var {string} */
@@ -24,6 +26,7 @@ export default class Image extends Model {
   hydrate(data) {
     this.id = data.id;
     this.uuid = data.uuid;
+    this.url = data.url;
     this.article_id = data.article_id;
     this.created_at = data.created_at;
     this.updated_at = data.updated_at;
