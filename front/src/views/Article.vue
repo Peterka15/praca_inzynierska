@@ -52,7 +52,7 @@ export default {
         <b-col cols="2" class="panel">
           <h1 class="logo">
             <a href="http://localhost:8080/">OSP LATARNIA <span>GNIEZNO <b-img
-                src="https://i.picsum.photos/id/517/70/50.jpg?hmac=TlaHUUrNdx_l1_ussq_mE2F90F-Alr7pKaHCoPjdBmg" fluid
+                src="http://localhost:8000/logo.png" fluid
                 alt="Fluid image"></b-img></span></a>
 
           </h1>
@@ -76,13 +76,13 @@ export default {
             <div v-if="!this.isLoaded">Loading...</div>
             <div v-else-if="this.isError">ERROR!</div>
             <div v-else>
+              <b-img v-if="this.article.images[0]" :src="this.article.images[0].url" fluid></b-img>
               <div>
                 <h3 class="title">{{ this.article.title }}</h3>
               </div>
               <div v-html="this.article.content"></div>
               <div class="article_tagposition">
-                <p><span class="blue">New!</span> <span class="green">More Later!</span> <span class="red">dupa</span>
-                  <span class="orange">janusz</span></p>
+                <p><button class="blue" v-for="tag in this.article.tags" :key="tag.id">{{ tag.name }}</button></p>
               </div>
             </div>
           </div>
