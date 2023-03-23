@@ -1,9 +1,8 @@
 <script>
 import './../style/style.css';
-import Article from "@/Model/Article";
-import CommentComponent from "@/components/CommentComponent";
-import Navbar from "@/components/Navbar";
-import dataStorage from "@/Data/DataStorageInstance";
+import CommentComponent from '@/components/CommentComponent';
+import Navbar from '@/components/Navbar';
+import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
   name: 'Article',
@@ -14,33 +13,19 @@ export default {
     Navbar
   },
 
-  data() {
+  data () {
     return {
       isLoaded: false,
-      isError: false,
       article: null
-    }
+    };
   },
 
-  created() {
+  created () {
     const articleId = parseInt(this.$route.params.articleId);
-
-    dataStorage.getArticle(1)
-
-    Article.get(articleId)
-        .then(article => {
-          console.log("DONE. ", article)
-          this.isLoaded = true;
-          this.isError = false;
-          this.article = article;
-        })
-        .catch(() => {
-          console.log("ERROR. ")
-          this.isLoaded = true;
-          this.isError = true
-        });
+    this.article = dataStorage.getArticle(articleId);
+    this.isLoaded = true;
   }
-}
+};
 </script>
 
 <template>
@@ -49,6 +34,7 @@ export default {
 
     <b-container>
       <b-row class="background">
+        <!-- TODO: ZRÓB MNIE Z TEGO KOMPONENT       -->
         <b-col cols="2" class="panel">
           <h1 class="logo">
             <a href="http://localhost:8080/">OSP LATARNIA <span>GNIEZNO <b-img
@@ -82,7 +68,9 @@ export default {
               </div>
               <div v-html="this.article.content"></div>
               <div class="article_tagposition">
-                <p><button class="blue" v-for="tag in this.article.tags" :key="tag.id">{{ tag.name }}</button></p>
+                <p>
+                  <button class="blue" v-for="tag in this.article.tags" :key="tag.id">{{ tag.name }}</button>
+                </p>
               </div>
             </div>
           </div>
@@ -101,10 +89,8 @@ export default {
               </div>
             </div>
           </div>
-
           <div class="comments_box shadow">
             <div v-if="!this.isLoaded">Loading...</div>
-            <div v-else-if="this.isError">ERROR!</div>
             <div v-else>
               <CommentComponent
                   v-for="comment in this.article.comments"

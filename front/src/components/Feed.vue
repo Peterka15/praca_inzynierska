@@ -4,6 +4,7 @@
 
     <div class="text">
 
+      <!-- TODO: ZRÓB MNIE ANIMACJA PO NAJECHANIU MYSZKA -->
       <h3 @click="goToArticle()">{{ this.article.title }}</h3>
       <p v-html="this.article.content"></p>
 
@@ -11,6 +12,7 @@
         <button class="blue" v-for="tag in this.article.tags" :key="tag.id">{{ tag.name }}</button>
       </p>
 
+      <!-- TODO: REMOVE -->
       <div>
         <a href="url" style="color: red">Edytuj</a>
       </div>

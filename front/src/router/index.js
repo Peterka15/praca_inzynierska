@@ -4,7 +4,7 @@ import Loginscreen from "@/views/Loginscreen";
 import Mainpage from "@/views/Mainpage";
 import Article from "@/views/Article";
 import Teachingmaterials from "@/views/Teachingmaterials";
-import Addarticle from "@/views/Addarticle";
+import Addarticle from "@/views/AddArticle.vue";
 
 Vue.use(VueRouter)
 

@@ -2,7 +2,7 @@
 <div class="fixed-top">
 <b-navbar type="dark" variant="dark">
   <b-navbar-nav>
-    <b-nav-item href="http://localhost:8080/">Strona Główna</b-nav-item>
+    <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
     <!-- Navbar dropdowns -->
     <b-nav-item-dropdown text="Kategorie Artykułów" right>
@@ -12,6 +12,7 @@
       <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
     </b-nav-item-dropdown>
 
+    <!-- TODO: ZRÓB MNIE Z TEGO ROUTING JAK W LINII 5 -->
     <b-nav-item href="http://localhost:8080/addarticle">Nowy artykuł</b-nav-item>
     <b-nav-item href="http://localhost:8080/materials">Materiały szkoleniowe</b-nav-item>
   </b-navbar-nav>

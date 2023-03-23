@@ -71,6 +71,7 @@
                 <li>
                   <router-link to="/article/3">Artykuł 3</router-link>
                 </li>
+<!--                TODO: LINKI MAJĄ BYĆ PRZEZ ROUTER LINK-->
                 <li><a href="#">Wyszukaj</a></li>
                 <li><a href="http://localhost:8080/addarticle">Dodaj artykuł</a></li>
                 <li><a href="http://localhost:8080/materials">Materiały szkoleniowe</a></li>
@@ -99,8 +100,6 @@
 
 <script>
 import './../style/style.css';
-// import Bridge from "@/api/Bridge";
-// import ApiUrls from "@/api/ApiUrls";
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
@@ -131,6 +130,11 @@ export default {
 
 
   mounted() {
+    if(this.dataStorage.isReady()) {
+      this.isReady = true;
+      return;
+    }
+
     this.dataStorage.loadData().then(() => {
       console.log('[DATA_STORAGE]', this.dataStorage);
       this.isReady = true;
