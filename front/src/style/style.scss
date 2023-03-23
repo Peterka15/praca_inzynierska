@@ -563,6 +563,13 @@ body {
 
 }
 
+.article_header{
+    cursor: pointer;
+}
+
+.article_header:hover {
+    background-color: #a11d28
+}
 
 .blue {
     background: #788a9e;

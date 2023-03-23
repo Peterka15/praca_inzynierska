@@ -2,6 +2,7 @@
 import './../style/style.css';
 import CommentComponent from '@/components/CommentComponent';
 import Navbar from '@/components/Navbar';
+import PanelBar from '/src/components/PanelBar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
@@ -10,7 +11,8 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     CommentComponent,
-    Navbar
+    Navbar,
+    PanelBar,
   },
 
   data () {
@@ -34,27 +36,7 @@ export default {
 
     <b-container>
       <b-row class="background">
-        <!-- TODO: ZRÓB MNIE Z TEGO KOMPONENT       -->
-        <b-col cols="2" class="panel">
-          <h1 class="logo">
-            <a href="http://localhost:8080/">OSP LATARNIA <span>GNIEZNO <b-img
-                src="http://localhost:8000/logo.png" fluid
-                alt="Fluid image"></b-img></span></a>
-
-          </h1>
-          <div class="nav-wrap">
-            <nav class="main-nav" role="navigation">
-              <ul class="unstyled list-hover-slide">
-                <li><a href="#">Wyszukaj</a></li>
-                <li><a href="#">Zaloguj/Wyloguj</a></li>
-                <li><a href="#">Dodaj artykuł</a></li>
-                <li><a href="#">Materiały szkoleniowe</a></li>
-                <li><a href="#">Tagi</a></li>
-
-              </ul>
-            </nav>
-          </div>
-        </b-col>
+        <PanelBar></PanelBar>
         <b-col cols="10" class="right_column">
           <div style="height: 200px"/>
 

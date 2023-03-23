@@ -339,6 +339,10 @@
   color: #fff;
 }
 
+.b-nav-dropdown {
+  overflow: visible !important;
+}
+
 .social-links {
   border-bottom: solid 1px #3C3735;
 }
@@ -415,6 +419,14 @@ li:hover {
 
 body {
   background-color: #424141 !important;
+}
+
+.article_header {
+  cursor: pointer;
+}
+
+.article_header:hover {
+  background-color: #a11d28;
 }
 
 .blue {

@@ -49,38 +49,7 @@
 
     <b-container>
       <b-row class="background">
-        <b-col cols="2" class="panel">
-          <h1 class="logo">
-            <a href="#">OSP LATARNIA <span>GNIEZNO <b-img
-                src="http://localhost:8000/logo.png" fluid
-                alt="Fluid image"></b-img></span></a>
-
-          </h1>
-          <div class="nav-wrap">
-            <nav class="main-nav" role="navigation">
-              <ul class="unstyled list-hover-slide">
-                <li>
-                  <router-link to="/login">Logowanie</router-link>
-                </li>
-                <li>
-                  <router-link to="/article/1">Artykuł 1</router-link>
-                </li>
-                <li>
-                  <router-link to="/article/2">Artykuł 2</router-link>
-                </li>
-                <li>
-                  <router-link to="/article/3">Artykuł 3</router-link>
-                </li>
-<!--                TODO: LINKI MAJĄ BYĆ PRZEZ ROUTER LINK-->
-                <li><a href="#">Wyszukaj</a></li>
-                <li><a href="http://localhost:8080/addarticle">Dodaj artykuł</a></li>
-                <li><a href="http://localhost:8080/materials">Materiały szkoleniowe</a></li>
-                <li><a href="#">Tagi</a></li>
-                <li><a href="#">Wyloguj</a></li>
-              </ul>
-            </nav>
-          </div>
-        </b-col>
+        <PanelBar></PanelBar>
         <b-col cols="10" class="right_column">
           <div>
             <feed v-for="article in articles" :key="article.id" :article="article"></feed>
@@ -88,9 +57,6 @@
         </b-col>
       </b-row>
     </b-container>
-
-<!--TODO: DODAC WYŚWIETLANIE OBRAZKÓW DO ARTYKUŁÓW  -->
-<!--TODO  DODAĆ PRAWIDŁOWE TAGI W ARTYKUŁACH-->
   </div>
 
 </template>
@@ -102,6 +68,7 @@
 import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
+import PanelBar from '/src/components/PanelBar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
 
 
@@ -126,6 +93,7 @@ export default {
   components: {
     Navbar,
     Feed,
+    PanelBar
   },
 
 

@@ -12,9 +12,8 @@
       <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
     </b-nav-item-dropdown>
 
-    <!-- TODO: ZRÓB MNIE Z TEGO ROUTING JAK W LINII 5 -->
-    <b-nav-item href="http://localhost:8080/addarticle">Nowy artykuł</b-nav-item>
-    <b-nav-item href="http://localhost:8080/materials">Materiały szkoleniowe</b-nav-item>
+    <b-nav-item :to="{ path: '/addarticle'}">Nowy artykuł</b-nav-item>
+    <b-nav-item :to="{ path: '/materials'}">Materiały szkoleniowe</b-nav-item>
   </b-navbar-nav>
 </b-navbar>
 </div>
