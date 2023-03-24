@@ -1,35 +1,3 @@
-<script>
-import './../style/style.css';
-import CommentComponent from '@/components/CommentComponent';
-import Navbar from '@/components/Navbar';
-import PanelBar from '/src/components/PanelBar.vue';
-import dataStorage from '@/Data/DataStorageInstance';
-
-export default {
-  name: 'Article',
-
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    CommentComponent,
-    Navbar,
-    PanelBar,
-  },
-
-  data () {
-    return {
-      isLoaded: false,
-      article: null
-    };
-  },
-
-  created () {
-    const articleId = parseInt(this.$route.params.articleId);
-    this.article = dataStorage.getArticle(articleId);
-    this.isLoaded = true;
-  }
-};
-</script>
-
 <template>
   <div>
     <Navbar></Navbar>
@@ -67,6 +35,7 @@ export default {
             <div class="name_form">
               <textarea name="comments" id="comments" class="comment_box" placeholder="Pole na komentarz"></textarea>
               <div style="padding: 8px">
+<!--                ZAPISZ KOMENTARZ-->
                 <b-button variant="primary">Dodaj</b-button>
               </div>
             </div>
@@ -87,3 +56,44 @@ export default {
 
   </div>
 </template>
+
+<script>
+
+import './../style/style.css';
+import CommentComponent from '@/components/CommentComponent';
+import Navbar from '@/components/Navbar';
+import PanelBar from '/src/components/PanelBar.vue';
+import dataStorage from '@/Data/DataStorageInstance';
+
+export default {
+  name: 'Article',
+
+  // TODO: DODAć obsługę zapisywania komentarzy od userów
+
+  components: {
+    // eslint-disable-next-line vue/no-unused-components
+    CommentComponent,
+    Navbar,
+    PanelBar,
+  },
+
+  data() {
+    return {
+      isLoaded: false,
+      article: null
+    };
+  },
+
+  created() {
+    const articleId = parseInt(this.$route.params.articleId);
+    this.article = dataStorage.getArticle(articleId);
+    this.isLoaded = true;
+  },
+
+  methods: {
+    saveComment: function () {
+      // napisz mnie
+    }
+  }
+};
+</script>

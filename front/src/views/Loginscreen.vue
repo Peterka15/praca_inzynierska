@@ -1,4 +1,5 @@
 <template>
+  <!-- NAVBAR? -->
   <div>
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">LOGOWANIE</h3>
@@ -48,6 +49,7 @@ export default {
   },
   methods: {
     login() {
+      // TODO: NAPRAWIĆ PRZEKIEROWANIE
       auth.login(this.email, this.password)
           .then(() => {
             this.$router.push({ name: 'Mainpage' });

@@ -63,6 +63,13 @@ export default class DataStorage {
         this.articles.data.splice(this.articles.data.indexOf(article), 1);
     }
 
+    /**
+     * @param {Article} article
+     */
+    addArticle (article) {
+        this.articles.data.push(article);
+    }
+
 
     // /**
     //  * @return {?User}

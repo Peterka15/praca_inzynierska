@@ -1,4 +1,6 @@
 <template>
+  <!-- TODO: OSBŁUŻYĆ REJESTRACJĘ, JEŻELI SIĘ UDA, TO PRZEKIEROWAĆ NA LOGOWANIE, TAK JAK LOGOWANIE PRZEKIEROWYWUJE NA STRONĘ GŁÓWNĄ -->
+  <!-- TODO: UŻYĆ NAVABRA Z KOMPONENTU -->
   <div>
     <div class="fixed-top">
       <b-navbar type="dark" variant="dark">

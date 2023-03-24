@@ -1,11 +1,11 @@
 <template>
   <div>
-    <navbar></navbar>
+    <navbar/>
 
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">NOWY ARTYKUŁ</h3>
     </div>
-    <div class="workspace workspacep">
+    <div class="workspace">
       <b-container>
         <b-row>
           <b-col cols="6">
@@ -15,7 +15,11 @@
           </b-col>
           <b-col cols="6">
             <div class="name_form">
-              <input class="name_formp" type="text" id="fname" name="fname" placeholder="Nazwa artykułu"><br>
+              <input class="name_formp" type="text" id="fname" name="fname" placeholder="Nazwa artykułu"
+                     v-model="title"><br>
+            </div>
+            <div class="name_form">
+              <input class="tags" type="text" placeholder="Tagi (oddziel przecinkami)" v-model="raw_tags"><br>
             </div>
             <div class="addphotos">
               <b-button variant="primary" v-b-modal.photo-modal>Dodaj zdjęcia +</b-button>
@@ -23,29 +27,27 @@
                 <h3>
                   Wybierz zdjęcia do dodania
                 </h3>
-                <b-form-file v-model="file2" class="mt-3" plain></b-form-file>
+                <b-form-file v-model="photos" class="mt-3" plain></b-form-file>
               </b-modal>
             </div>
+            <!-- TODO: zaorać te tagi -->
             <div class="addphotos">
               <b-button variant="primary" v-b-modal.tag-modal>Dodaj tagi +</b-button>
               <b-modal id="tag-modal">
                 <h3>
                   Wybierz tagi, maksymalnie 3
                 </h3>
-                  <b-form-select v-model="selected" :options="options"></b-form-select>
-                  <b-form-select v-model="selected2" :options="options"></b-form-select>
-                  <b-form-select v-model="selected3" :options="options"></b-form-select>
-                  <div class="mt-3">Wybrano: <strong>{{ selected}} {{selected2}} {{selected3}}</strong></div>
+                <b-form-select v-model="selected" :options="options"></b-form-select>
+                <b-form-select v-model="selected2" :options="options"></b-form-select>
+                <b-form-select v-model="selected3" :options="options"></b-form-select>
+                <div class="mt-3">Wybrano: <strong>{{ selected }} {{ selected2 }} {{ selected3 }}</strong></div>
               </b-modal>
             </div>
 
             <div class="add_article_button">
-              <b-button  variant="primary" style="margin-bottom: 10px">Dodaj Artykuł</b-button>
+              <b-button variant="primary" style="margin-bottom: 10px" @click="saveArticle()">Dodaj Artykuł</b-button>
               <b-button style="background: red">Usuń artykuł</b-button>
             </div>
-
-
-
           </b-col>
         </b-row>
       </b-container>
@@ -60,39 +62,56 @@
 import './../style/style.css';
 import {VueEditor} from "vue2-editor";
 import Navbar from '/src/components/Navbar.vue';
+import Article from "@/Model/Article";
+import Tag from "@/Model/Tag";
+import Bridge from "@/api/Bridge";
+import dataStorage from "@/Data/DataStorageInstance";
 
 export default {
   name: 'Mainpage',
   components: {VueEditor, Navbar},
 
   data() {
-      return {
-        selected: null,
-        selected2: null,
-        selected3: null,
-        options: [
-          { value: null, text: 'Wybierz tag' },
-          { value: 'a', text: 'Pożar' },
-          { value: 'b', text: 'Wypadek' },
-          { value: 'c', text: 'Zabezpieczenie' },
-        ],
-        options2: [
-          { value: null, text: 'Wybierz tag' },
-          { value: 'a', text: 'Pożar' },
-          { value: 'b', text: 'Wypadek' },
-          { value: 'c', text: 'Zabezpieczenie' },
-        ],
-        options3: [
-          { value: null, text: 'Wybierz tag' },
-          { value: 'a', text: 'Pożar' },
-          { value: 'b', text: 'Wypadek' },
-          { value: 'c', text: 'Zabezpieczenie' },
-        ]
-      }
+    return {
+      title: '',
+      // selected: null,
+      // selected2: null,
+      // selected3: null,
+      content: '',
+      raw_tags: "",
+      options: [
+        {value: null, text: 'Wybierz tag'},
+        {value: 'a', text: 'Pożar'},
+        {value: 'b', text: 'Wypadek'},
+        {value: 'c', text: 'Zabezpieczenie'},
+      ],
+      options2: [
+        {value: null, text: 'Wybierz tag'},
+        {value: 'a', text: 'Pożar'},
+        {value: 'b', text: 'Wypadek'},
+        {value: 'c', text: 'Zabezpieczenie'},
+      ],
+      options3: [
+        {value: null, text: 'Wybierz tag'},
+        {value: 'a', text: 'Pożar'},
+        {value: 'b', text: 'Wypadek'},
+        {value: 'c', text: 'Zabezpieczenie'},
+      ]
     }
+  },
 
+  methods: {
+    saveArticle: function () {
+      Bridge.setBearerToken('34|f0zn0BWpVKZimKURjquUbvWgeVhGTAH41RnGjEG3');
 
+      const tags = this.raw_tags.split(',').map(tagText => new Tag(tagText.trim()));
+      const article = new Article(this.title, this.content, tags);
 
-
+      article.save().then((article) => {
+        console.log('Udało się!');
+        dataStorage.addArticle(article);
+      });
+    }
+  }
 }
 </script>

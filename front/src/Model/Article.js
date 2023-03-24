@@ -55,13 +55,13 @@ export default class Article extends Model {
     return this;
   }
 
-  /** @return {{title: string, content: string, tag: string}} */
+  /** @return {{title: string, content: string, tags: string}} */
   dehydrate() {
     return (
       {
         title: this.title,
         content: this.content,
-        tag: this.tags.map(tag => tag.name).join(',')
+        tags: this.tags.map(tag => tag.name).join(',')
       }
     );
   }
