@@ -5,6 +5,9 @@ export default class DataStorage {
     /** @type {DataContainer} */
     articles;
 
+    /** @type {DataContainer} */
+    users;
+
     /** @type {?number} */
     loggedAsId = null;
 
@@ -13,7 +16,7 @@ export default class DataStorage {
 
     constructor () {
         this.articles = new DataContainer(DataContainer.TYPE_ARTICLE);
-
+        this.users = new DataContainer(DataContainer);
     }
 
     loadData () {
@@ -68,6 +71,13 @@ export default class DataStorage {
      */
     addArticle (article) {
         this.articles.data.push(article);
+    }
+
+    /**
+     * @param {User} user
+     */
+    addUser (user) {
+        this.users.data.push(user);
     }
 
 

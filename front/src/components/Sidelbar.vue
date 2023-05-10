@@ -1,11 +1,9 @@
 <template>
-<!-- TODO: ZMIENIĆ NAZWĘ NA SIDEBAR -->
   <b-col cols="2" class="panel">
     <h1 class="logo">
       <router-link to="/"> OSP LATARNIA <span>GNIEZNO <b-img
           src="http://localhost:8000/logo.png" fluid
           alt="Fluid image"></b-img></span></router-link>
-      <!--TODO: PRZEJSCIE DO STRONY GŁÓWNEJ KLIKAJAC W OBRAZEK I NAPIS-->
     </h1>
     <div class="nav-wrap">
       <nav class="main-nav" role="navigation">

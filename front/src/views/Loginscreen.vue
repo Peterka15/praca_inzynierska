@@ -1,6 +1,8 @@
 <template>
-  <!-- NAVBAR? -->
+<!--TODO: CZEMU TEN NAVBAR WSZYSTKO ROZPIER... PSUJE???-->
+<!--  <navbar/>-->
   <div>
+
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">LOGOWANIE</h3>
     </div>
@@ -11,13 +13,14 @@
       </div>
       <div>
         <div class="logininput">
-          <b-form @submit.prevent="login">
+          <b-form @submit.prevent="login" style="margin: 5px">
             <label class="sr-only">E-mail</label>
             <b-form-input
                 id="inline-form-input-name"
                 v-model="email"
                 class="mb-2 mr-sm-2 mb-sm-0"
                 placeholder="E-mail"
+
             ></b-form-input>
             <label class="sr-only">Hasło</label>
             <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
@@ -26,11 +29,13 @@
             </b-input-group>
             <b-button variant="primary" type="submit">Zaloguj</b-button>
           </b-form>
+          <b-button :to="{ path: '/register'}">Rejestracja</b-button>
         </div>
       </div>
 
     </div>
   </div>
+
 </template>
 
 <style>
@@ -39,20 +44,24 @@
 
 <script>
 import auth from "@/Model/AuthInstance";
+import Navbar from "@/components/Navbar";
 
 export default {
+  component: Navbar,
   data() {
     return {
       email: "",
       password: "",
     };
   },
+
+
   methods: {
     login() {
       // TODO: NAPRAWIĆ PRZEKIEROWANIE
       auth.login(this.email, this.password)
           .then(() => {
-            this.$router.push({ name: 'Mainpage' });
+            this.$router.push({ name: '/' });
           })
     },
   },

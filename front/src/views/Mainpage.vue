@@ -68,7 +68,7 @@
 import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
-import PanelBar from '/src/components/PanelBar.vue';
+import PanelBar from '/src/components/Sidelbar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
 
 

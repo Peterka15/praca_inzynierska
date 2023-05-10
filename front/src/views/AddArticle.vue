@@ -30,20 +30,6 @@
                 <b-form-file v-model="photos" class="mt-3" plain></b-form-file>
               </b-modal>
             </div>
-            <!-- TODO: zaorać te tagi -->
-            <div class="addphotos">
-              <b-button variant="primary" v-b-modal.tag-modal>Dodaj tagi +</b-button>
-              <b-modal id="tag-modal">
-                <h3>
-                  Wybierz tagi, maksymalnie 3
-                </h3>
-                <b-form-select v-model="selected" :options="options"></b-form-select>
-                <b-form-select v-model="selected2" :options="options"></b-form-select>
-                <b-form-select v-model="selected3" :options="options"></b-form-select>
-                <div class="mt-3">Wybrano: <strong>{{ selected }} {{ selected2 }} {{ selected3 }}</strong></div>
-              </b-modal>
-            </div>
-
             <div class="add_article_button">
               <b-button variant="primary" style="margin-bottom: 10px" @click="saveArticle()">Dodaj Artykuł</b-button>
               <b-button style="background: red">Usuń artykuł</b-button>
@@ -74,29 +60,8 @@ export default {
   data() {
     return {
       title: '',
-      // selected: null,
-      // selected2: null,
-      // selected3: null,
       content: '',
       raw_tags: "",
-      options: [
-        {value: null, text: 'Wybierz tag'},
-        {value: 'a', text: 'Pożar'},
-        {value: 'b', text: 'Wypadek'},
-        {value: 'c', text: 'Zabezpieczenie'},
-      ],
-      options2: [
-        {value: null, text: 'Wybierz tag'},
-        {value: 'a', text: 'Pożar'},
-        {value: 'b', text: 'Wypadek'},
-        {value: 'c', text: 'Zabezpieczenie'},
-      ],
-      options3: [
-        {value: null, text: 'Wybierz tag'},
-        {value: 'a', text: 'Pożar'},
-        {value: 'b', text: 'Wypadek'},
-        {value: 'c', text: 'Zabezpieczenie'},
-      ]
     }
   },
 

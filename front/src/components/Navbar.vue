@@ -17,7 +17,7 @@
 
   </b-navbar-nav>
   <b-navbar-nav class="ml-auto">
-    <b-nav-item>Zaloguj</b-nav-item>
+    <b-nav-item :to="{ path: '/login'}">Zaloguj</b-nav-item>
   </b-navbar-nav>
 </b-navbar>
 </div>

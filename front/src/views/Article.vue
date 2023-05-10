@@ -62,7 +62,7 @@
 import './../style/style.css';
 import CommentComponent from '@/components/CommentComponent';
 import Navbar from '@/components/Navbar';
-import PanelBar from '/src/components/PanelBar.vue';
+import PanelBar from '/src/components/Sidelbar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
 export default {

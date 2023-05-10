@@ -5,6 +5,7 @@ import Mainpage from "@/views/Mainpage";
 import Article from "@/views/Article";
 import Teachingmaterials from "@/views/Teachingmaterials";
 import Addarticle from "@/views/AddArticle.vue";
+import Register from "@/views/Register";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,12 @@ const routes = [
     name: 'materials',
     component: Teachingmaterials
   },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  },
+
 ]
 
 const router = new VueRouter({

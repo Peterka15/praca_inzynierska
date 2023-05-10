@@ -75,6 +75,28 @@ export default class Auth {
   }
 
   /**
+   * Register to api (retrieve JWT token)
+   * Token is stored in localStorage
+   * @param {string} email
+   * @param {string} password
+   * @param {string} name
+   *
+   * @return Promise
+   */
+  register(email,password,name){
+    let data = {
+      email: email,
+      password: password,
+      name: name
+    };
+
+    return Bridge.postData(
+      ApiUrls.auth.register,
+      data
+    );
+  }
+
+  /**
    * Login to api (retrieve JWT token)
    * Token is stored in localStorage
    * @param {string} email
