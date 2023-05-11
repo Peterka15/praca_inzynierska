@@ -81,10 +81,10 @@ export default class DataStorage {
     }
 
 
-    // /**
-    //  * @return {?User}
-    //  */
-    // getLoggedUser () {
-    //     return this.users.data.find(user => user.id === this.loggedAsId);
-    // }
+    /**
+     * @return {?User}
+     */
+    getLoggedUser () {
+        return this.users.data.find(user => user.id === this.loggedAsId);
+    }
 }

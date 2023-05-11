@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: OSBŁUŻYĆ REJESTRACJĘ, JEŻELI SIĘ UDA, TO PRZEKIEROWAĆ NA LOGOWANIE, TAK JAK LOGOWANIE PRZEKIEROWYWUJE NA STRONĘ GŁÓWNĄ -->
   <div>
     <navbar/>
     <div class="m_boxcenter m_boxcenterp shadow">
@@ -80,15 +79,12 @@ export default {
   methods: {
     addUser: function () {
       auth.register(this.email, this.password, this.name)
-          .then((data) => {
-            this.isSuccess=true;
-            this.isError=false;
-            console.log(data)
+          .then(() => {
+            this.$router.push({path: '/login'});
 
-          }).catch((data)=>{
-        this.isSuccess=false;
-        this.isError=true;
-            console.error(data)
+          }).catch(() => {
+            this.isSuccess = false;
+            this.isError = true;
       })
     }
   }

@@ -9,7 +9,6 @@
       <nav class="main-nav" role="navigation">
         <ul class="unstyled list-hover-slide">
           <li>
-            <router-link to="/login">Logowanie</router-link>
           </li>
           <!--      <li>-->
           <!--        <router-link to="/article/1">Artykuł 1</router-link>-->
@@ -30,7 +29,6 @@
             <router-link to="/materials">Materiały szkoleniowe</router-link>
           </li>
           <li><a href="#">Tagi</a></li>
-          <li><a href="#">Wyloguj</a></li>
         </ul>
       </nav>
     </div>

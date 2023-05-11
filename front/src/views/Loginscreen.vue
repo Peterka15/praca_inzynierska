@@ -1,7 +1,8 @@
 <template>
-<!--TODO: CZEMU TEN NAVBAR WSZYSTKO ROZPIER... PSUJE???-->
-<!--  <navbar/>-->
+  <!--TODO: CZEMU TEN NAVBAR WSZYSTKO ROZPIER... PSUJE???-->
   <div>
+  <navbar/>
+
 
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">LOGOWANIE</h3>
@@ -47,7 +48,9 @@ import auth from "@/Model/AuthInstance";
 import Navbar from "@/components/Navbar";
 
 export default {
-  component: Navbar,
+  components: {
+    Navbar,
+  },
   data() {
     return {
       email: "",
@@ -58,10 +61,9 @@ export default {
 
   methods: {
     login() {
-      // TODO: NAPRAWIĆ PRZEKIEROWANIE
       auth.login(this.email, this.password)
           .then(() => {
-            this.$router.push({ name: '/' });
+            this.$router.push({path: '/'});
           })
     },
   },

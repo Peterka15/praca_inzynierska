@@ -1,6 +1,6 @@
 <template>
 <div class="fixed-top">
-<b-navbar type="dark" variant="dark">
+<b-navbar type="dark" variant="dark" class="justify-content-between">
   <b-navbar-nav>
     <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
@@ -17,14 +17,42 @@
 
   </b-navbar-nav>
   <b-navbar-nav class="ml-auto">
-    <b-nav-item :to="{ path: '/login'}">Zaloguj</b-nav-item>
+    <b-nav-item :to="{ path: '/login'}" v-if="!username">Zaloguj</b-nav-item>
+    <b-nav-item v-if="username" @click="logOut()">Wyloguj</b-nav-item>
+    <b-nav-item v-if="username">{{username}}</b-nav-item>
   </b-navbar-nav>
 </b-navbar>
 </div>
 </template>
 
 <script>
+import auth from "@/Model/AuthInstance";
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  data() {
+    return {
+      username5: "",
+    };
+
+
+  },
+
+  computed: {
+    username: function () {
+      if (auth.user != null) {
+        return auth.user.name;
+      }
+      else{
+        return null
+      }
+    },
+  },
+  methods: {
+    logOut() {
+      auth.logout();
+      this.$router.push({ path: '/' });
+    }
+  }
+
 }
 </script>
