@@ -40,13 +40,21 @@
             </b-input-group>
           </b-form>
           <div class="logininput">
-            <b-button variant="primary" @click="addUser()">Zarejestruj się</b-button>
+            <b-button v-b-modal.modal-1 @click="addUser()">Zarejestruj się</b-button>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="isSuccess">sukcess, możesz się zalogować</div>
-    <div v-if="isError">wystąpił błąd, sprobuj ponownie</div>
+    <div v-if="isSuccess" >
+      <b-modal id="modal-1" title="SUKCES">
+        <p class="my-4">Udało Ci się pomyślnie zarejestrować</p>
+      </b-modal>
+    </div>
+    <div v-if="isError" >
+      <b-modal id="modal-1" title="BŁĄD">
+        <p class="my-4">Coś poszło nie tak, sprawdz czy wypełniłeś wszystkie dane i czy są one poprawne.</p>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -86,7 +94,15 @@ export default {
             this.isSuccess = false;
             this.isError = true;
       })
+    },
+    makeToast(variant = null) {
+      this.$bvToast.toast('sukcess, możesz się zalogować', {
+        title: `${variant || 'default'}`,
+        variant: variant,
+        solid: true
+      })
     }
+
   }
 }
 

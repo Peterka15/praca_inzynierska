@@ -4,6 +4,10 @@ import Article from "@/Model/Article";
 export default class DataContainer {
   @readonly
   static TYPE_ARTICLE = 'article';
+  @readonly
+  static TYPE_USER = 'user';
+  @readonly
+  static TYPE_COMMENT = 'comment';
 
 
   /** @type {?string} */

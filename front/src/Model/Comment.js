@@ -2,7 +2,7 @@ import Model from "@/Model/Model";
 import ApiUrls from "@/api/ApiUrls";
 
 export default class Comment extends Model {
-  endpoint = ApiUrls.articles;
+  endpoint = ApiUrls.comments;
 
   /** @var {number} */
   article_id;

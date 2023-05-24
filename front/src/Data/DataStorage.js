@@ -6,6 +6,9 @@ export default class DataStorage {
     articles;
 
     /** @type {DataContainer} */
+    comments;
+
+    /** @type {DataContainer} */
     users;
 
     /** @type {?number} */
@@ -16,7 +19,8 @@ export default class DataStorage {
 
     constructor () {
         this.articles = new DataContainer(DataContainer.TYPE_ARTICLE);
-        this.users = new DataContainer(DataContainer);
+        this.users = new DataContainer(DataContainer.TYPE_USER);
+        this.comments = new DataContainer(DataContainer.TYPE_COMMENT);
     }
 
     loadData () {
@@ -71,6 +75,20 @@ export default class DataStorage {
      */
     addArticle (article) {
         this.articles.data.push(article);
+    }
+
+    /**
+     * @param {Comment} comment
+     */
+    addComment (comment) {
+        this.comments.data.push(comment);
+    }
+
+    /**
+     * @return {?Comment[]}
+     */
+    getComments () {
+        return this.comments.data;
     }
 
     /**

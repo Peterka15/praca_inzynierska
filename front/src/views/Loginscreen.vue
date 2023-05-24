@@ -1,5 +1,4 @@
 <template>
-  <!--TODO: CZEMU TEN NAVBAR WSZYSTKO ROZPIER... PSUJE???-->
   <div>
   <navbar/>
 

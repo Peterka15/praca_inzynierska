@@ -56,13 +56,14 @@ export default class Model {
     if (this.id !== 0) {
       throw new Error('Can\'t POST already created object.');
     }
+console.log("post1")
 
     return Bridge.postData(this.endpoint, this.dehydrate(BridgeRequestMethod.POST))
       .then((response) => {
         if (response.message !== undefined) {
           throw new Error(`POST failed with message ${response.message}`);
         }
-
+        console.log("post2")
         this.hydrate(response.data);
 
         /** @var Model this */
@@ -74,13 +75,13 @@ export default class Model {
     if (this.id === 0) {
       throw new Error('Can\'t PUT non-existing object.');
     }
-
+    console.log("put1")
     return Bridge.putData(this.endpoint, this.id, this.dehydrate(BridgeRequestMethod.PUT))
       .then((response) => {
         if (response.message !== undefined) {
           throw new Error(`PUT failed with message ${response.message}`);
         }
-
+        console.log("put2")
         this.hydrate(response.data);
 
         /** @var Model this */

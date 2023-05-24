@@ -12,7 +12,7 @@
             <div v-if="!this.isLoaded">Loading...</div>
             <div v-else-if="this.isError">ERROR!</div>
             <div v-else>
-              <b-img v-if="this.article.images[0]" :src="this.article.images[0].url" fluid></b-img>
+              <b-img v-if="this.article && this.article.images[0]" :src="this.article.images[0].url" fluid></b-img>
               <div>
                 <h3 class="title">{{ this.article.title }}</h3>
               </div>
@@ -27,16 +27,16 @@
 
           <div class="add_comment_box shadow">
             <div>
-              <h4>Weź udział w dyskusji i dodając komentarz: </h4>
+              <h4>Weź udział w dyskusji dodając komentarz: </h4>
             </div>
             <div class="name_form">
-              <input class="name_formp" type="text" id="fname" name="fname" placeholder="Imię i Nazwisko"><br>
+              <input class="name_formp" type="text" id="fname" name="fname" placeholder="Imię i Nazwisko" v-model="author"><br>
             </div>
             <div class="name_form">
-              <textarea name="comments" id="comments" class="comment_box" placeholder="Pole na komentarz"></textarea>
+              <textarea name="comments" id="comments" class="comment_box" placeholder="Pole na komentarz"  v-model="content" ></textarea>
               <div style="padding: 8px">
 <!--                ZAPISZ KOMENTARZ-->
-                <b-button variant="primary">Dodaj</b-button>
+                <b-button variant="primary"  @click="saveComment()">Dodaj</b-button>
               </div>
             </div>
           </div>
@@ -65,6 +65,10 @@ import Navbar from '@/components/Navbar';
 import PanelBar from '/src/components/Sidelbar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
+import Comment from "@/Model/Comment";
+import Article from "@/Model/Article";
+
+
 export default {
   name: 'Article',
 
@@ -80,20 +84,32 @@ export default {
   data() {
     return {
       isLoaded: false,
-      article: null
+      article: null,
+      author: "",
+      content: ""
     };
   },
 
   created() {
     const articleId = parseInt(this.$route.params.articleId);
-    this.article = dataStorage.getArticle(articleId);
-    this.isLoaded = true;
+    Article.get(articleId).then((article) =>{
+      dataStorage.addArticle(article);
+      this.article = article;
+      this.isLoaded = true;
+    });
   },
 
   methods: {
     saveComment: function () {
-      // napisz mnie
+
+      const articleId = parseInt(this.$route.params.articleId);
+      const comment = new Comment(articleId, this.author, this.content);
+
+      comment.save().then((comment) => {
+        console.log('Udało się!');
+        this.article.comments.push(comment);
+      });
     }
   }
-};
+}
 </script>
