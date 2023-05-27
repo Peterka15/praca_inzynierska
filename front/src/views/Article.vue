@@ -9,7 +9,7 @@
           <div style="height: 200px"/>
 
           <div class="article_box shadow">
-            <div v-if="!this.isLoaded">Loading...</div>
+            <div v-if="!this.isLoaded"><b-spinner label="Spinning"></b-spinner></div>
             <div v-else-if="this.isError">ERROR!</div>
             <div v-else>
               <b-img v-if="this.article && this.article.images[0]" :src="this.article.images[0].url" fluid></b-img>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="comments_box shadow">
-            <div v-if="!this.isLoaded">Loading...</div>
+            <div v-if="!this.isLoaded"><b-spinner label="Spinning"></b-spinner></div>
             <div v-else>
               <CommentComponent
                   v-for="comment in this.article.comments"

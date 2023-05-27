@@ -2,51 +2,6 @@
   <div>
     <navbar>
     </navbar>
-    <!--    <div>-->
-    <!--      <div>-->
-    <!--        <b-carousel-->
-    <!--            id="carousel-1"-->
-    <!--            v-model="slide"-->
-    <!--            :interval="10000"-->
-    <!--            controls-->
-    <!--            indicators-->
-    <!--            background="#ababab"-->
-    <!--            img-width="800"-->
-    <!--            img-height="100"-->
-    <!--            style="text-shadow: 1px 1px 2px #333;"-->
-    <!--            @sliding-start="onSlideStart"-->
-    <!--            @sliding-end="onSlideEnd"-->
-    <!--        >-->
-
-    <!--          <b-carousel-slide-->
-    <!--              caption="Kosmos"-->
-    <!--              text="A gdzie to jest?"-->
-    <!--              img-src="http://localhost:8000/carusel1.jpg"-->
-    <!--          ></b-carousel-slide>-->
-
-    <!--          <b-carousel-slide-->
-    <!--              caption="Diuna część 2"-->
-    <!--              text="nie no nie czytałem"-->
-    <!--              img-src="http://localhost:8000/carusel2.jpg"-->
-    <!--          ></b-carousel-slide>-->
-
-    <!--          <b-carousel-slide-->
-    <!--              caption="Bardzo wysoko"-->
-    <!--              text="Bardzo"-->
-    <!--              img-src="http://localhost:8000/carusel3.png"-->
-    <!--          ></b-carousel-slide>-->
-
-    <!--          <b-carousel-slide-->
-    <!--              caption="Jeszcze wyżej"-->
-    <!--              text="Serio"-->
-    <!--              img-src="http://localhost:8000/carusel4.jpg"-->
-    <!--          ></b-carousel-slide>-->
-    <!--        </b-carousel>-->
-
-    <!--      </div>-->
-    <!--    </div>-->
-
-
     <b-container>
       <b-row class="background">
         <PanelBar></PanelBar>
@@ -58,7 +13,7 @@
       </b-row>
     </b-container>
   </div>
-
+<!--TODO: Dodać paginację-->
 </template>
 
 <style>

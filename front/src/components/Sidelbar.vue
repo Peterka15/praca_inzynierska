@@ -1,4 +1,5 @@
 <template>
+<!--  TODO: Poprawić renderowanie, panel się rozchodzi w css i nie wyświetla się ładnie -->
   <b-col cols="2" class="panel">
     <h1 class="logo">
       <router-link to="/"> OSP LATARNIA <span>GNIEZNO <b-img
@@ -9,18 +10,13 @@
       <nav class="main-nav" role="navigation">
         <ul class="unstyled list-hover-slide">
           <li>
-          </li>
-          <!--      <li>-->
-          <!--        <router-link to="/article/1">Artykuł 1</router-link>-->
-          <!--      </li>-->
-          <!--      <li>-->
-          <!--        <router-link to="/article/2">Artykuł 2</router-link>-->
-          <!--      </li>-->
-          <!--      <li>-->
-          <!--        <router-link to="/article/3">Artykuł 3</router-link>-->
-          <!--      </li>-->
-          <li>
-            <a href="#">Wyszukaj</a>
+            <a @click="showSearchForm = true" style="color: #DFDBD9">Wyszukaj</a>
+            <div v-if="showSearchForm">
+              <form @submit.prevent="submitSearch">
+                <a><input type="text" v-model="searchQuery" placeholder="Wpisz wyszukiwaną frazę" /> </a>
+                <b-button type="submit" style="margin: 7px">Szukaj</b-button>
+              </form>
+            </div>
           </li>
           <li>
             <router-link to="/addarticle">Dodaj artykuł</router-link>
@@ -28,7 +24,10 @@
           <li>
             <router-link to="/materials">Materiały szkoleniowe</router-link>
           </li>
-          <li><a href="#">Tagi</a></li>
+          <li>
+            <a href="#">Tagi</a>
+<!--            TODO: Dodać obsługę tagów-->
+          </li>
         </ul>
       </nav>
     </div>
@@ -37,6 +36,23 @@
 
 <script>
 export default {
-  name: 'PanelBar'
+  name: 'PanelBar',
+
+  data(){
+    return{
+      showSearchForm: false,
+      searchQuery: ''
+    }
+  },
+  // TODO: Dodać wyszukiwanie nazw
+  methods: {
+    submitSearch() {
+
+      console.log('Wyszukiwanie:', this.searchQuery);
+
+      this.searchQuery = '';
+      this.showSearchForm = false;
+    }
+  }
 }
 </script>

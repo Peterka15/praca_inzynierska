@@ -1,5 +1,5 @@
 <template>
-
+<!--TODO:Research zrobić dodawanie materiałów-->
   <div>
     <navbar>
     </navbar>

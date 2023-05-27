@@ -12,8 +12,8 @@
       <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
     </b-nav-item-dropdown>
 
-    <b-nav-item :to="{ path: '/addarticle'}">Nowy artykuł</b-nav-item>
-    <b-nav-item :to="{ path: '/materials'}">Materiały szkoleniowe</b-nav-item>
+    <b-nav-item v-if="isLogged" :to="{ path: '/addarticle'}">Nowy artykuł</b-nav-item>
+    <b-nav-item v-if="isLogged" :to="{ path: '/materials'}">Materiały szkoleniowe</b-nav-item>
 
   </b-navbar-nav>
   <b-navbar-nav class="ml-auto">
@@ -32,8 +32,9 @@ export default {
   data() {
     return {
       username5: "",
+      isLogged: false,
     };
-
+// TODO: Zrobić możliwość wejścia do materiałów i dodawania artykuł tylko dla zalogowanych (można to zrobić w routingu)
 
   },
 
@@ -46,6 +47,16 @@ export default {
         return null
       }
     },
+    // deleted: function (){
+    //   if (auth.user != null) {
+    //     console.log("dupa")
+    //     this.isLogged=true;
+    //   }
+    //   else{
+    //     return null
+    //   }
+    // },
+
   },
   methods: {
     logOut() {
