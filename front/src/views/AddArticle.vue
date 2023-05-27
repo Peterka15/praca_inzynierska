@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div v-if="loggedIn">
     <navbar/>
-
     <div class="m_boxcenter m_boxcenterp shadow">
       <h3 class="m_boxfont">NOWY ARTYKUŁ</h3>
     </div>
@@ -42,6 +41,7 @@
 
 
   </div>
+  <h1 v-else>Dostęp nielegalny</h1>
 </template>
 
 <script>
@@ -52,6 +52,7 @@ import Article from "@/Model/Article";
 import Tag from "@/Model/Tag";
 import Bridge from "@/api/Bridge";
 import dataStorage from "@/Data/DataStorageInstance";
+import auth from "@/Model/AuthInstance";
 
 export default {
   name: 'Mainpage',
@@ -77,6 +78,12 @@ export default {
         dataStorage.addArticle(article);
       });
     }
-  }
+  },
+
+  computed: {
+    loggedIn: function () {
+      return auth.loggedIn
+    },
+  },
 }
 </script>

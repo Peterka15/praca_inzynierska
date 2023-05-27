@@ -72,7 +72,6 @@ import Article from "@/Model/Article";
 export default {
   name: 'Article',
 
-  // TODO: DODAć obsługę zapisywania komentarzy od userów
 
   components: {
     // eslint-disable-next-line vue/no-unused-components

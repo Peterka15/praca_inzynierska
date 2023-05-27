@@ -1,6 +1,6 @@
 <template>
 <!--TODO:Research zrobić dodawanie materiałów-->
-  <div>
+  <div v-if="loggedIn">
     <navbar>
     </navbar>
 
@@ -26,6 +26,7 @@
       </div>
     </div>
   </div>
+  <h1 v-else>Dostęp nielegalny</h1>
 
 
 </template>
@@ -36,6 +37,7 @@
 <script>
 import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
+import auth from "@/Model/AuthInstance";
 
 export default {
   name: 'Mainpage',
@@ -54,6 +56,12 @@ export default {
 
   components: {
     Navbar
+  },
+
+  computed: {
+    loggedIn: function () {
+      return auth.loggedIn
+    },
   }
 }
 
