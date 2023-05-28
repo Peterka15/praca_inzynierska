@@ -29,6 +29,7 @@ import dataStorageInstance from "@/Data/DataStorageInstance";
 
 export default {
   name: 'Mainpage',
+  searchPhrase: '',
 
   data() {
     return {
@@ -72,6 +73,14 @@ export default {
 
       return this.dataStorage.getArticles();
     },
+    // filteredArticles() {
+    //   let articles = this.dataStorage.articles;
+    //   if(this.searchPhrase !== '') {
+    //     articles = articles.includes(article => article.title.includes(this.searchPhrase));
+    //   }
+    //   return articles;
+    // }
+
   },
 
   // methods: {

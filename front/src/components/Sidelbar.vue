@@ -12,8 +12,8 @@
             <a @click="showSearchForm = true" style="color: #DFDBD9">Wyszukaj</a>
             <div v-if="showSearchForm">
               <form @submit.prevent="submitSearch">
-                <a><input type="text" v-model="searchQuery" placeholder="Wpisz wyszukiwaną frazę" /> </a>
-                <b-button type="submit" style="margin: 7px">Szukaj</b-button>
+                <a> <input type="text" v-model="searchPhrase" placeholder="Wpisz frazę..."></a>
+<!--                <b-button type="submit" style="margin: 7px">Szukaj</b-button>-->
               </form>
             </div>
           </li>

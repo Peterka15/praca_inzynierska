@@ -64,6 +64,7 @@ export default {
     logOut() {
       auth.logout();
       this.$router.push({ path: '/' });
+      window.location.reload();
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loggedIn">
+  <div>
     <Navbar></Navbar>
 
     <b-container>
