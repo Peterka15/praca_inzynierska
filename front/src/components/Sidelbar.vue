@@ -1,6 +1,5 @@
 <template>
-<!--  TODO: Poprawić renderowanie, panel się rozchodzi w css i nie wyświetla się ładnie -->
-  <b-col cols="2" class="panel">
+  <b-col cols="3" class="panel">
     <h1 class="logo">
       <router-link to="/"> OSP LATARNIA <span>GNIEZNO <b-img
           src="http://localhost:8000/logo.png" fluid

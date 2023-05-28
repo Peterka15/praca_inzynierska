@@ -5,7 +5,7 @@
     <b-container>
       <b-row class="background">
         <PanelBar></PanelBar>
-        <b-col cols="10" class="right_column">
+        <b-col cols="9" class="right_column">
           <div>
             <feed v-for="article in articles" :key="article.id" :article="article"></feed>
           </div>

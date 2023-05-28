@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-if="loggedIn">
     <Navbar></Navbar>
 
     <b-container>
       <b-row class="background">
         <PanelBar></PanelBar>
-        <b-col cols="10" class="right_column">
+        <b-col cols="9" class="right_column">
           <div style="height: 200px"/>
 
           <div class="article_box shadow">
@@ -22,6 +22,8 @@
                   <button class="blue" v-for="tag in this.article.tags" :key="tag.id">{{ tag.name }}</button>
                 </p>
               </div>
+<!--              TODO: Przejście do ekranu edycji artykułu-->
+              <b-button v-if="loggedIn" :to="{ path: '/'}">EDYTUJ WPIS</b-button>
             </div>
           </div>
 
@@ -67,6 +69,7 @@ import dataStorage from '@/Data/DataStorageInstance';
 
 import Comment from "@/Model/Comment";
 import Article from "@/Model/Article";
+import auth from "@/Model/AuthInstance";
 
 
 export default {
@@ -87,6 +90,12 @@ export default {
       author: "",
       content: ""
     };
+  },
+
+  computed: {
+    loggedIn: function () {
+      return auth.loggedIn
+    },
   },
 
   created() {
