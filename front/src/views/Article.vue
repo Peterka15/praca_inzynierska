@@ -4,7 +4,7 @@
 
     <b-container>
       <b-row class="background">
-        <PanelBar></PanelBar>
+        <Sidebar></Sidebar>
         <b-col cols="9" class="right_column">
           <div style="height: 200px"/>
 
@@ -64,7 +64,7 @@
 import './../style/style.css';
 import CommentComponent from '@/components/CommentComponent';
 import Navbar from '@/components/Navbar';
-import PanelBar from '/src/components/Sidelbar.vue';
+import Sidebar from '/src/components/Sidebar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
 import Comment from "@/Model/Comment";
@@ -80,7 +80,7 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     CommentComponent,
     Navbar,
-    PanelBar,
+    Sidebar,
   },
 
   data() {

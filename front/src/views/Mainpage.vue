@@ -4,16 +4,16 @@
     </navbar>
     <b-container>
       <b-row class="background">
-        <PanelBar></PanelBar>
+        <Sidebar @submitSearch="handleSubmitSearch"></Sidebar>
         <b-col cols="9" class="right_column">
           <div>
-            <feed v-for="article in articles" :key="article.id" :article="article"></feed>
+            <feed v-for="article in filteredArticles" :key="article.id" :article="article"></feed>
           </div>
         </b-col>
       </b-row>
     </b-container>
   </div>
-<!--TODO: Dodać paginację-->
+  <!--TODO: Dodać paginację-->
 </template>
 
 <style>
@@ -23,13 +23,13 @@
 import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
-import PanelBar from '/src/components/Sidelbar.vue';
+import Sidebar from '/src/components/Sidebar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
 
 
 export default {
   name: 'Mainpage',
-  searchPhrase: '',
+
 
   data() {
     return {
@@ -37,6 +37,8 @@ export default {
       dataStorage: dataStorageInstance,
       isLoggedIn: false,
       isReady: false,
+      searchPhrase: '',
+      searchTag: "",
     }
   },
 
@@ -49,12 +51,12 @@ export default {
   components: {
     Navbar,
     Feed,
-    PanelBar
+    Sidebar
   },
 
 
   mounted() {
-    if(this.dataStorage.isReady()) {
+    if (this.dataStorage.isReady()) {
       this.isReady = true;
       return;
     }
@@ -68,26 +70,34 @@ export default {
   computed: {
     articles: function () {
       if (!this.isReady) {
-        return null;
+        return [];
       }
 
       return this.dataStorage.getArticles();
     },
-    // filteredArticles() {
-    //   let articles = this.dataStorage.articles;
-    //   if(this.searchPhrase !== '') {
-    //     articles = articles.includes(article => article.title.includes(this.searchPhrase));
-    //   }
-    //   return articles;
-    // }
+    filteredArticles() {
+      const searchTermLower = this.searchPhrase.toLowerCase();
+
+      return this.articles.filter(article => {
+        const articleTitleLower = article.title.toLowerCase();
+        return this.searchPhrase === '' || articleTitleLower.includes(searchTermLower);
+      }).filter(article => {
+        return this.searchTag === '' || article.tags.filter(tag => tag.name === this.searchTag).length > 0
+      })
+    },
+
 
   },
 
-  // methods: {
-  //   isDateStorageReady: function () {
-  //     return this.dataStorage && this.dataStorage.isReady();
-  //   },
-  // }
+  methods: {
+    isDateStorageReady: function () {
+      return this.dataStorage && this.dataStorage.isReady();
+    },
+
+    handleSubmitSearch(searchPhrase) {
+      this.searchPhrase = searchPhrase;
+    },
+  }
 };
 
 // console.log(Auth.getCurrentUser());

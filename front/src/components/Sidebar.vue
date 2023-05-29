@@ -12,8 +12,8 @@
             <a @click="showSearchForm = true" style="color: #DFDBD9">Wyszukaj</a>
             <div v-if="showSearchForm">
               <form @submit.prevent="submitSearch">
-                <a> <input type="text" v-model="searchPhrase" placeholder="Wpisz frazę..."></a>
-<!--                <b-button type="submit" style="margin: 7px">Szukaj</b-button>-->
+                <a> <input type="text" v-model="searchPhrase" placeholder="Nazwa artykułu..."></a>
+                <b-button type="submit" style="margin: 7px">Szukaj</b-button>
               </form>
             </div>
           </li>
@@ -35,23 +35,23 @@
 
 <script>
 export default {
-  name: 'PanelBar',
+  name: 'Sidebar',
 
   data(){
     return{
       showSearchForm: false,
-      searchQuery: ''
+      searchPhrase: ''
     }
   },
   // TODO: Dodać wyszukiwanie nazw
   methods: {
     submitSearch() {
+      this.$emit("submitSearch", this.searchPhrase);
+      console.log('Wyszukiwanie:', this.searchPhrase);
 
-      console.log('Wyszukiwanie:', this.searchQuery);
-
-      this.searchQuery = '';
-      this.showSearchForm = false;
-    }
+      // this.searchQuery = '';
+      // this.showSearchForm = false;
+    },
   }
 }
 </script>
