@@ -30,9 +30,10 @@
             <b-button variant="primary" type="submit">Zaloguj</b-button>
           </b-form>
           <b-button :to="{ path: '/register'}">Rejestracja</b-button>
-        </div>
-      </div>
 
+        </div>
+        <b-alert v-if="loginError" variant="danger" show>{{ loginError }}</b-alert>
+      </div>
     </div>
   </div>
 
@@ -54,6 +55,7 @@ export default {
     return {
       email: "",
       password: "",
+      loginError: null,
     };
   },
 
@@ -64,6 +66,14 @@ export default {
           .then(() => {
             this.$router.push({path: '/'});
           })
+          .catch((error) => {
+            // Obsługa błędu nieprawidłowego hasła
+            if (error.response && error.response.status === 400) {
+              this.loginError = 'Nieprawidłowe login lub hasło. Spróbuj ponownie.';
+            } else {
+              this.loginError = 'Wystąpił błąd podczas logowania. Spróbuj ponownie później.';
+            }
+          });
     },
   },
 };

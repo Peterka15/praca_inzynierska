@@ -43,18 +43,10 @@
             <b-button v-b-modal.modal-1 @click="addUser()">Zarejestruj się</b-button>
           </div>
         </div>
+        <b-alert v-if="registrationError" variant="danger" show>{{ registrationError }}</b-alert>
       </div>
     </div>
-    <div v-if="isSuccess" >
-      <b-modal id="modal-1" title="SUKCES">
-        <p class="my-4">Udało Ci się pomyślnie zarejestrować</p>
-      </b-modal>
-    </div>
-    <div v-if="isError" >
-      <b-modal id="modal-1" title="BŁĄD">
-        <p class="my-4">Coś poszło nie tak, sprawdz czy wypełniłeś wszystkie dane i czy są one poprawne.</p>
-      </b-modal>
-    </div>
+
   </div>
 </template>
 
@@ -76,8 +68,8 @@ export default {
       email: '',
       password: '',
       name: "",
-      isError: false,
-      isSuccess: false,
+      registrationError: null,
+      error: null,
     }
   },
   components: {
@@ -89,21 +81,50 @@ export default {
       auth.register(this.email, this.password, this.name)
           .then(() => {
             this.$router.push({path: '/login'});
-
-          }).catch(() => {
-            this.isSuccess = false;
-            this.isError = true;
       })
+      this.registrationError = null; // Zresetuj błąd przed próbą rejestracji
+      // Sprawdź warunki przed rejestracją
+
+      if (this.name.trim() === "") {
+        this.registrationError = 'Pole "Imię" nie może być puste.';
+        return;
+      }
+      if (this.password.length < 8) {
+        this.registrationError = 'Hasło musi mieć minimum 8 znaków.';
+        return;
+      }
+      // TODO wyciągniecie z api informacji o tym czy jest już w bazie podany użytkownik:
+      auth.checkUserExistence(this.email)
+          .then((response) => {
+            if (response.data.exists) {
+              this.registrationError = 'Użytkownik o podanym adresie e-mail już istnieje.';
+            } else {
+              // Sprawdź, czy input to adres email
+              if (!this.isValidEmail(this.email)) {
+                this.registrationError = 'Podany adres e-mail jest nieprawidłowy.';
+              } else {
+                // Wykonaj rejestrację
+                auth.register(this.email, this.password, this.name)
+                    .then(() => {
+                      this.$router.push({path: '/login'});
+                    })
+                    .catch(() => {
+                      // Obsługa błędów rejestracji
+                      this.registrationError = 'Wystąpił błąd podczas rejestracji. Spróbuj ponownie później.';
+                    });
+              }
+            }
+          })
+          .catch(() => {
+            this.registrationError = 'Wystąpił błąd podczas sprawdzania dostępności użytkownika.';
+          });
     },
-    makeToast(variant = null) {
-      this.$bvToast.toast('sukcess, możesz się zalogować', {
-        title: `${variant || 'default'}`,
-        variant: variant,
-        solid: true
-      })
-    }
+    isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    },
+    },
 
-  }
 }
 
 </script>
