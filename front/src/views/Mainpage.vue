@@ -1,7 +1,6 @@
 <template>
   <div>
-    <navbar>
-    </navbar>
+    <navbar></navbar>
     <b-container>
       <b-row class="background">
         <Sidebar @submitSearch="handleSubmitSearch"></Sidebar>
@@ -26,34 +25,30 @@ import Feed from '/src/components/Feed.vue';
 import Sidebar from '/src/components/Sidebar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
 
-
 export default {
   name: 'Mainpage',
 
-
   data() {
     return {
-      /** @var {DataStorage} dataStorage */
       dataStorage: dataStorageInstance,
       isLoggedIn: false,
       isReady: false,
       searchPhrase: '',
-      searchTag: "",
-    }
+      searchTag: '',
+    };
   },
 
   watch: {
     isLoggedIn(newValue) {
-      console.log("LOGGED", newValue)
-    }
+      console.log("LOGGED", newValue);
+    },
   },
 
   components: {
     Navbar,
     Feed,
-    Sidebar
+    Sidebar,
   },
-
 
   mounted() {
     if (this.dataStorage.isReady()) {
@@ -64,7 +59,7 @@ export default {
     this.dataStorage.loadData().then(() => {
       console.log('[DATA_STORAGE]', this.dataStorage);
       this.isReady = true;
-    })
+    });
   },
 
   computed: {
@@ -78,15 +73,22 @@ export default {
     filteredArticles() {
       const searchTermLower = this.searchPhrase.toLowerCase();
 
-      return this.articles.filter(article => {
+      const uniqueArticles = [];
+      const seenIds = new Set();
+
+      this.articles.forEach((article) => {
         const articleTitleLower = article.title.toLowerCase();
-        return this.searchPhrase === '' || articleTitleLower.includes(searchTermLower);
-      }).filter(article => {
-        return this.searchTag === '' || article.tags.filter(tag => tag.name === this.searchTag).length > 0
-      })
+        const isTitleMatch = this.searchPhrase === '' || articleTitleLower.includes(searchTermLower);
+        const isTagMatch = this.searchTag === '' || article.tags.filter((tag) => tag.name === this.searchTag).length > 0;
+
+        if (isTitleMatch && isTagMatch && !seenIds.has(article.id)) {
+          uniqueArticles.push(article);
+          seenIds.add(article.id);
+        }
+      });
+
+      return uniqueArticles;
     },
-
-
   },
 
   methods: {
@@ -97,27 +99,6 @@ export default {
     handleSubmitSearch(searchPhrase) {
       this.searchPhrase = searchPhrase;
     },
-  }
+  },
 };
-
-// console.log(Auth.getCurrentUser());
-//
-// if (Auth.loggedIn) {
-//   console.log("YES");
-// } else {
-//   console.log("NOT YET");
-// }
-//
-// Auth.login('sam@osp', 'strazaksam').then(() => {
-//   console.log(Auth.getCurrentUser());
-// });
-
-// const newArticle = new Article('Pieniądze za siano: Wielka gra', 'Stara Baba', 'Stahu chyba nie ucieknie!');
-// newArticle.post();
-//
-// Article.get(1).then((article) => {
-//   console.log(article);
-// });
-
 </script>
-

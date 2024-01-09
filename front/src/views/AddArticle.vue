@@ -22,6 +22,9 @@
             </div>
             <div class="addphotos">
               <b-button variant="primary" v-b-modal.photo-modal>Dodaj zdjęcia +</b-button>
+              <b-alert v-if="validationError" variant="danger" show dismissible @dismissed="validationError = null">
+                {{ validationError }}
+              </b-alert>
               <b-modal id="photo-modal">
                 <h3>
                   Wybierz zdjęcia do dodania
@@ -33,15 +36,13 @@
               <b-button variant="primary" style="margin-bottom: 10px" @click="saveArticle()">Dodaj Artykuł</b-button>
               <b-button style="background: red">Usuń artykuł</b-button>
             </div>
+
           </b-col>
         </b-row>
       </b-container>
-
     </div>
-
-
   </div>
-  <h1 v-else>Dostęp nielegalny</h1>
+  <h1 v-else style="background-color: white; color: black;">Dostęp nielegalny</h1>
 </template>
 
 <script>
@@ -63,23 +64,41 @@ export default {
       title: '',
       content: '',
       raw_tags: "",
+      validationError: null,
     }
   },
 
   methods: {
     saveArticle: function () {
-      Bridge.setBearerToken('34|f0zn0BWpVKZimKURjquUbvWgeVhGTAH41RnGjEG3');
+      if (!this.title.trim() || !this.content.trim() || !this.raw_tags.trim()) {
+        this.validationError = 'Wypełnij wszystkie pola przed dodaniem artykułu.';
+        return;
+      }
+
+      if (!this.isValidTagsFormat(this.raw_tags)) {
+        this.validationError = 'Tagi muszą być oddzielone przecinkami.';
+        return;
+      }
 
       const tags = this.raw_tags.split(',').map(tagText => new Tag(tagText.trim()));
       const article = new Article(this.title, this.content, tags);
 
+      Bridge.setBearerToken('34|f0zn0BWpVKZimKURjquUbvWgeVhGTAH41RnGjEG3');
+
       article.save().then((article) => {
         console.log('Udało się!');
         dataStorage.addArticle(article);
+        this.validationError = null;
+      }).catch(() => {
+        this.validationError = 'Wystąpił błąd podczas dodawania artykułu. Spróbuj ponownie później.';
       });
-    }
-  },
+    },
 
+    isValidTagsFormat(tags) {
+      const tagsArray = tags.split(',');
+      return tagsArray.length > 1;
+    },
+  },
   computed: {
     loggedIn: function () {
       return auth.loggedIn
