@@ -3,7 +3,7 @@
     <navbar></navbar>
     <b-container>
       <b-row class="background">
-        <Sidebar @submitSearch="handleSubmitSearch"></Sidebar>
+        <Sidebar @submitSearch="handleSubmitSearch" @submitSearchTag="handleSubmitSearchTag"></Sidebar>
         <b-col cols="9" class="right_column">
           <div>
             <feed v-for="article in filteredArticles" :key="article.id" :article="article"></feed>
@@ -24,6 +24,7 @@ import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
 import Sidebar from '/src/components/Sidebar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
+
 
 export default {
   name: 'Mainpage',
@@ -55,6 +56,8 @@ export default {
       this.isReady = true;
       return;
     }
+
+
 
     this.dataStorage.loadData().then(() => {
       console.log('[DATA_STORAGE]', this.dataStorage);
@@ -98,6 +101,9 @@ export default {
 
     handleSubmitSearch(searchPhrase) {
       this.searchPhrase = searchPhrase;
+    },
+    handleSubmitSearchTag(searchTag) {
+      this.searchTag = searchTag;
     },
   },
 };

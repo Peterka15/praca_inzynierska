@@ -31,35 +31,34 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      username5: "",
-
+      isSessionRestored: false,
     };
   },
 
-  computed: {
-    username: function () {
-      if (auth.user != null) {
-        return auth.user.name;
+  mounted() {
+    auth.restoreSession(resolved => {
+      console.log(resolved, auth.user);
+      if (resolved) {
+        this.isSessionRestored = true;
       }
-      else{
-        return null
-      }
-    },
-
-    loggedIn: function () {
-      return auth.loggedIn
-    },
-    // deleted: function (){
-    //   if (auth.user != null) {
-    //     console.log("dupa")
-    //     this.isLogged=true;
-    //   }
-    //   else{
-    //     return null
-    //   }
-    // },
-
+    });
   },
+
+  computed: {
+    username() {
+      // This will recompute whenever isSessionRestored changes
+      if (this.isSessionRestored && auth.user != null) {
+        return auth.user.name;
+      } else {
+        return null;
+      }
+    },
+
+    loggedIn() {
+      return auth.loggedIn;
+    },
+  },
+
   methods: {
     logOut() {
       auth.logout();
@@ -67,6 +66,5 @@ export default {
       window.location.reload();
     }
   }
-
 }
 </script>

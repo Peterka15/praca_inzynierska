@@ -36,7 +36,7 @@ export default class Auth {
 
         User.fetchCurrentUser()
           .then((user) => {
-            this.user = user;
+            this.user = user; console.log(this.user);
             this.loggedIn = true;
             this.wasSessionRestoreAttempted = true;
 
@@ -96,6 +96,7 @@ export default class Auth {
     );
   }
 
+
   /**
    * Login to api (retrieve JWT token)
    * Token is stored in localStorage
@@ -139,6 +140,7 @@ export default class Auth {
 
     Bridge.setBearerToken();
   }
+
 
   /**
    * @return {?User}

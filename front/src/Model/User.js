@@ -31,7 +31,6 @@ export default class User extends Model {
     this.password = data.password;
     this.created_at = data.created_at;
     this.updated_at = data.updated_at;
-
     return this;
   }
 
@@ -51,6 +50,7 @@ export default class User extends Model {
 
   /** @return {Promise<User>} */
   static fetchCurrentUser() {
-    return Bridge.getData(ApiUrls.profile).then((user) => (new User()).hydrate(user));
+    return Bridge.getData(ApiUrls.profile).then((user) => (new User()).hydrate(user.data));
+
   }
 }

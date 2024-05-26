@@ -24,11 +24,13 @@ export default {
   name: 'Feed',
   props: ['article'],
 
-  methods: {
-    goToArticle() {
-      router.push({name: 'article', params: { articleId: this.article.id }});
+
+    methods: {
+      goToArticle() {
+        router.push({name: 'article', params: {articleId: this.article.id}});
+      }
     }
-  }
 }
+
 
 </script>

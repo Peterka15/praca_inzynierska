@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <h1 v-else>Dostęp nielegalny</h1>
+  <h1 v-else style="background-color: white; color: black;">Dostęp nielegalny</h1>
 
 
 </template>

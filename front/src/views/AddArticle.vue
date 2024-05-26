@@ -51,7 +51,7 @@ import {VueEditor} from "vue2-editor";
 import Navbar from '/src/components/Navbar.vue';
 import Article from "@/Model/Article";
 import Tag from "@/Model/Tag";
-import Bridge from "@/api/Bridge";
+// import Bridge from "@/api/Bridge";
 import dataStorage from "@/Data/DataStorageInstance";
 import auth from "@/Model/AuthInstance";
 
@@ -83,7 +83,7 @@ export default {
       const tags = this.raw_tags.split(',').map(tagText => new Tag(tagText.trim()));
       const article = new Article(this.title, this.content, tags);
 
-      Bridge.setBearerToken('34|f0zn0BWpVKZimKURjquUbvWgeVhGTAH41RnGjEG3');
+     // Bridge.setBearerToken('34|f0zn0BWpVKZimKURjquUbvWgeVhGTAH41RnGjEG3');
 
       article.save().then((article) => {
         console.log('Udało się!');
