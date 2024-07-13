@@ -54,7 +54,7 @@
               </div>
               <div class="logininput">
                 <b-form inline>
-                  <label for="unit" class="sr-only">Jednostka</label>
+                  <label for="unit" class="sr-only">Jednostka OSP</label>
                   <b-form-select
                       id="unit"
                       v-model="selectedUnit"
