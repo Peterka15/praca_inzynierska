@@ -6,6 +6,7 @@ import Article from "@/views/Article";
 import Teachingmaterials from "@/views/Teachingmaterials";
 import Addarticle from "@/views/AddArticle.vue";
 import Register from "@/views/Register";
+import AdminPanel from "@/views/AdminPanel.vue";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/materials',
     name: 'materials',
     component: Teachingmaterials
+  },
+  {
+    path: '/adminpanel',
+    name: 'adminpanel',
+    component: AdminPanel
   },
   {
     path: '/register',

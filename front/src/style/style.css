@@ -537,15 +537,15 @@ body {
 }
 
 .center_box {
-  height: 5cm;
+  height: 3cm;
   position: relative;
-  padding: 531px;
+  padding: 650px;
   background: gray;
-  width: 2px;
+  width: 10cm;
 }
 
 .center_boxp {
-  margin: 0;
+  margin: 10px;
   position: absolute;
   top: 96%;
   left: 50%;
