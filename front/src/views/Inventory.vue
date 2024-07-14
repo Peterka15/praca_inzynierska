@@ -1,7 +1,4 @@
 <template>
-
-<!--TODO:Wykonać listę wyposażenia-->
-  <!--TODO:Raporty wyposażenia -->
   <div>
     <navbar>
     </navbar>
@@ -84,27 +81,33 @@
       <div class="line"><h2 style="color: white;">Lista sprzętu</h2></div>
 
       <div>
-      <b-table  style="margin: -209px; position: absolute;top: 39%;left: 17%;width: 98%; --bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);" striped hover :items="equipment" :fields="fields" @sort-changed="onSortChange ">
-        <template #cell(edit)="row">
-          <b-button @click="editUser(row.item)">Edytuj</b-button>
-        </template>
-      </b-table>
+        <b-table
+            style="margin: -209px; position: absolute;top: 39%;left: 17%;width: 98%; --bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);"
+            striped hover
+            :items="equipment"
+            :fields="fields"
+            @sort-changed="onSortChange"
+        >
+          <template #cell(edit)="row">
+            <b-button @click="editUser(row.item)">Edytuj</b-button>
+          </template>
+        </b-table>
+      </div>
+
+      <!-- Przycisk generujący PDF -->
+      <div class="export-button">
+        <b-button variant="success" @click="generatePDF">Generuj PDF</b-button>
       </div>
     </div>
   </div>
-
-
-
 </template>
 
-<style>
-</style>
-
 <script>
-import './../style/style.css';
-import Navbar from '/src/components/Navbar.vue';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import Navbar from "@/components/Navbar.vue";
 
-
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
   name: 'Mainpage',
@@ -115,10 +118,6 @@ export default {
       selectedCategory: null,
       isActive: false,
       isInStock: false,
-      isCommander: false,
-      canEditEquipment: false,
-      canEditMembers: false,
-      isModerator: false,
       units: [
         { value: null, text: 'Proszę przypisać jednostkę' },
         { value: 'Pszów', text: 'Pszów' },
@@ -135,7 +134,6 @@ export default {
         { value: 'Sprzęt burzący', text: 'Sprzęt burzący' },
         { value: 'Sprzęt gaśniczy', text: 'Sprzęt burzący' }
       ],
-      error: null,
       equipment: [
         {
           isActive: true,
@@ -178,23 +176,77 @@ export default {
           category: 'Sprzęt medyczny'
         }
       ],
-
       fields: [
-      { key: 'isActive', label: 'Aktywny', sortable: true },
-        { key: 'isInStock', label: 'Aktywny', sortable: true },
-      { key: 'name', label: 'Nazwa sprzętu', sortable: true },
-      { key: 'amount', label: 'Ilość', sortable: true },
-      { key: 'unit', label: 'Jednostka', sortable: true },
-      { key: 'category', label: 'Kategoria', sortable: true },
-      { key: 'edit', label: 'Edytuj', sortable: false }
+        { key: 'isActive', label: 'Aktywny', sortable: true },
+        { key: 'isInStock', label: 'Na stanie', sortable: true },
+        { key: 'name', label: 'Nazwa sprzętu', sortable: true },
+        { key: 'amount', label: 'Ilość', sortable: true },
+        { key: 'unit', label: 'Jednostka', sortable: true },
+        { key: 'category', label: 'Kategoria', sortable: true },
+        { key: 'edit', label: 'Edytuj', sortable: false }
       ]
     };
   },
-
   components: {
     Navbar
   },
+  methods: {
+    generatePDF() {
+      const docDefinition = {
+        content: [
+          { text: 'Lista Wyposażenia', style: 'header' },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['*', '*', '*', '*', '*', '*'],
+              body: [
+                ['Aktywny', 'Na stanie', 'Nazwa sprzętu', 'Ilość', 'Jednostka', 'Kategoria'],
+                ...this.equipment.map(item => [
+                  item.isActive ? 'Tak' : 'Nie',
+                  item.isInStock ? 'Tak' : 'Nie',
+                  item.name,
+                  item.amount,
+                  item.unit,
+                  item.category
+                ])
+              ]
+            }
+          }
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 0, 0, 10]
+          },
+          tableHeader: {
+            bold: true,
+            fontSize: 13,
+            color: 'black'
+          }
+        }
+      };
 
-}
-
+      pdfMake.createPdf(docDefinition).download('equipment.pdf');
+    },
+    addItem() {
+      // Funkcja dodawania sprzętu
+    },
+    editUser() {
+      // Funkcja edytowania użytkownika
+    },
+    onSortChange() {
+      // Funkcja obsługi sortowania tabeli
+    }
+  }
+};
 </script>
+
+<style>
+/* Dodaj odpowiednie style */
+.export-button {
+  margin-top: 20px;
+  text-align: right;
+  padding-right: 15px;
+}
+</style>
