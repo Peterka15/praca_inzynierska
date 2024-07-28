@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
                 User::NAME => 'admin',
                 User::EMAIL => 'admin@localhost',
                 User::PASSWORD => Hash::make('admin123'),
+                User::ROLE => 'admin',
+                User::UNIT => 'admin',
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
             ]
@@ -30,6 +32,8 @@ class UserSeeder extends Seeder
                 User::NAME => 'Strażak Sam',
                 User::EMAIL => 'sam@osp',
                 User::PASSWORD => Hash::make('strazaksam'),
+                User::ROLE => 'Moderator',
+                User::UNIT => 'OSP ZAWADA',
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
             ]

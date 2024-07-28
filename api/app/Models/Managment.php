@@ -21,10 +21,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property int $id
  * @property string $name
  * @property string|null $email
- * @property string|null $password
- * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property string $unit
+ * @property string $function
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
@@ -42,36 +40,25 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable
+final class Managment extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
-    public const TABLE_NAME = 'users';
+    public const TABLE_NAME = 'managment';
 
     public const ID = 'id';
-    public const UNIT_ID = 'unit_id';
     public const NAME = 'name';
     public const EMAIL = 'email';
-    public const PASSWORD = 'password';
     public const UNIT = 'unit';
-    public const ROLE = 'role';
+    public const FUNCTION = 'function';
 
     protected $fillable = [
         self::NAME,
         self::EMAIL,
-        self::PASSWORD,
         self::UNIT,
-        self::ROLE
+        self::FUNCTION
     ];
 
-    protected $hidden = [
-        self::PASSWORD,
-    ];
-
-    protected $casts = [
-        self::UPDATED_AT => 'datetime',
-        self::CREATED_AT => 'datetime'
-    ];
 }

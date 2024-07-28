@@ -19,12 +19,12 @@ use Laravel\Sanctum\PersonalAccessToken;
  * App\Models\User
  *
  * @property int $id
+ * @property int $unit_id
  * @property string $name
- * @property string|null $email
- * @property string|null $password
- * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property int $amount
+ * @property string $category
+ * @property string $unit
+ * @property boolean $onstate
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
@@ -42,36 +42,30 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-final class User extends Authenticatable
+final class Inventory extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
-    public const TABLE_NAME = 'users';
+    public const TABLE_NAME = 'inventory';
 
     public const ID = 'id';
     public const UNIT_ID = 'unit_id';
     public const NAME = 'name';
-    public const EMAIL = 'email';
-    public const PASSWORD = 'password';
+    public const AMOUNT = 'amount';
+    public const CATEGORY = 'category';
     public const UNIT = 'unit';
-    public const ROLE = 'role';
+    public const ONSTATE = 'onstate';
+
 
     protected $fillable = [
         self::NAME,
-        self::EMAIL,
-        self::PASSWORD,
+        self::AMOUNT,
+        self::CATEGORY,
         self::UNIT,
-        self::ROLE
+        self::ONSTATE
     ];
 
-    protected $hidden = [
-        self::PASSWORD,
-    ];
 
-    protected $casts = [
-        self::UPDATED_AT => 'datetime',
-        self::CREATED_AT => 'datetime'
-    ];
 }
