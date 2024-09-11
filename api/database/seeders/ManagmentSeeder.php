@@ -6,7 +6,6 @@ namespace Database\Seeders;
 
 use App\Models\Managment;
 
-use Date;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,17 +20,17 @@ class ManagmentSeeder extends Seeder
                 Managment::ID => 1,
                 Managment::NAME => 'Jan Kowalski',
                 Managment::FUNCTION => 'Prezes',
-                Managment::UNIT => 'OSP KOKOSZYCE',
+                Managment::UNIT => 1,
                 Managment::EMAIL => 'jkowalski@gmail.com'
             ]
         );
 
         DB::table(Managment::TABLE_NAME)->insert(
             [
-                Managment::ID => 1,
+                Managment::ID => 2,
                 Managment::NAME => 'Karol Nowak',
                 Managment::FUNCTION => 'Naczelnik',
-                Managment::UNIT => 'OSP Pszów',
+                Managment::UNIT => 2,
                 Managment::EMAIL => 'knowak@onet.pl'
             ]
         );

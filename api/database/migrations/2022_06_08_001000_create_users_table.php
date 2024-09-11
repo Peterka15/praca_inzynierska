@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Enums\UserRole;
+use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -17,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string(User::NAME);
             $table->string(User::EMAIL)->nullable()->unique();
-            $table->foreignId(User::UNIT_ID)->references(Unit::ID)->on(Unit::TABLE_NAME);
+            $table->foreignId(User::ROLE)->references(Role::ID)->on(Role::TABLE_NAME);
+            $table->foreignId(User::UNIT)->references(Unit::ID)->on(Unit::TABLE_NAME);
             $table->string(User::PASSWORD)->nullable();
-            $table->string(User::ROLE) -> default(UserRole::USER()->getValue());
             $table->rememberToken();
             $table->timestamps();
         });

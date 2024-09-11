@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * App\Models\User
+ * App\Models\Role
  *
  * @property int $id
  * @property string $name
@@ -25,17 +25,17 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @method static UserFactory factory(...$parameters)
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User query()
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereName($value)
- * @method static Builder|User wherePassword($value)
- * @method static Builder|User whereRememberToken($value)
- * @method static Builder|User whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|Unit newModelQuery()
+ * @method static Builder|Unit newQuery()
+ * @method static Builder|Unit query()
+ * @method static Builder|Unit whereCreatedAt($value)
+ * @method static Builder|Unit whereEmail($value)
+ * @method static Builder|Unit whereId($value)
+ * @method static Builder|Unit whereName($value)
+ * @method static Builder|Unit wherePassword($value)
+ * @method static Builder|Unit whereRememberToken($value)
+ * @method static Builder|Unit whereUpdatedAt($value)
+ * @mixin
  */
 final class Unit extends Authenticatable
 {

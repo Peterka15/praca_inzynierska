@@ -16,55 +16,40 @@ use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * App\Models\Inventory
+ * App\Models\Role
  *
  * @property int $id
- * @property int $unit_id
  * @property string $name
- * @property int $amount
- * @property string $category
- * @property string $unit
- * @property boolean $onstate
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @method static UserFactory factory(...$parameters)
- * @method static Builder|Inventory newModelQuery()
- * @method static Builder|Inventory newQuery()
- * @method static Builder|Inventory query()
- * @method static Builder|Inventory whereCreatedAt($value)
- * @method static Builder|Inventory whereEmail($value)
- * @method static Builder|Inventory whereId($value)
- * @method static Builder|Inventory whereName($value)
- * @method static Builder|Inventory wherePassword($value)
- * @method static Builder|Inventory whereRememberToken($value)
- * @method static Builder|Inventory whereUpdatedAt($value)
+ * @method static Builder|Role newModelQuery()
+ * @method static Builder|Role newQuery()
+ * @method static Builder|Role query()
+ * @method static Builder|Role whereCreatedAt($value)
+ * @method static Builder|Role whereEmail($value)
+ * @method static Builder|Role whereId($value)
+ * @method static Builder|Role whereName($value)
+ * @method static Builder|Role wherePassword($value)
+ * @method static Builder|Role whereRememberToken($value)
+ * @method static Builder|Role whereUpdatedAt($value)
  * @mixin
  */
-final class Inventory extends Authenticatable
+final class Role extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
 
-    public const TABLE_NAME = 'inventory';
+    public const TABLE_NAME = 'role';
 
     public const ID = 'id';
     public const NAME = 'name';
-    public const AMOUNT = 'amount';
-    public const CATEGORY = 'category';
-    public const UNIT = 'unit';
-    public const ONSTATE = 'onstate';
-
 
     protected $fillable = [
-        self::NAME,
-        self::AMOUNT,
-        self::CATEGORY,
-        self::UNIT,
-        self::ONSTATE,
+        self::NAME
     ];
-
 
 }

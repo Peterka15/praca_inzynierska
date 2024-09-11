@@ -40,7 +40,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin
  */
 final class User extends Authenticatable
 {
@@ -51,7 +51,6 @@ final class User extends Authenticatable
     public const TABLE_NAME = 'users';
 
     public const ID = 'id';
-    public const UNIT_ID = 'unit_id';
     public const NAME = 'name';
     public const EMAIL = 'email';
     public const PASSWORD = 'password';

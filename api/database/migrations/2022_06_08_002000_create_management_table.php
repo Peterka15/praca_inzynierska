@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 use App\Models\Managment;
+use App\Models\Unit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ class CreateManagementTable extends Migration
             $table->id();
             $table->string(Managment::NAME);
             $table->string(Managment::FUNCTION);
-            $table->string(Managment::UNIT);
+            $table->foreignId(Managment::UNIT)->references(Unit::ID)->on(Unit::TABLE_NAME);
             $table->string(Managment::EMAIL);
         });
     }
