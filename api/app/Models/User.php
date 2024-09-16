@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -25,6 +26,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int $unit
+ * @property int $role
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
@@ -55,7 +58,11 @@ final class User extends Authenticatable
     public const EMAIL = 'email';
     public const PASSWORD = 'password';
     public const UNIT = 'unit';
+
+    public const UNIT_ID = 'unit_id';
     public const ROLE = 'role';
+
+    public const ROLE_ID = 'role_id';
 
     protected $fillable = [
         self::NAME,
@@ -73,4 +80,15 @@ final class User extends Authenticatable
         self::UPDATED_AT => 'datetime',
         self::CREATED_AT => 'datetime'
     ];
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(Unit::class, Unit::ID, self::UNIT_ID);
+    }
+
+    public function role(): HasOne
+    {
+        return $this->hasOne(Role::class, Role::ID, self::ROLE_ID);
+    }
+
 }

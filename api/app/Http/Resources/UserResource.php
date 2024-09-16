@@ -18,13 +18,15 @@ class UserResource extends JsonResource
     {
         /** @var User $user */
         $user = $this;
-
+//        var_dump($user);
         return [
             User::ID => $user->id,
             User::NAME => $user->name,
             User::EMAIL => $user->email,
             User::CREATED_AT => $user->created_at,
-            User::UPDATED_AT => $user->updated_at
+            User::UPDATED_AT => $user->updated_at,
+            User::UNIT => new UnitResource($user->unit),
+            User::ROLE => new RoleResource($user->role),
         ];
     }
 }
