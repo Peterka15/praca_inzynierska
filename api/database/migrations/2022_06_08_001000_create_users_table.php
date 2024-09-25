@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string(User::PASSWORD)->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->boolean(User::REQUIRED_PASSWORD_CHANGE)->default(true);
         });
     }
 

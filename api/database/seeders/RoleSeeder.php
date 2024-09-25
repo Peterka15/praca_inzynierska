@@ -43,5 +43,11 @@ class RoleSeeder extends Seeder
                 Role::NAME => 'Public',
             ]
         );
+        DB::table(Role::TABLE_NAME)->insert(
+            [
+                Role::ID => 6,
+                Role::NAME => 'Disabled',
+            ]
+        );
     }
 }

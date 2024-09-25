@@ -19,7 +19,9 @@ class AuthController extends Controller
         $validationRules = [
             User::NAME => 'required|string|max:255',
             User::EMAIL => 'required|string|email|max:255|unique:users',
-            User::PASSWORD => 'required|string|min:8'
+            User::PASSWORD => 'required|string|min:8',
+            User::ROLE_ID => 'required|integer|min:1|exists:roles,id',
+            User::UNIT_ID => 'required|integer|min:1|exists:units,id'
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {
@@ -27,18 +29,24 @@ class AuthController extends Controller
         }
 
         $requestData = $request->all();
+//var_dump($requestData);
         $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
+        $requestData[User::REQUIRED_PASSWORD_CHANGE] = true;
 
         $user = User::create($requestData);
 
         return $this->successResponse($this->getResponseData($user, null));
+
+
+
+
     }
 
     public function login(Request $request): JsonResponse
     {
         $validationRules = [
             User::EMAIL => 'required|string|email|max:255|exists:App\Models\User,email',
-            User::PASSWORD => 'required|string|min:8'
+            User::PASSWORD => 'required|string|min:8',
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {
@@ -52,6 +60,11 @@ class AuthController extends Controller
         }
 
         $user = User::where(User::EMAIL, $request[User::EMAIL])->firstOrFail();
+
+        if ($user->role_id == 6) {
+            return $this->errorResponse(['role_id' => ['Logowanie nieudane. Rola o wartości 6 jest niedostępna.']], Response::HTTP_UNAUTHORIZED);
+        }
+
         $user->tokens()->delete();
         $token = $user->createToken('auth_token')->plainTextToken;
 

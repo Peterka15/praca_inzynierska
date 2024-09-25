@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
                 User::UNIT_ID => 1,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
+                User::REQUIRED_PASSWORD_CHANGE => False,
             ]
         );
 
@@ -32,10 +33,11 @@ class UserSeeder extends Seeder
                 User::NAME => 'Strażak Sam',
                 User::EMAIL => 'sam@osp',
                 User::PASSWORD => Hash::make('strazaksam'),
-                User::ROLE_ID => 2,
+                User::ROLE_ID => 6,
                 User::UNIT_ID => 2,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
+                User::REQUIRED_PASSWORD_CHANGE => False,
             ]
         );
     }

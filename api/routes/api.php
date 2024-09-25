@@ -24,6 +24,7 @@ Route::resource('units', UnitsController::class)->only(['index', 'show']);
 Route::resource('roles', RolesController::class)->only(['index', 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], static function () {
+
     Route::resource('articles', ArticlesController::class)->except(['index', 'show']);
     Route::resource('tags', TagsController::class)->except(['index', 'show']);
     Route::resource('comments', CommentsController::class)->except(['store']);
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('files', FilesController::class)->except(['show']);
 
     Route::resource('users', UserController::class);
+    Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
     Route::get('/profile', [UserController::class, 'getCurrent']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/logout', [AuthController::class, 'logout']);

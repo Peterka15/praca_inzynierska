@@ -29,7 +29,7 @@ final class Unit extends ApiModel
     public const NAME = 'name';
 
     protected $fillable = [
-        self::NAME
+        self::NAME,
     ];
 
 }

@@ -18,7 +18,7 @@ class UserResource extends JsonResource
     {
         /** @var User $user */
         $user = $this;
-//        var_dump($user);
+       // var_dump($user);
         return [
             User::ID => $user->id,
             User::NAME => $user->name,
@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             User::UPDATED_AT => $user->updated_at,
             User::UNIT => new UnitResource($user->unit),
             User::ROLE => new RoleResource($user->role),
+            User::REQUIRED_PASSWORD_CHANGE => $user-> required_password_change,
         ];
     }
 }

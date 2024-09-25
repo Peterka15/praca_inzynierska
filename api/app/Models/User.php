@@ -28,6 +28,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property Carbon|null $updated_at
  * @property int $unit
  * @property int $role
+ * @property boolean $required_password_change
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
@@ -64,12 +65,15 @@ final class User extends Authenticatable
 
     public const ROLE_ID = 'role_id';
 
+    public const REQUIRED_PASSWORD_CHANGE = "required_password_change";
+
     protected $fillable = [
         self::NAME,
         self::EMAIL,
         self::PASSWORD,
-        self::UNIT,
-        self::ROLE
+        self::UNIT_ID,
+        self::ROLE_ID,
+        self::REQUIRED_PASSWORD_CHANGE
     ];
 
     protected $hidden = [

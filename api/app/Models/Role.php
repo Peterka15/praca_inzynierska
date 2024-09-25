@@ -30,7 +30,7 @@ final class Role extends ApiModel
     public const NAME = 'name';
 
     protected $fillable = [
-        self::NAME
+        self::NAME,
     ];
 
 }
