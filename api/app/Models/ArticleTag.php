@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|ArticleTag whereArticleId($value)
  * @method static Builder|ArticleTag whereId($value)
  * @method static Builder|ArticleTag whereTagId($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class ArticleTag extends ApiModel
 {

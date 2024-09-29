@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\UserFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,17 +23,19 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property int $id
  * @property string $name
  * @property string|null $email
+ * @property int $role_id
+ * @property int $unit_id
  * @property string|null $password
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $unit
- * @property int $role
- * @property boolean $required_password_change
+ * @property int $required_password_change
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read Role|null $role
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ * @property-read Unit|null $unit
  * @method static UserFactory factory(...$parameters)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -43,8 +46,11 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRequiredPasswordChange($value)
+ * @method static Builder|User whereRoleId($value)
+ * @method static Builder|User whereUnitId($value)
  * @method static Builder|User whereUpdatedAt($value)
- * @mixin
+ * @mixin Eloquent
  */
 final class User extends Authenticatable
 {

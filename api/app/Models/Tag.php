@@ -14,14 +14,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * @property int $id
  * @property string $name
+ * @property-read Collection|Article[] $articles
+ * @property-read int|null $articles_count
  * @method static Builder|Tag newModelQuery()
  * @method static Builder|Tag newQuery()
  * @method static Builder|Tag query()
  * @method static Builder|Tag whereId($value)
  * @method static Builder|Tag whereName($value)
  * @mixin Eloquent
- * @property-read Collection|Article[] $articles
- * @property-read int|null $articles_count
  */
 final class Tag extends ApiModel
 {

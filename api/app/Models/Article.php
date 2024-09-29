@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -27,6 +26,8 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $comments_count
  * @property-read Collection|Image[] $images
  * @property-read int|null $images_count
+ * @property-read Collection|Tag[] $tags
+ * @property-read int|null $tags_count
  * @method static Builder|Article newModelQuery()
  * @method static Builder|Article newQuery()
  * @method static Builder|Article query()
@@ -37,8 +38,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Article whereTitle($value)
  * @method static Builder|Article whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read Collection|Tag[] $tags
- * @property-read int|null $tags_count
  */
 final class Article extends ApiModel
 {

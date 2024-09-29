@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
@@ -25,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Comment whereCreatedAt($value)
  * @method static Builder|Comment whereId($value)
  * @method static Builder|Comment whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin Eloquent
  */
 final class Comment extends ApiModel
 {

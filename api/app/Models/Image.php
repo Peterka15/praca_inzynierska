@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $uuid
+ * @property string $mime_type
  * @property int $article_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -21,13 +23,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Image whereArticleId($value)
  * @method static Builder|Image whereCreatedAt($value)
  * @method static Builder|Image whereId($value)
+ * @method static Builder|Image whereMimeType($value)
  * @method static Builder|Image whereUpdatedAt($value)
  * @method static Builder|Image whereUuid($value)
- * @mixin \Eloquent
- * @property string $extension
- * @method static Builder|Image whereExtension($value)
- * @property string $mime_type
- * @method static Builder|Image whereMimeType($value)
+ * @mixin Eloquent
  */
 final class Image extends ApiModel
 {

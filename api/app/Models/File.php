@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
@@ -14,22 +15,20 @@ use Illuminate\Support\Carbon;
  * @property string $uuid
  * @property int $user_id
  * @property string $name
- * @property string $extension
+ * @property string $mime_type
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|File newModelQuery()
  * @method static Builder|File newQuery()
  * @method static Builder|File query()
  * @method static Builder|File whereCreatedAt($value)
- * @method static Builder|File whereExtension($value)
  * @method static Builder|File whereId($value)
+ * @method static Builder|File whereMimeType($value)
  * @method static Builder|File whereName($value)
  * @method static Builder|File whereUpdatedAt($value)
  * @method static Builder|File whereUserId($value)
  * @method static Builder|File whereUuid($value)
- * @mixin \Eloquent
- * @property string $mime_type
- * @method static Builder|File whereMimeType($value)
+ * @mixin Eloquent
  */
 final class File extends ApiModel
 {

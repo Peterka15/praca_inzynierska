@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,36 +11,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * App\Models\Inventory
  *
- * @property int $id
- * @property int $unit_id
- * @property string $name
- * @property int $amount
- * @property string $category
- * @property string $unit
- * @property boolean $onstate
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
- * @method static UserFactory factory(...$parameters)
  * @method static Builder|Inventory newModelQuery()
  * @method static Builder|Inventory newQuery()
  * @method static Builder|Inventory query()
- * @method static Builder|Inventory whereCreatedAt($value)
- * @method static Builder|Inventory whereEmail($value)
- * @method static Builder|Inventory whereId($value)
- * @method static Builder|Inventory whereName($value)
- * @method static Builder|Inventory wherePassword($value)
- * @method static Builder|Inventory whereRememberToken($value)
- * @method static Builder|Inventory whereUpdatedAt($value)
- * @mixin
+ * @mixin Eloquent
  */
 final class Inventory extends Authenticatable
 {
