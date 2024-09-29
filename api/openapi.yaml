@@ -1,0 +1,644 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+  description: Copy and paste this into https://editor.swagger.io/ to see openapi in action.
+    You can import it directly to the postman to get all requests at once.
+
+paths:
+  /register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+                - name
+                - email
+                - password
+      responses:
+        201:
+          description: User registered successfully
+        400:
+          description: Validation errors
+
+  /login:
+    post:
+      summary: Login user
+      operationId: loginUser
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: User logged in successfully
+        401:
+          description: Unauthorized
+
+  /resetPassword:
+    post:
+      summary: Reset password
+      operationId: resetPassword
+      tags:
+        - Auth
+      responses:
+        200:
+          description: Password reset successfully
+
+  /refresh:
+    post:
+      summary: Refresh token
+      operationId: refreshToken
+      tags:
+        - Auth
+      responses:
+        200:
+          description: Token refreshed successfully
+
+  /logout:
+    post:
+      summary: Logout user
+      operationId: logoutUser
+      tags:
+        - Auth
+      responses:
+        200:
+          description: User logged out successfully
+
+  /articles:
+    get:
+      summary: Get list of articles
+      operationId: getArticles
+      tags:
+        - Articles
+      responses:
+        200:
+          description: List of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Article'
+        500:
+          description: Server error
+
+    post:
+      summary: Create a new article (requires authentication)
+      operationId: createArticle
+      tags:
+        - Articles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                tags:
+                  type: string
+              required:
+                - title
+                - content
+                - tags
+      responses:
+        201:
+          description: Article created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: Validation errors
+
+  /articles/{id}:
+    get:
+      summary: Get a single article
+      operationId: getArticleById
+      tags:
+        - Articles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Article found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        404:
+          description: Article not found
+
+    put:
+      summary: Update an article (requires authentication)
+      operationId: updateArticle
+      tags:
+        - Articles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                tags:
+                  type: string
+      responses:
+        200:
+          description: Article updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        404:
+          description: Article not found
+
+    delete:
+      summary: Delete an article (requires authentication)
+      operationId: deleteArticle
+      tags:
+        - Articles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Article deleted
+        404:
+          description: Article not found
+
+  /tags:
+    get:
+      summary: Get list of tags
+      operationId: getTags
+      tags:
+        - Tags
+      responses:
+        200:
+          description: List of tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+        500:
+          description: Server error
+
+    post:
+      summary: Create a new tag (requires authentication)
+      operationId: createTag
+      tags:
+        - Tags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: Tag created successfully
+        400:
+          description: Validation errors
+
+  /tags/{id}:
+    get:
+      summary: Get a single tag with its articles
+      operationId: getTagById
+      tags:
+        - Tags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Tag found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagWithArticles'
+        404:
+          description: Tag not found
+
+    put:
+      summary: Update a tag (requires authentication)
+      operationId: updateTag
+      tags:
+        - Tags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        200:
+          description: Tag updated
+        404:
+          description: Tag not found
+
+    delete:
+      summary: Delete a tag (requires authentication)
+      operationId: deleteTag
+      tags:
+        - Tags
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Tag deleted
+        404:
+          description: Tag not found
+
+  /comments:
+    post:
+      summary: Create a new comment
+      operationId: createComment
+      tags:
+        - Comments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+                article_id:
+                  type: integer
+              required:
+                - author
+                - content
+                - article_id
+      responses:
+        201:
+          description: Comment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: Validation errors
+
+  /comments/{id}:
+    put:
+      summary: Update a comment (requires authentication)
+      operationId: updateComment
+      tags:
+        - Comments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                content:
+                  type: string
+      responses:
+        200:
+          description: Comment updated
+        404:
+          description: Comment not found
+
+  /files/{uuid}:
+    get:
+      summary: Download a file by UUID
+      operationId: downloadFileByUuid
+      tags:
+        - Files
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: File download successful
+        404:
+          description: File not found
+
+  /images/{uuid}:
+    get:
+      summary: Get an image by UUID
+      operationId: getImageByUuid
+      tags:
+        - Images
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Image retrieved
+        404:
+          description: Image not found
+
+  /roles:
+    get:
+      summary: Get list of roles
+      operationId: getRoles
+      tags:
+        - Roles
+      responses:
+        200:
+          description: List of roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        500:
+          description: Server error
+
+  /units:
+    get:
+      summary: Get list of units
+      operationId: getUnits
+      tags:
+        - Units
+      responses:
+        200:
+          description: List of units
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Unit'
+        500:
+          description: Server error
+
+  /users:
+    get:
+      summary: Get list of users (requires authentication)
+      operationId: getUsers
+      tags:
+        - Users
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        500:
+          description: Server error
+
+  /profile:
+    get:
+      summary: Get the current authenticated user's profile
+      operationId: getCurrentUserProfile
+      tags:
+        - Users
+      responses:
+        200:
+          description: User profile retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    Article:
+      type: object
+      properties:
+        id:
+          type: integer
+        author:
+          $ref: '#/components/schemas/User'
+        title:
+          type: string
+        content:
+          type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageUrl'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        article_id:
+          type: integer
+        author:
+          type: string
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        user_id:
+          type: integer
+        name:
+          type: string
+        mime_type:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    FileUrl:
+      type: object
+      properties:
+        url:
+          type: string
+
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        article_id:
+          type: integer
+        uuid:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ImageUrl:
+      type: object
+      properties:
+        url:
+          type: string
+
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    TagWithArticles:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+
+    Unit:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        unit:
+          $ref: '#/components/schemas/Unit'
+        role:
+          $ref: '#/components/schemas/Role'
+        required_password_change:
+          type: boolean
