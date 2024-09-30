@@ -1,0 +1,45 @@
+services:
+  api:
+    build:
+      context: ../
+      dockerfile: docker/php-fpm-cli/Dockerfile-php-fpm-cli
+    working_dir: /api
+    environment:
+      - WEB_DOCUMENT_ROOT=/api/public
+    ports:
+      - "8090:8000"
+    depends_on:
+      - mysql
+    volumes:
+      - ../api:/api
+    command: >
+      sh -c "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+    networks:
+      - default
+
+  mysql:
+    image: mysql:8.0.32
+    platform: linux/x86_64
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --big-tables=ON
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'main'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/logs:/var/log/mysql"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: '172.18.0.0/16'

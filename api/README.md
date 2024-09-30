@@ -1,18 +1,31 @@
 # Backend dla Portal OSP
 
 # Setup projektu
+
+## Docker
+Docker cię wybawi. Nie opieraj się. Uwierz w dockera.
+Docker sam postawi php7.4 i mysql8.
+Docker sam odpali `php artisan serve` na porcie 8090.
+```bash
+# Start kontenera
+docker-compose up -d
+# Wejście do kontenera jako bash (do ręcznego wywoływania komend)
+docker exec -it api bash
+```
+API będzie dostępne pod `http://localhost:8090/api`.
+
 ## Baza danych
 Wymagana jest baza danych MySQL w wersji 5 lub 8.
 Dane dostępowe do bazy danych należy umieścić w pliku `.env`
 
 ## PHP
-Wymagany jest PHP7.4. 
+Wymagany jest PHP7.4.
 
 ## Pierwsze uruchomienie projektu
-1. `composer install` lub `php composer.phar install`
+1. `composer install` lub `php composer.phar install` (docker zrobi to sam)
 2. Migracja i seedy bazy danych `php artisan migrate:fresh --seed`
-3. Uruchomienie serwera `php artisan serve`
-4. Aplikacja będzie dostępna pod `http://localhost:80`
+3. Uruchomienie serwera `php artisan serve` (docker zrobi to sam)
+4. Aplikacja będzie dostępna pod `http://localhost:80` (pod docker na `http://localhost:8090`)
 
 ## IDE
 Zalecane jest użycie PhpStorm.
