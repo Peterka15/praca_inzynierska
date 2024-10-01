@@ -7,21 +7,19 @@ namespace App\Models\Enums;
 use MyCLabs\Enum\Enum;
 
 /**
- * Class UserRole
- *
- * Enum-like class for user roles.
- *
- * @method static UserRole ADMIN()      Represents the Admin role.
- * @method static UserRole MODERATOR()  Represents the Moderator role.
- * @method static UserRole USER()       Represents the User role.
- * @method static UserRole KOMENDANT()  Represents the Komendant role.
- * @method static UserRole PUBLIC ()     Represents the Public role.
+ * @method static UserRole ADMIN()
+ * @method static UserRole MODERATOR()
+ * @method static UserRole USER()
+ * @method static UserRole COMMANDANT()
+ * @method static UserRole PUBLIC()
+ * @method static UserRole DISABLED()
  */
 class UserRole extends Enum
 {
-    private const ADMIN = 'Admin';
-    private const MODERATOR = 'Moderator';
-    private const USER = 'User';
-    private const KOMENDANT = 'Komendant';
-    private const PUBLIC = 'Publiczne';
+    private const ADMIN = 1;
+    private const MODERATOR = 2;
+    private const USER = 3;
+    private const COMMANDANT = 4;
+    private const PUBLIC = 5;
+    private const DISABLED = 6;
 }

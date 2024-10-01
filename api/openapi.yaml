@@ -473,6 +473,88 @@ paths:
         500:
           description: Server error
 
+    post:
+      summary: Create an user (requires authentication)
+      operationId: updateUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                unit_id:
+                  type: integer
+                role_id:
+                  type: integer
+                password:
+                  type: string
+      responses:
+        200:
+          description: User updated
+        401:
+          description: Not authorized
+        404:
+          description: User not found
+
+  /users/{id}:
+    get:
+      summary: Get list of users (requires authentication)
+      operationId: getUsers
+      tags:
+        - Users
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        500:
+          description: Server error
+
+    patch:
+      summary: Update an user (requires authentication)
+      operationId: updateUser
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                unit_id:
+                  type: integer
+                role_id:
+                  type: integer
+      responses:
+        200:
+          description: User updated
+        401:
+          description: Not authorized
+        404:
+          description: User not found
+
   /profile:
     get:
       summary: Get the current authenticated user's profile

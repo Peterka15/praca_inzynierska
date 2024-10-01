@@ -27,13 +27,13 @@ class RoleSeeder extends Seeder
         DB::table(Role::TABLE_NAME)->insert(
             [
                 Role::ID => 3,
-                Role::NAME => 'USER',
+                Role::NAME => 'User',
             ]
         );
         DB::table(Role::TABLE_NAME)->insert(
             [
                 Role::ID => 4,
-                Role::NAME => 'Komendant',
+                Role::NAME => 'Commandant',
             ]
         );
         DB::table(Role::TABLE_NAME)->insert(

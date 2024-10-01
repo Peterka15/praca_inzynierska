@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Enums\UserRole;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -29,17 +30,12 @@ class AuthController extends Controller
         }
 
         $requestData = $request->all();
-//var_dump($requestData);
         $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
         $requestData[User::PASSWORD_CHANGE_IS_REQUIRED] = true;
 
         $user = User::create($requestData);
 
         return $this->successResponse($this->getResponseData($user, null));
-
-
-
-
     }
 
     public function login(Request $request): JsonResponse
@@ -61,8 +57,8 @@ class AuthController extends Controller
 
         $user = User::where(User::EMAIL, $request[User::EMAIL])->firstOrFail();
 
-        if ($user->role_id == 6) {
-            return $this->errorResponse(['role_id' => ['Logowanie nieudane. Rola o wartości 6 jest niedostępna.']], Response::HTTP_UNAUTHORIZED);
+        if ($user->role_enum->equals(UserRole::DISABLED())) {
+            return $this->errorResponse(['password' => ['Account is disabled.']], Response::HTTP_UNAUTHORIZED);
         }
 
         $user->tokens()->delete();

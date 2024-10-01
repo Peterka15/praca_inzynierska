@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Enums\UserRole;
 use App\Models\User;
 use Date;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class UserSeeder extends Seeder
                 User::NAME => 'admin',
                 User::EMAIL => 'admin@localhost',
                 User::PASSWORD => Hash::make('admin123'),
-                User::ROLE_ID => 1,
+                User::ROLE_ID => UserRole::ADMIN()->getValue(),
                 User::UNIT_ID => 1,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
@@ -33,7 +34,7 @@ class UserSeeder extends Seeder
                 User::NAME => 'Strażak Sam',
                 User::EMAIL => 'sam@osp',
                 User::PASSWORD => Hash::make('strazaksam'),
-                User::ROLE_ID => 6,
+                User::ROLE_ID => UserRole::USER()->getValue(),
                 User::UNIT_ID => 2,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),

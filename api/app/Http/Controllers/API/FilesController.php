@@ -18,9 +18,9 @@ class FilesController extends Controller
 {
     public function index(): JsonResponse
     {
-        $articles = File::latest()->get();
+        $files = File::latest()->get();
 
-        return $this->successResponse(FileUrlResource::collection($articles));
+        return $this->successResponse(FileUrlResource::collection($files));
     }
 
     public function store(Request $request): JsonResponse

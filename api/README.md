@@ -1,5 +1,27 @@
 # Backend dla Portal OSP
 
+# TODO
+- [ ] Tworzenie użytkowników przed administratora / moderatora
+- [ ] Edycja użytkownika
+- [ ] Usuwanie użytkownika
+- [ ] Rejestracja przez przesłanie linku z tokenem
+- [ ] Zmiana hasła przez przesłanie linku z tokenem
+- [ ] Kontroler do materiałów szkoleniowych
+- [ ] Kontroler do wyposażenia
+- [ ] Kontroler do wyświetlania / modyfikacji zarządu
+- [ ] Uprawniania
+  - [ ] Artykuły
+  - [ ] Auth
+  - [ ] Komentarze
+  - [ ] Pliki
+  - [ ] Zdjęcia
+  - [ ] Zarząd
+  - [ ] Role
+  - [ ] Tagi
+  - [ ] Jednostki
+  - [ ] Użytkownicy
+  - [ ] Materiały szkoleniowe
+
 # Setup projektu
 
 ## Docker

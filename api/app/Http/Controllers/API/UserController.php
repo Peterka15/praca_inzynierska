@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,8 +38,14 @@ class UserController extends Controller
             return $this->errorResponse($validator->errors());
         }
 
+        // Only admin is allowed to create new users
+        if (!$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
+        }
+
         $requestData = $request->all();
 
+        // Todo will it work with non-fillable field? Probably not.
         if (isset($requestData[User::PASSWORD])) {
             $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
         }
@@ -65,29 +72,31 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             User::NAME => 'string|max:255',
             User::EMAIL => 'string|email|max:255|unique:users',
-            User::PASSWORD => 'string|min:8',
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors());
         }
 
+        var_dump($this->currentUser->role_enum);
+
+        if ($user->id !== $this->currentUser->id && !$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
+        }
+
         $requestData = $request->all();
 
-        if (isset($requestData[User::PASSWORD])) {
-            $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
+        if (isset($requestData[User::ROLE_ID]) && !$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
+        }
+
+        if (isset($requestData[User::UNIT_ID]) && !$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
         }
 
         $user->fill($requestData);
         $user->save();
 
         return $this->successResponse(new UserResource($user));
-    }
-
-    public function destroy(User $user): JsonResponse
-    {
-        $user->delete();
-
-        return $this->successResponse();
     }
 }

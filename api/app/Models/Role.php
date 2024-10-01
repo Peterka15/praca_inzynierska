@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Enums\UserRole;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,9 +18,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @method static Builder|Role query()
  * @method static Builder|Role whereId($value)
  * @method static Builder|Role whereName($value)
+ * @property-read UserRole $user_role
+ * @property-read UserRole $user_role_enum
  * @mixin Eloquent
  */
 final class Role extends ApiModel
+
 {
     use HasFactory;
 
@@ -31,4 +35,9 @@ final class Role extends ApiModel
     protected $fillable = [
         self::NAME,
     ];
+
+    public function getUserRoleEnumAttribute(): UserRole
+    {
+        return UserRole::fromValue($this->id);
+    }
 }

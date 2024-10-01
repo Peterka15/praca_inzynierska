@@ -10,16 +10,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * App\Models\Management
  *
+ * @property int $id
+ * @property string $name
+ * @property string $function
+ * @property int $unit_id
  * @method static Builder|Management newModelQuery()
  * @method static Builder|Management newQuery()
  * @method static Builder|Management query()
+ * @method static Builder|Management whereFunction($value)
+ * @method static Builder|Management whereId($value)
+ * @method static Builder|Management whereName($value)
+ * @method static Builder|Management whereUnitId($value)
  * @mixin Eloquent
  */
 final class Management extends ApiModel
 {
     use HasFactory;
 
-    public const TABLE_NAME = 'managements';
+    public const TABLE_NAME = 'management';
 
     public const ID = 'id';
     public const NAME = 'name';
@@ -31,5 +39,4 @@ final class Management extends ApiModel
         self::UNIT_ID,
         self::FUNCTION
     ];
-
 }

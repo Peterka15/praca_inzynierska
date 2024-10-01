@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Enums\UserRole;
 use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,6 +55,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property string|null $password_change_token
  * @method static Builder|User wherePasswordChangeIsRequired($value)
  * @method static Builder|User wherePasswordChangeToken($value)
+ * @property-read UserRole $role_enum
  * @mixin Eloquent
  */
 final class User extends Authenticatable
@@ -81,10 +83,8 @@ final class User extends Authenticatable
     protected $fillable = [
         self::NAME,
         self::EMAIL,
-        self::PASSWORD,
         self::UNIT_ID,
-        self::ROLE_ID,
-        self::PASSWORD_CHANGE_IS_REQUIRED
+        self::ROLE_ID
     ];
 
     protected $hidden = [
@@ -105,5 +105,24 @@ final class User extends Authenticatable
     public function role(): HasOne
     {
         return $this->hasOne(Role::class, Role::ID, self::ROLE_ID);
+    }
+
+    public function getRoleEnumAttribute(): UserRole
+    {
+        return UserRole::from($this->role_id);
+    }
+
+    public function isRole(UserRole $role): bool
+    {
+        return $this->role_enum->equals($role);
+    }
+
+    /**
+     * @param UserRole[] $roles
+     * @return bool
+     */
+    public function isRoleIn(array $roles): bool
+    {
+        return in_array($this->role_enum->getValue(), array_map(static fn(UserRole $role) => $role->getValue(), $roles), true);
     }
 }
