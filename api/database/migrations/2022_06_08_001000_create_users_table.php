@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Enums\UserRole;
 use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
@@ -21,9 +20,10 @@ class CreateUsersTable extends Migration
             $table->foreignId(User::ROLE_ID)->references(Role::ID)->on(Role::TABLE_NAME);
             $table->foreignId(User::UNIT_ID)->references(Unit::ID)->on(Unit::TABLE_NAME);
             $table->string(User::PASSWORD)->nullable();
+            $table->boolean(User::PASSWORD_CHANGE_IS_REQUIRED)->default(true);
+            $table->string(User::PASSWORD_CHANGE_TOKEN)->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->boolean(User::REQUIRED_PASSWORD_CHANGE)->default(true);
         });
     }
 

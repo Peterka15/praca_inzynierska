@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 User::UNIT_ID => 1,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
-                User::REQUIRED_PASSWORD_CHANGE => False,
+                User::PASSWORD_CHANGE_IS_REQUIRED => false,
             ]
         );
 
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 User::UNIT_ID => 2,
                 User::CREATED_AT => Date::now(),
                 User::UPDATED_AT => Date::now(),
-                User::REQUIRED_PASSWORD_CHANGE => False,
+                User::PASSWORD_CHANGE_IS_REQUIRED => false,
             ]
         );
     }

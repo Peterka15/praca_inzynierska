@@ -64,6 +64,7 @@ final class User extends Authenticatable
     public const NAME = 'name';
     public const EMAIL = 'email';
     public const PASSWORD = 'password';
+    public const PASSWORD_CHANGE_TOKEN = 'password_change_token';
     public const UNIT = 'unit';
 
     public const UNIT_ID = 'unit_id';
@@ -71,7 +72,7 @@ final class User extends Authenticatable
 
     public const ROLE_ID = 'role_id';
 
-    public const REQUIRED_PASSWORD_CHANGE = "required_password_change";
+    public const PASSWORD_CHANGE_IS_REQUIRED = "password_change_is_required";
 
     protected $fillable = [
         self::NAME,
@@ -79,11 +80,12 @@ final class User extends Authenticatable
         self::PASSWORD,
         self::UNIT_ID,
         self::ROLE_ID,
-        self::REQUIRED_PASSWORD_CHANGE
+        self::PASSWORD_CHANGE_IS_REQUIRED
     ];
 
     protected $hidden = [
         self::PASSWORD,
+        self::PASSWORD_CHANGE_TOKEN
     ];
 
     protected $casts = [
@@ -100,5 +102,4 @@ final class User extends Authenticatable
     {
         return $this->hasOne(Role::class, Role::ID, self::ROLE_ID);
     }
-
 }

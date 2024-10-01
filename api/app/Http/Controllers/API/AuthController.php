@@ -31,7 +31,7 @@ class AuthController extends Controller
         $requestData = $request->all();
 //var_dump($requestData);
         $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
-        $requestData[User::REQUIRED_PASSWORD_CHANGE] = true;
+        $requestData[User::PASSWORD_CHANGE_IS_REQUIRED] = true;
 
         $user = User::create($requestData);
 
