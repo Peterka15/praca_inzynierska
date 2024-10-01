@@ -15,9 +15,10 @@ use MyCLabs\Enum\Enum;
  * @method static UserRole MODERATOR()  Represents the Moderator role.
  * @method static UserRole USER()       Represents the User role.
  * @method static UserRole KOMENDANT()  Represents the Komendant role.
- * @method static UserRole PUBLIC()     Represents the Public role.
+ * @method static UserRole PUBLIC ()     Represents the Public role.
  */
-class UserRole extends Enum {
+class UserRole extends Enum
+{
     private const ADMIN = 'Admin';
     private const MODERATOR = 'Moderator';
     private const USER = 'User';

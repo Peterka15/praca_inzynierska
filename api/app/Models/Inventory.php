@@ -3,8 +3,30 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * App\Models\Inventory
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $amount
+ * @property int $category_id
+ * @property int $unit_id
+ * @property int $available
+ * @method static Builder|Inventory newModelQuery()
+ * @method static Builder|Inventory newQuery()
+ * @method static Builder|Inventory query()
+ * @method static Builder|Inventory whereAmount($value)
+ * @method static Builder|Inventory whereAvailable($value)
+ * @method static Builder|Inventory whereCategoryId($value)
+ * @method static Builder|Inventory whereId($value)
+ * @method static Builder|Inventory whereName($value)
+ * @method static Builder|Inventory whereUnitId($value)
+ * @mixin Eloquent
+ */
 final class Inventory extends ApiModel
 {
     use HasFactory;

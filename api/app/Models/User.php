@@ -50,6 +50,10 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereRoleId($value)
  * @method static Builder|User whereUnitId($value)
  * @method static Builder|User whereUpdatedAt($value)
+ * @property int $password_change_is_required
+ * @property string|null $password_change_token
+ * @method static Builder|User wherePasswordChangeIsRequired($value)
+ * @method static Builder|User wherePasswordChangeToken($value)
  * @mixin Eloquent
  */
 final class User extends Authenticatable

@@ -3,8 +3,18 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * App\Models\Management
+ *
+ * @method static Builder|Management newModelQuery()
+ * @method static Builder|Management newQuery()
+ * @method static Builder|Management query()
+ * @mixin Eloquent
+ */
 final class Management extends ApiModel
 {
     use HasFactory;
