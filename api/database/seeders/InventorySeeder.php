@@ -17,10 +17,10 @@ class InventorySeeder extends Seeder
             [
                 Inventory::ID => 1,
                 Inventory::NAME => 'Wąż W-52',
-                Inventory::AMOUNT => '2',
-                Inventory::CATEGORY => 'Armatura Wodno-Pianowa',
-                Inventory::UNIT => 1,
-                Inventory::ONSTATE => true
+                Inventory::AMOUNT => 2,
+                Inventory::CATEGORY_ID => 1,
+                Inventory::UNIT_ID => 1,
+                Inventory::AVAILABLE => true
             ]
         );
 
@@ -28,10 +28,10 @@ class InventorySeeder extends Seeder
             [
                 Inventory::ID => 2,
                 Inventory::NAME => 'Kominiarka',
-                Inventory::AMOUNT => '30',
-                Inventory::CATEGORY => 'Osobiste',
-                Inventory::UNIT => 2,
-                Inventory::ONSTATE => true
+                Inventory::AMOUNT => 30,
+                Inventory::CATEGORY_ID => 5,
+                Inventory::UNIT_ID => 2,
+                Inventory::AVAILABLE => true
             ]
         );
     }

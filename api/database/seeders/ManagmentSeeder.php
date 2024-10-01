@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 
-use App\Models\Managment;
+use App\Models\Management;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,23 +15,21 @@ class ManagmentSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table(Managment::TABLE_NAME)->insert(
+        DB::table(Management::TABLE_NAME)->insert(
             [
-                Managment::ID => 1,
-                Managment::NAME => 'Jan Kowalski',
-                Managment::FUNCTION => 'Prezes',
-                Managment::UNIT => 1,
-                Managment::EMAIL => 'jkowalski@gmail.com'
+                Management::ID => 1,
+                Management::NAME => 'Jan Kowalski',
+                Management::FUNCTION => 'Prezes',
+                Management::UNIT_ID => 1,
             ]
         );
 
-        DB::table(Managment::TABLE_NAME)->insert(
+        DB::table(Management::TABLE_NAME)->insert(
             [
-                Managment::ID => 2,
-                Managment::NAME => 'Karol Nowak',
-                Managment::FUNCTION => 'Naczelnik',
-                Managment::UNIT => 2,
-                Managment::EMAIL => 'knowak@onet.pl'
+                Management::ID => 2,
+                Management::NAME => 'Karol Nowak',
+                Management::FUNCTION => 'Naczelnik',
+                Management::UNIT_ID => 2,
             ]
         );
     }

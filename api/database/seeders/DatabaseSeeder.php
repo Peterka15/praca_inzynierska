@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ArticlesSeeder::class,
             ArticleTagsSeeder::class,
             CommentsSeeder::class,
+            InventoryCategoriesSeeder::class,
             InventorySeeder::class,
             ManagmentSeeder::class
         ]);

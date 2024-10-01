@@ -23,7 +23,6 @@ final class Role extends ApiModel
 {
     use HasFactory;
 
-
     public const TABLE_NAME = 'roles';
 
     public const ID = 'id';
@@ -32,5 +31,4 @@ final class Role extends ApiModel
     protected $fillable = [
         self::NAME,
     ];
-
 }

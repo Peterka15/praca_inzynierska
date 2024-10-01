@@ -5,25 +5,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-final class Inventory extends ApiModel
+final class Management extends ApiModel
 {
     use HasFactory;
 
-    public const TABLE_NAME = 'inventories';
+    public const TABLE_NAME = 'managements';
 
     public const ID = 'id';
     public const NAME = 'name';
-    public const AMOUNT = 'amount';
-    public const CATEGORY_ID = 'category_id';
     public const UNIT_ID = 'unit_id';
-    public const AVAILABLE = 'available';
-
+    public const FUNCTION = 'function';
 
     protected $fillable = [
         self::NAME,
-        self::AMOUNT,
-        self::CATEGORY_ID,
         self::UNIT_ID,
-        self::AVAILABLE,
+        self::FUNCTION
     ];
+
 }
