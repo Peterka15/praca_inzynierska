@@ -14,26 +14,16 @@
             <div>
               <h3>Dodaj członka zarządu</h3>
               <div class="logininput">
-                <b-form inline>
+                <b-form inline> Podaj imię i nazwisko
                   <label class="sr-only">Imię i nazwisko</label>
                   <b-form-input
                       id="inline-form-input-name"
                       v-model="name"
-                      placeholder="imię"
+                      placeholder="Imię i nazwisko"
                   ></b-form-input>
                 </b-form>
               </div>
-              <div class="logininput">
-                <b-form inline>
-                  <label class="sr-only">E-mail</label>
-                  <b-form-input
-                      id="inline-form-input-email"
-                      v-model="email"
-                      placeholder="E-mail"
-                  ></b-form-input>
-                </b-form>
-              </div>
-              <div class="logininput">
+              <div class="logininput"> Przypisz funkcję
                 <b-form inline>
                   <label for="position" class="sr-only">Pełniona funkcja</label>
                   <b-form-select
@@ -44,7 +34,7 @@
                   ></b-form-select>
                 </b-form>
               </div>
-              <div class="logininput">
+              <div class="logininput"> Wybierz jednostkę
                 <b-form inline>
                   <label for="unit" class="sr-only">Jednostka OSP</label>
                   <b-form-select
@@ -100,43 +90,36 @@ export default {
         {
           name: 'Adam Nowak',
           position: 'Prezes',
-          email: 'adam.nowak@onet.pl',
           unit: 'Pszów',
         },
         {
           name: 'Jan Kowalski',
           position: 'Prezes',
-          email: 'jan.kowalski@example.com',
           unit: 'Krzyżkowice',
         },
         {
           name: 'Piotr Wiśniewski',
           position: 'Naczelnik',
-          email: 'piotr.wisniewski@example.com',
           unit: 'Pszów',
         },
         {
           name: 'Katarzyna Zielińska',
           position: 'Sekretarz',
-          email: 'katarzyna.zielinska@example.com',
           unit: 'Rogów',
         },
         {
           name: 'Marek Lewandowski',
           position: 'Członek zarządu',
-          email: 'marek.lewandowski@example.com',
           unit: 'Zawada',
         },
       ],
       units: [
-        { value: null, text: 'Proszę przypisać jednostkę' },
         { value: 'Pszów', text: 'Pszów' },
         { value: 'Krzyżkowice', text: 'Krzyżkowice' },
         { value: 'Zawada', text: 'Zawada' },
         { value: 'Rogów', text: 'Rogów' }
       ],
       position: [
-        { value: null, text: 'Proszę przypisać funkcję' },
         { value: 'Prezes', text: 'Prezes' },
         { value: 'Wiceprezes', text: 'Wiceprezes' },
         { value: 'Naczelnik', text: 'Naczelnik' },
@@ -150,8 +133,7 @@ export default {
         { key: 'name', label: 'Imię i nazwisko', sortable: true },
         { key: 'position', label: 'Pełniona funkcja', sortable: true },
         { key: 'unit', label: 'Jednostka', sortable: true },
-        { key: 'email', label: 'E-mail', sortable: true },
-        { key: 'edit', label: 'Edytuj', sortable: false }
+        { key: 'edit', label: '', sortable: false }
       ]
     };
   },
@@ -172,13 +154,11 @@ export default {
                   { text: 'Imię i nazwisko', style: 'tableHeader' },
                   { text: 'Pełniona funkcja', style: 'tableHeader' },
                   { text: 'Jednostka', style: 'tableHeader' },
-                  { text: 'E-mail', style: 'tableHeader' }
                 ],
                 ...this.users.map(user => [
                   user.name,
                   user.position,
                   user.unit,
-                  user.email
                 ])
               ]
             }

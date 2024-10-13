@@ -15,21 +15,14 @@
             <div>
               <h3 >Dodaj sprzęt</h3>
               <div class="logininput">
-                <b-form inline>
+                <b-form inline> Czy sprzęt jest dostępny?
                   <b-form-checkbox v-model="isInStock">
-                    Na stanie
+                     Dostępny
                   </b-form-checkbox>
                 </b-form>
               </div>
               <div class="logininput">
-                <b-form inline>
-                  <b-form-checkbox v-model="isActive">
-                    Czy działa
-                  </b-form-checkbox>
-                </b-form>
-              </div>
-              <div class="logininput">
-                <b-form inline>
+                <b-form inline> Podaj nazwę sprzętu
                   <label class="sr-only">Nazwa sprzętu</label>
                   <b-form-input
                       id="inline-form-input-name"
@@ -38,7 +31,7 @@
                   ></b-form-input>
                 </b-form>
               </div>
-              <div class="logininput">
+              <div class="logininput"> Podaj ilość
                 <b-form inline>
                   <label class="sr-only">Ilość</label>
                   <b-form-input
@@ -49,7 +42,7 @@
                 </b-form>
               </div>
               <div class="logininput">
-                <b-form inline>
+                <b-form inline> Wybierz kategorię
                   <label for="unit" class="sr-only">Kategoria przedmiotu</label>
                   <b-form-select
                       id="unit"
@@ -60,7 +53,7 @@
                 </b-form>
               </div>
               <div class="logininput">
-                <b-form inline>
+                <b-form inline> Przypisz jednostkę
                   <label for="unit" class="sr-only">Jednostka OSP</label>
                   <b-form-select
                       id="unit"
@@ -116,17 +109,15 @@ export default {
       name: '',
       selectedUnit: null,
       selectedCategory: null,
-      isActive: false,
       isInStock: false,
+      searchQuery: '',
       units: [
-        { value: null, text: 'Proszę przypisać jednostkę' },
         { value: 'Pszów', text: 'Pszów' },
         { value: 'Krzyżkowice', text: 'Krzyżkowice' },
         { value: 'Zawada', text: 'Zawada' },
         { value: 'Rogów', text: 'Rogów' }
       ],
       category: [
-        { value: null, text: 'Proszę przypisać kategorię' },
         { value: 'Pojazd', text: 'Pojazd' },
         { value: 'Sprzęt osobisty', text: 'Sprzęt osobisty' },
         { value: 'Sprzęt medyczny', text: 'Sprzęt medyczny' },
@@ -136,40 +127,35 @@ export default {
       ],
       equipment: [
         {
-          isActive: true,
-          isInStock: true,
+          isInStock: 'tak',
           name: 'Wąż strażacki W-52',
           amount: 10,
           unit: 'Pszów',
           category: 'Sprzęt gaśniczy'
         },
         {
-          isActive: true,
-          isInStock: true,
+          isInStock: 'tak',
           name: 'Łom "Huligan"',
           amount: 5,
           unit: 'Krzyżkowice',
           category: 'Sprzęt medyczny'
         },
         {
-          isActive: false,
-          isInStock: true,
+          isInStock: 'nie',
           name: 'Hełm Bojowy',
           amount: 8,
           unit: 'Zawada',
           category: 'Sprzęt osobisty'
         },
         {
-          isActive: true,
-          isInStock: true,
+          isInStock: 'tak',
           name: 'Prądownica',
           amount: 3,
           unit: 'Rogów',
           category: 'Sprzęt gaśniczy'
         },
         {
-          isActive: true,
-          isInStock: true,
+          isInStock: 'tak',
           name: 'Torba PSP-R1',
           amount: 2,
           unit: 'Pszów',
@@ -177,13 +163,12 @@ export default {
         }
       ],
       fields: [
-        { key: 'isActive', label: 'Aktywny', sortable: true },
-        { key: 'isInStock', label: 'Na stanie', sortable: true },
+        { key: 'isInStock', label: 'Dostępny', sortable: true },
         { key: 'name', label: 'Nazwa sprzętu', sortable: true },
         { key: 'amount', label: 'Ilość', sortable: true },
         { key: 'unit', label: 'Jednostka', sortable: true },
         { key: 'category', label: 'Kategoria', sortable: true },
-        { key: 'edit', label: 'Edytuj', sortable: false }
+        { key: 'edit', label: '', sortable: false }
       ]
     };
   },
@@ -198,11 +183,10 @@ export default {
           {
             table: {
               headerRows: 1,
-              widths: ['*', '*', '*', '*', '*', '*'],
+              widths: ['*', '*', '*', '*', '*'],
               body: [
-                ['Aktywny', 'Na stanie', 'Nazwa sprzętu', 'Ilość', 'Jednostka', 'Kategoria'],
+                ['Na stanie', 'Nazwa sprzętu', 'Ilość', 'Jednostka', 'Kategoria'],
                 ...this.equipment.map(item => [
-                  item.isActive ? 'Tak' : 'Nie',
                   item.isInStock ? 'Tak' : 'Nie',
                   item.name,
                   item.amount,
@@ -249,4 +233,6 @@ export default {
   text-align: right;
   padding-right: 15px;
 }
+
+
 </style>
