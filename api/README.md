@@ -25,15 +25,17 @@
 # Setup projektu
 
 ## Docker
-Docker cię wybawi. Nie opieraj się. Uwierz w dockera.
+Docker cię wybawi. Nie opieraj się. Uwierz w dockera (ale trzeba go na początku zainstalować, najlepiej pod WSL).
 Docker sam postawi php7.4 i mysql8.
 Docker sam odpali `php artisan serve` na porcie 8090.
+
 ```bash
 # Start kontenera
 docker-compose up -d
 # Wejście do kontenera jako bash (do ręcznego wywoływania komend)
 docker exec -it api bash
 ```
+
 API będzie dostępne pod `http://localhost:8090/api`.
 
 ## Baza danych
