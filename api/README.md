@@ -7,7 +7,7 @@
 - [ ] Rejestracja przez przesłanie linku z tokenem
 - [ ] Zmiana hasła przez przesłanie linku z tokenem
 - [ ] Kontroler do materiałów szkoleniowych
-- [ ] Kontroler do wyposażenia
+- [x] Kontroler do wyposażenia i kategorii - `InventoryController / InventoryCategoryController`
 - [ ] Kontroler do wyświetlania / modyfikacji zarządu
 - [ ] Uprawniania
   - [ ] Artykuły
@@ -23,7 +23,6 @@
   - [ ] Materiały szkoleniowe
 
 # Setup projektu
-
 ## Docker
 Docker cię wybawi. Nie opieraj się. Uwierz w dockera (ale trzeba go na początku zainstalować, najlepiej pod WSL).
 Docker sam postawi php7.4 i mysql8.

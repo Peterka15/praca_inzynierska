@@ -2,15 +2,17 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\API\ArticlesController;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CommentsController;
 use App\Http\Controllers\API\FilesController;
 use App\Http\Controllers\API\ImagesController;
+use App\Http\Controllers\API\InventoryController;
 use App\Http\Controllers\API\RolesController;
 use App\Http\Controllers\API\TagsController;
-use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UnitsController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\InventoryCategoryController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -24,13 +26,14 @@ Route::resource('units', UnitsController::class)->only(['index', 'show']);
 Route::resource('roles', RolesController::class)->only(['index', 'show']);
 
 Route::group(['middleware' => ['auth:sanctum']], static function () {
-
     Route::resource('articles', ArticlesController::class)->except(['index', 'show']);
     Route::resource('tags', TagsController::class)->except(['index', 'show']);
     Route::resource('comments', CommentsController::class)->except(['store']);
     Route::resource('images', ImagesController::class)->except(['show']);
     Route::resource('files', FilesController::class)->except(['show']);
 
+    Route::resource('inventory', InventoryController::class);
+    Route::resource('inventoryCategory', InventoryCategoryController::class);
     Route::resource('users', UserController::class);
     Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
     Route::get('/profile', [UserController::class, 'getCurrent']);

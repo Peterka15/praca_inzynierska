@@ -19,8 +19,8 @@ class RoleResource extends JsonResource
         $role = $this;
 
         return [
-            ROLE::ID => $role->id,
-            ROLE::NAME => $role->name,
+            Role::ID => $role->id,
+            Role::NAME => $role->name,
         ];
     }
 }

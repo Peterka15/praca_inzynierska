@@ -37,7 +37,9 @@ final class Inventory extends ApiModel
     public const NAME = 'name';
     public const AMOUNT = 'amount';
     public const CATEGORY_ID = 'category_id';
+    public const CATEGORY = 'category';
     public const UNIT_ID = 'unit_id';
+    public const UNIT = 'unit';
     public const AVAILABLE = 'available';
 
 
