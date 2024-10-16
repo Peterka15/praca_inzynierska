@@ -47,19 +47,13 @@ class ManagementController extends Controller
     }
 
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, Management $management): JsonResponse
     {
-        $management = Management::find($id);
-
-        if ($management === null) {
-            return $this->notFoundResponse();
-        }
-
         $request->validate(
             [
-                Management::NAME => 'required|string',
-                Management::FUNCTION => 'required|string',
-                Management::UNIT_ID => 'required|int|exists:units,id',
+                Management::NAME => 'string',
+                Management::FUNCTION => 'string',
+                Management::UNIT_ID => 'int|exists:units,id',
             ]
         );
 
@@ -67,5 +61,12 @@ class ManagementController extends Controller
         $management->update($requestData);
 
         return $this->successResponse(new ManagementResource($management));
+    }
+
+    public function destroy(Management $management): JsonResponse
+    {
+        $management->delete();
+
+        return $this->successResponse();
     }
 }

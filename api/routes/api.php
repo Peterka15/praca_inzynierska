@@ -6,13 +6,14 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CommentsController;
 use App\Http\Controllers\API\FilesController;
 use App\Http\Controllers\API\ImagesController;
+use App\Http\Controllers\API\InventoryCategoryController;
 use App\Http\Controllers\API\InventoryController;
+use App\Http\Controllers\API\ManagementController;
 use App\Http\Controllers\API\RolesController;
 use App\Http\Controllers\API\TagsController;
 use App\Http\Controllers\API\UnitsController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\InventoryCategoryController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -34,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
 
     Route::resource('inventory', InventoryController::class);
     Route::resource('inventoryCategory', InventoryCategoryController::class);
+    Route::resource('management', ManagementController::class);
     Route::resource('users', UserController::class);
     Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
     Route::get('/profile', [UserController::class, 'getCurrent']);

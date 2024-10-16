@@ -8,7 +8,7 @@
 - [ ] Zmiana hasła przez przesłanie linku z tokenem
 - [ ] Kontroler do materiałów szkoleniowych
 - [x] Kontroler do wyposażenia i kategorii - `InventoryController / InventoryCategoryController`
-- [ ] Kontroler do wyświetlania / modyfikacji zarządu
+- [x] Kontroler do wyświetlania / modyfikacji zarządu
 - [ ] Uprawniania
   - [ ] Artykuły
   - [ ] Auth

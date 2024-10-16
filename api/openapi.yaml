@@ -464,6 +464,129 @@ paths:
         404:
           description: Inventory category not found
 
+  /management:
+    get:
+      summary: Get list of management records
+      operationId: getManagement
+      tags:
+        - Management
+      responses:
+        200:
+          description: List of management records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Management'
+        500:
+          description: Server error
+
+    post:
+      summary: Create a new management record
+      operationId: createManagement
+      tags:
+        - Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                function:
+                  type: string
+                unit_id:
+                  type: integer
+              required:
+                - name
+                - function
+                - unit_id
+      responses:
+        201:
+          description: Management record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Management'
+        400:
+          description: Validation errors
+
+  /management/{id}:
+    get:
+      summary: Get a single management record
+      operationId: getManagementById
+      tags:
+        - Management
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Management record found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Management'
+        404:
+          description: Management record not found
+
+    put:
+      summary: Update a management record
+      operationId: updateManagement
+      tags:
+        - Management
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                function:
+                  type: string
+                unit_id:
+                  type: integer
+      responses:
+        200:
+          description: Management record updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Management'
+        404:
+          description: Management record not found
+
+    delete:
+      summary: Delete a management record
+      operationId: deleteManagement
+      tags:
+        - Management
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Management record deleted
+        404:
+          description: Management record not found
+
   /tags:
     get:
       summary: Get list of tags
@@ -970,6 +1093,18 @@ components:
           type: integer
         name:
           type: string
+
+    Management:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        function:
+          type: string
+        unit:
+          $ref: '#/components/schemas/Unit'
 
     User:
       type: object

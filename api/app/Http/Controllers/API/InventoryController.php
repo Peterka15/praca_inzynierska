@@ -71,9 +71,9 @@ class InventoryController extends Controller
         return $this->successResponse(new InventoryResource($inventory));
     }
 
-    public function destroy(Inventory $article): JsonResponse
+    public function destroy(Inventory $inventory): JsonResponse
     {
-        $article->delete();
+        $inventory->delete();
 
         return $this->successResponse();
     }
