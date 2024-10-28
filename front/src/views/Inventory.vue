@@ -84,6 +84,12 @@
           <template #cell(edit)="row">
             <b-button @click="editUser(row.item)">Edytuj</b-button>
           </template>
+
+          <template #cell(isInStock)="row">
+      <span :style="row.item.isInStock === 'nie' ? { color: 'red' } : {}">
+        {{ row.item.isInStock }}
+      </span>
+          </template>
         </b-table>
       </div>
 
