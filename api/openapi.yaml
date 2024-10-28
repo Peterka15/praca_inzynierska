@@ -2,41 +2,24 @@ openapi: 3.0.0
 info:
   title: API Documentation
   version: 1.0.0
-  description: Copy and paste this into https://editor.swagger.io/ to see openapi in action.
+  description: >-
+    Copy and paste this into https://editor.swagger.io/ to see openapi in action.
     You can import it directly to the postman to get all requests at once.
 
-paths:
-  /register:
-    post:
-      summary: Register a new user
-      operationId: registerUser
-      tags:
-        - Auth
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-                  format: password
-              required:
-                - name
-                - email
-                - password
-      responses:
-        201:
-          description: User registered successfully
-        400:
-          description: Validation errors
+    # How to register a new user?
 
+    1. Login as admin
+
+    2. Call the users POST endpoint with user name, email, role and unit
+
+    3. Grab the setPassword URL from the response and send to the user
+
+    4. User must call the setPassword URL to set their password
+
+    5. User can log in
+
+
+paths:
   /login:
     post:
       summary: Login user
@@ -65,15 +48,36 @@ paths:
         401:
           description: Unauthorized
 
-  /resetPassword:
+  /setPassword/{uuid}:
     post:
-      summary: Reset password
-      operationId: resetPassword
+      summary: >-
+        Set password. Requires reset password token as UUID.
+        You can acquire it via reset password or account creation.
+        Password reset token is one-time use.
+      operationId: setPassword
       tags:
         - Auth
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  format: password
+              required:
+                - password
       responses:
-        200:
-          description: Password reset successfully
+        204:
+          description: Password set successfully
 
   /refresh:
     post:
@@ -843,8 +847,11 @@ paths:
           description: Server error
 
     post:
-      summary: Create an user (requires authentication)
-      operationId: updateUser
+      summary: >-
+        Create an user (admin only).
+        This will create a new user and return the setPassword url.
+        User needs to set their password using this url.
+      operationId: createUser
       tags:
         - Users
       requestBody:
@@ -862,11 +869,15 @@ paths:
                   type: integer
                 role_id:
                   type: integer
-                password:
-                  type: string
       responses:
         200:
-          description: User updated
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PasswordSetUrl'
         401:
           description: Not authorized
         404:
@@ -919,6 +930,32 @@ paths:
       responses:
         200:
           description: User updated
+        401:
+          description: Not authorized
+        404:
+          description: User not found
+
+  /users/{id}/resetPassword:
+    post:
+      summary: Reset an user's password (admin only)
+      operationId: resetUserPassword
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Password reset
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PasswordSetUrl'
         401:
           description: Not authorized
         404:
@@ -1127,3 +1164,9 @@ components:
           $ref: '#/components/schemas/Role'
         required_password_change:
           type: boolean
+
+    PasswordSetUrl:
+      type: object
+      properties:
+        set_password_url:
+          type: string

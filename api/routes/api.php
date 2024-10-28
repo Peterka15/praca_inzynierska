@@ -15,8 +15,8 @@ use App\Http\Controllers\API\UnitsController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/setPassword/{uuid}', [AuthController::class, 'setPassword']);
 
 Route::resource('articles', ArticlesController::class)->only(['index', 'show']);
 Route::resource('tags', TagsController::class)->only(['index', 'show']);
@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('inventoryCategory', InventoryCategoryController::class);
     Route::resource('management', ManagementController::class);
     Route::resource('users', UserController::class);
-    Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
+    Route::post('/users/resetPassword/{id}', [UserController::class, 'resetPassword']);
+
     Route::get('/profile', [UserController::class, 'getCurrent']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/logout', [AuthController::class, 'logout']);

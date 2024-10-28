@@ -11,6 +11,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -28,32 +30,55 @@ class UserController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        // Only admin is allowed to create new users
+        if (!$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
+        }
+
         $validator = Validator::make($request->all(), [
-            User::NAME => 'string|max:255|required',
-            User::EMAIL => 'string|email|max:255|unique:users|required',
-            User::PASSWORD => 'string|min:8|required',
+            User::NAME => 'required|string|max:255|required',
+            User::EMAIL => 'required|string|email|max:255|unique:users|required',
+            User::ROLE_ID => 'required|integer|min:1|exists:roles,id|required',
+            User::UNIT_ID => 'required|integer|min:1|exists:units,id|required'
         ]);
 
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors());
         }
 
-        // Only admin is allowed to create new users
+        $requestData = $request->all();
+
+        $user = User::create($requestData);
+        $user->password = Hash::make(Uuid::uuid4()->toString());
+        $user->password_change_token = Uuid::uuid4()->toString();
+        $user->password_change_is_required = true;
+        $user->save();
+
+        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
+    }
+
+    public function resetPassword($id): JsonResponse
+    {
+        // Only admin is allowed to reset passwords
         if (!$this->currentUser->isRole(UserRole::ADMIN())) {
             return $this->notAuthorisedResponse();
         }
 
-        $requestData = $request->all();
+        $user = User::findOrFail($id);
 
-        // Todo will it work with non-fillable field? Probably not.
-        if (isset($requestData[User::PASSWORD])) {
-            $requestData[User::PASSWORD] = Hash::make($requestData[User::PASSWORD]);
+        if(!$user) {
+            return $this->errorResponse(['email' => ['User not found.']], Response::HTTP_NOT_FOUND);
         }
 
-        $user = User::create($requestData);
+        if ($user->role_enum->equals(UserRole::DISABLED())) {
+            return $this->errorResponse(['password' => ['Account is disabled.']], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user->password_change_token = Uuid::uuid4()->toString();
+        $user->password_change_is_required = true;
         $user->save();
 
-        return $this->successResponse(new UserResource($user));
+        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
     }
 
     public function show(int $id): JsonResponse

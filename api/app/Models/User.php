@@ -30,7 +30,6 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int $required_password_change
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Role|null $role
@@ -124,5 +123,14 @@ final class User extends Authenticatable
     public function isRoleIn(array $roles): bool
     {
         return in_array($this->role_enum->getValue(), array_map(static fn(UserRole $role) => $role->getValue(), $roles), true);
+    }
+
+    public function getSetPasswordUrl(): ?string
+    {
+        if(!$this->password_change_token) {
+            return null;
+        }
+
+        return env('APP_SET_PASSWORD_URL') . '/' . $this->password_change_token;
     }
 }

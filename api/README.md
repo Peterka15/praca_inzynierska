@@ -1,11 +1,11 @@
 # Backend dla Portal OSP
 
 # TODO
-- [ ] Tworzenie użytkowników przed administratora / moderatora
+- [x] Tworzenie użytkowników przed administratora / moderatora
 - [ ] Edycja użytkownika
 - [ ] Usuwanie użytkownika
-- [ ] Rejestracja przez przesłanie linku z tokenem
-- [ ] Zmiana hasła przez przesłanie linku z tokenem
+- [x] Rejestracja przez przesłanie linku z tokenem
+- [x] Zmiana hasła przez przesłanie linku z tokenem
 - [ ] Kontroler do materiałów szkoleniowych
 - [x] Kontroler do wyposażenia i kategorii - `InventoryController / InventoryCategoryController`
 - [x] Kontroler do wyświetlania / modyfikacji zarządu
