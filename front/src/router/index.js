@@ -9,6 +9,8 @@ import Register from "@/views/Register";
 import AdminPanel from "@/views/AdminPanel.vue";
 import Inventory from "@/views/Inventory.vue";
 import Managment from "@/views/Managment.vue";
+import SetPassword from "@/views/SetPassword.vue";
+import AuthPassword from "@/views/AuthPassword.vue";
 
 Vue.use(VueRouter)
 
@@ -47,6 +49,16 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/setpassword',
+    name: 'setpassword',
+    component: SetPassword
+  },
+  {
+    path: '/authpassword',
+    name: 'authpassword',
+    component: AuthPassword
   },
   {
     path: '/inventory',
