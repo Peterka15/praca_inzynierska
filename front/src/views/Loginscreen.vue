@@ -9,7 +9,7 @@
 
     <div class="center centerp shadow">
       <div>
-        <h3 class="left_column">OSP LATARNIA GNIEZNO</h3>
+        <h3 class="left_column">POWIATOWY SYSTEM OSP</h3>
       </div>
       <div>
         <div class="logininput">

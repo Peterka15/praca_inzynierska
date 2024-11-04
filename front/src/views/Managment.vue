@@ -9,6 +9,16 @@
     <div class="center_box center_boxp shadow">
       <div class="addbutton addbuttonp">
         <b-button variant="primary" v-b-modal.my-modal>Dodaj członka zarządu +</b-button>
+        <div class="search-container">
+          <b-input-group class="mb-3" style="max-width: 300px; margin-left: auto;">
+            <b-form-input
+                v-model="searchQuery"
+                placeholder="Wyszukaj członka zarządu..."
+                style="margin: 10px"
+            ></b-form-input>
+          </b-input-group>
+        </div>
+
         <b-modal id="my-modal">
           <h3>
             <div>
@@ -56,7 +66,7 @@
       <div class="line"><h2 style="color: white;">Lista członków zarządu</h2></div>
 
       <div>
-        <b-table  style="margin: -209px; position: absolute;top: 39%;left: 17%;width: 98%; --bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);" striped hover :items="users" :fields="fields" @sort-changed="onSortChange ">
+        <b-table  style="margin: -209px; position: absolute;top: 39%;left: 17%;width: 98%; --bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);" striped hover :items="filteredUsers" :fields="fields" @sort-changed="onSortChange ">
           <template #cell(edit)="row">
             <b-button @click="editUser(row.item)">Edytuj</b-button>
           </template>
@@ -82,6 +92,7 @@ export default {
   name: 'Mainpage',
   data() {
     return {
+      searchQuery: '',
       name: '',
       email: '',
       selectedUnit: null,
@@ -136,6 +147,18 @@ export default {
         { key: 'edit', label: '', sortable: false }
       ]
     };
+  },
+  computed: {
+    filteredUsers() {
+      return this.users.filter(user => {
+        const query = this.searchQuery.toLowerCase();
+        return (
+            user.name.toLowerCase().includes(query) ||
+            user.position.toLowerCase().includes(query) ||
+            user.unit.toLowerCase().includes(query)
+        );
+      });
+    }
   },
   components: {
     Navbar

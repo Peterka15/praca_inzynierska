@@ -8,8 +8,14 @@
     </div>
 
     <div class="center_box center_boxp shadow">
-      <div class="addbutton addbuttonp">
-        <b-button variant="primary" v-b-modal.my-modal>Dodaj nowy sprzęt +</b-button>
+      <div class="addbutton addbuttonp" >
+        <b-button variant="primary" v-b-modal.my-modal >Dodaj nowy sprzęt +</b-button>
+        <b-form-input
+            v-model="searchQuery"
+            placeholder="Wyszukaj sprzęt..."
+            class="mb-3"
+            style="margin: 10px"
+        ></b-form-input>
         <b-modal id="my-modal">
           <h3>
             <div>
@@ -66,6 +72,7 @@
               <div class="logininput">
                 <b-button v-b-modal.modal-1 @click="addItem()">Dodaj</b-button>
               </div>
+
             </div>
           </h3>
         </b-modal>
@@ -77,12 +84,18 @@
         <b-table
             style="margin: -209px; position: absolute;top: 39%;left: 17%;width: 98%; --bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);"
             striped hover
-            :items="equipment"
+            :items="filteredEquipment"
             :fields="fields"
             @sort-changed="onSortChange"
         >
           <template #cell(edit)="row">
             <b-button @click="editUser(row.item)">Edytuj</b-button>
+          </template>
+
+          <template #cell(isInStock)="row">
+      <span :style="row.item.isInStock === 'nie' ? { color: 'red' } : {}">
+        {{ row.item.isInStock }}
+      </span>
           </template>
         </b-table>
       </div>
@@ -106,6 +119,7 @@ export default {
   name: 'Mainpage',
   data() {
     return {
+
       name: '',
       selectedUnit: null,
       selectedCategory: null,
@@ -170,10 +184,24 @@ export default {
         { key: 'category', label: 'Kategoria', sortable: true },
         { key: 'edit', label: '', sortable: false }
       ]
+
     };
   },
   components: {
     Navbar
+  },
+  computed: {
+    filteredEquipment() {
+      return this.equipment.filter(item => {
+        const query = this.searchQuery.toLowerCase();
+        return (
+            item.isInStock.toLowerCase().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
+            item.unit.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query)
+        );
+      });
+    }
   },
   methods: {
     generatePDF() {
