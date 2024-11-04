@@ -22,8 +22,8 @@ class InventoryResource extends JsonResource
             Inventory::ID => $inventory->id,
             Inventory::NAME => $inventory->name,
             Inventory::AMOUNT => $inventory->amount,
-            Inventory::CATEGORY => new InventoryCategoryResource($inventory->category_id),
-            Inventory::UNIT => new UnitResource($inventory->unit_id),
+            Inventory::CATEGORY => new InventoryCategoryResource($inventory->category),
+            Inventory::UNIT => new UnitResource($inventory->unit),
             Inventory::AVAILABLE => $inventory->available
         ];
     }

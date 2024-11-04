@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 final class Unit extends ApiModel
 {
-
     use HasFactory;
 
     public const TABLE_NAME = 'units';
@@ -32,5 +31,4 @@ final class Unit extends ApiModel
     protected $fillable = [
         self::NAME,
     ];
-
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Management
@@ -39,4 +40,9 @@ final class Management extends ApiModel
         self::UNIT_ID,
         self::FUNCTION
     ];
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(Unit::class, Unit::ID, self::UNIT_ID);
+    }
 }

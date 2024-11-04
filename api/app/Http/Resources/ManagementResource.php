@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\Management;
+use App\Models\Unit;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +25,7 @@ class ManagementResource extends JsonResource
             Management::ID => $management->id,
             Management::NAME => $management->name,
             Management::FUNCTION => $management->function,
-            Management::UNIT_ID => new UnitResource($management->unit_id)
+            Management::UNIT_ID => new UnitResource($management->unit)
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Inventory
@@ -50,4 +51,14 @@ final class Inventory extends ApiModel
         self::UNIT_ID,
         self::AVAILABLE,
     ];
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(Unit::class, Unit::ID, self::UNIT_ID);
+    }
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(InventoryCategory::class, InventoryCategory::ID, self::CATEGORY_ID);
+    }
 }
