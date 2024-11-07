@@ -2,8 +2,8 @@
 
 # TODO
 - [x] Tworzenie użytkowników przed administratora / moderatora
-- [ ] Edycja użytkownika
-- [ ] Usuwanie użytkownika
+- [x] Edycja użytkownika
+- [x] Usuwanie użytkownika
 - [x] Rejestracja przez przesłanie linku z tokenem
 - [x] Zmiana hasła przez przesłanie linku z tokenem
 - [ ] Kontroler do materiałów szkoleniowych

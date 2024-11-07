@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             User::UPDATED_AT => $user->updated_at,
             User::UNIT => new UnitResource($user->unit),
             User::ROLE => new RoleResource($user->role),
-            User::PASSWORD_CHANGE_IS_REQUIRED => $user->required_password_change,
+            User::PASSWORD_CHANGE_IS_REQUIRED => $user->password_change_is_required,
         ];
     }
 }

@@ -66,7 +66,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        if(!$user) {
+        if (!$user) {
             return $this->errorResponse(['email' => ['User not found.']], Response::HTTP_NOT_FOUND);
         }
 
@@ -103,8 +103,6 @@ class UserController extends Controller
             return $this->errorResponse($validator->errors());
         }
 
-        var_dump($this->currentUser->role_enum);
-
         if ($user->id !== $this->currentUser->id && !$this->currentUser->isRole(UserRole::ADMIN())) {
             return $this->notAuthorisedResponse();
         }
@@ -123,5 +121,17 @@ class UserController extends Controller
         $user->save();
 
         return $this->successResponse(new UserResource($user));
+    }
+
+    public function destroy(User $user): JsonResponse
+    {
+        if (!$this->currentUser->isRole(UserRole::ADMIN())) {
+            return $this->notAuthorisedResponse();
+        }
+
+        $user->role_id = UserRole::DISABLED()->getValue();
+        $user->save();
+
+        return $this->successResponse(null, Response::HTTP_NO_CONTENT);
     }
 }
