@@ -11,16 +11,68 @@
 - [x] Kontroler do wyświetlania / modyfikacji zarządu
 - [ ] Uprawniania
   - [ ] Artykuły
+    - GET: Publiczne
+    - POST: Moderator tylko swoje OSP, Administrator
+    - PATCH: Moderator tylko swoje OSP, Administrator
+    - DELETE: Moderator tylko swoje OSP, Administrator
   - [ ] Auth
+    - login: Publiczne
+    - logout: Publiczne
+    - setPassword: Publiczne
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Komentarze
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Pliki
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Zdjęcia
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Zarząd
+    - GET: Publiczne (???)
+    - POST: Moderator tylko swoje OSP, Administator
+    - PATCH: Moderator tylko swoje OSP, Administator
+    - DELETE: Moderator tylko swoje OSP, Administator
   - [ ] Role
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Tagi
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Jednostki
+    - GET:
+    - POST:
+    - PATCH:
+    - DELETE:
   - [ ] Użytkownicy
+    - GET: Niepubliczne (po zalogowaniu)
+    - POST: Moderator tylko swoje OSP, Administrator
+    - PATCH: Moderator tylko swoje OSP, Administrator
+    - DELETE: Moderator tylko swoje OSP, Administrator
+    - resetPassword: Administrator
+  - [ ] Wyposażenie
+    - GET: Niepubliczne (po zalogowaniu), Komandant i Admin wszystko, Moderator i user tylko swoje OSP
+    - POST: Moderator tylko swoje OSP, Administrator
+    - PATCH: Moderator tylko swoje OSP, Administrator
+    - DELETE: Moderator tylko swoje OSP, Administrator
   - [ ] Materiały szkoleniowe
+    - GET: Niepubliczne (po zalogowaniu)
+    - POST: Moderator tylko swoje OSP, Administrator
+    - PATCH: Moderator tylko swoje OSP, Administrator
+    - DELETE: Moderator tylko swoje OSP, Administrator
 
 # Setup projektu
 ## Docker

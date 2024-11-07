@@ -6,14 +6,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Enums\UserRole;
-use App\Models\Image;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -74,7 +71,7 @@ class AuthController extends Controller
 
         $user = User::wherePasswordChangeToken($uuid)->first();
 
-        if(!$user) {
+        if (!$user) {
             return $this->errorResponse(['uuid' => ['Token not found.']], Response::HTTP_NOT_FOUND);
         }
 
