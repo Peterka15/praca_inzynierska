@@ -38,6 +38,7 @@ final class File extends ApiModel
 
     public const USER_ID = 'user_id';
     public const UUID = 'uuid';
+    public const URL = 'url';
     public const NAME = 'name';
     public const MIME_TYPE = 'mime_type';
 

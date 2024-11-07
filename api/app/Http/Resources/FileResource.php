@@ -20,12 +20,11 @@ class FileResource extends JsonResource
 
         return [
             File::ID => $file->id,
+            File::URL => $file->path(),
             File::UUID => $file->uuid,
             File::USER_ID => $file->user_id,
             File::NAME => $file->name,
-            File::MIME_TYPE => $file->mime_type,
-            File::CREATED_AT => $file->created_at,
-            File::UPDATED_AT => $file->updated_at
+            File::MIME_TYPE => $file->mime_type
         ];
     }
 }

@@ -5,13 +5,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FileResource;
-use App\Http\Resources\FileUrlResource;
 use App\Models\File;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
-use Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FilesController extends Controller
@@ -20,7 +19,7 @@ class FilesController extends Controller
     {
         $files = File::latest()->get();
 
-        return $this->successResponse(FileUrlResource::collection($files));
+        return $this->successResponse(FileResource::collection($files));
     }
 
     public function store(Request $request): JsonResponse

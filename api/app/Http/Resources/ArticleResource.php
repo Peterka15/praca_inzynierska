@@ -23,7 +23,7 @@ class ArticleResource extends JsonResource
             Article::AUTHOR => new UserResource($article->author),
             Article::TITLE => $article->title,
             Article::CONTENT => $article->content,
-            Article::IMAGES => ImageUrlResource::collection($article->images),
+            Article::IMAGES => ImageResource::collection($article->images),
             Article::COMMENTS => CommentResource::collection($article->comments),
             Article::TAGS => TagResource::collection($article->tags),
             Article::CREATED_AT => $article->created_at,

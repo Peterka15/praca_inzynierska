@@ -36,6 +36,7 @@ final class Image extends ApiModel
 
     public const ARTICLE_ID = 'article_id';
     public const UUID = 'uuid';
+    public const URL = 'url';
     public const MIME_TYPE = 'mime_type';
 
     protected $fillable = [

@@ -21,10 +21,9 @@ class ImageResource extends JsonResource
 
         return [
             Image::ID => $image->id,
+            Image::URL => $image->path(),
             Image::ARTICLE_ID => $image->article_id,
-            Image::UUID => $image->uuid,
-            Image::CREATED_AT => $image->created_at,
-            Image::UPDATED_AT => $image->updated_at
+            Image::UUID => $image->uuid
         ];
     }
 }

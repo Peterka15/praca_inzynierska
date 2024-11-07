@@ -114,8 +114,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Article'
-        500:
-          description: Server error
 
     post:
       summary: Create a new article (requires authentication)
@@ -237,8 +235,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Inventory'
-        500:
-          description: Server error
 
     post:
       summary: Create a new inventory entry
@@ -370,8 +366,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-        500:
-          description: Server error
 
     post:
       summary: Create a new inventory category
@@ -483,8 +477,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Management'
-        500:
-          description: Server error
 
     post:
       summary: Create a new management record
@@ -606,8 +598,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
-        500:
-          description: Server error
 
     post:
       summary: Create a new tag (requires authentication)
@@ -756,6 +746,58 @@ paths:
         404:
           description: Comment not found
 
+  /files:
+    get:
+      summary: List all files
+      operationId: listFiles
+      tags:
+        - Files
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/File'
+        401:
+          description: Not authorized
+
+    post:
+      summary: Upload a new file
+      operationId: uploadFile
+      tags:
+        - Files
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the file
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+              required:
+                - name
+                - file
+      responses:
+        201:
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        400:
+          description: Validation error
+        401:
+          description: Not authorized
+
   /files/{uuid}:
     get:
       summary: Download a file by UUID
@@ -771,8 +813,69 @@ paths:
       responses:
         200:
           description: File download successful
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        401:
+          description: Not authorized
         404:
           description: File not found
+
+    delete:
+      summary: Delete a file by UUID
+      operationId: deleteFileByUuid
+      tags:
+        - Files
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: File deleted successfully
+        401:
+          description: Not authorized
+        404:
+          description: File not found
+
+  /images:
+    post:
+      summary: Upload a new image
+      operationId: uploadImage
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                article_id:
+                  type: integer
+                  description: ID of the article the image is associated with
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload
+              required:
+                - article_id
+                - image
+      responses:
+        201:
+          description: Image uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        400:
+          description: Validation error
+        401:
+          description: Not authorized
 
   /images/{uuid}:
     get:
@@ -788,7 +891,33 @@ paths:
             type: string
       responses:
         200:
-          description: Image retrieved
+          description: Image retrieved successfully
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+        401:
+          description: Not authorized
+        404:
+          description: Image not found
+
+    delete:
+      summary: Delete an image by UUID
+      operationId: deleteImageByUuid
+      tags:
+        - Images
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Image deleted successfully
+        401:
+          description: Not authorized
         404:
           description: Image not found
 
@@ -807,8 +936,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Role'
-        500:
-          description: Server error
 
   /units:
     get:
@@ -825,8 +952,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Unit'
-        500:
-          description: Server error
 
   /users:
     get:
@@ -843,8 +968,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-        500:
-          description: Server error
 
     post:
       summary: >-
@@ -898,8 +1021,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-        500:
-          description: Server error
 
     patch:
       summary: Update an user (requires authentication)
@@ -1010,7 +1131,7 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/ImageUrl'
+            $ref: '#/components/schemas/Image'
         comments:
           type: array
           items:
@@ -1065,54 +1186,6 @@ components:
         updated_at:
           type: string
           format: date-time
-
-    File:
-      type: object
-      properties:
-        id:
-          type: integer
-        uuid:
-          type: string
-        user_id:
-          type: integer
-        name:
-          type: string
-        mime_type:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-
-    FileUrl:
-      type: object
-      properties:
-        url:
-          type: string
-
-    Image:
-      type: object
-      properties:
-        id:
-          type: integer
-        article_id:
-          type: integer
-        uuid:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-
-    ImageUrl:
-      type: object
-      properties:
-        url:
-          type: string
 
     Role:
       type: object
@@ -1189,3 +1262,30 @@ components:
       properties:
         set_password_url:
           type: string
+
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        user_id:
+          type: integer
+        name:
+          type: string
+        mime_type:
+          type: string
+
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        article_id:
+          type: integer
+        mime_type:
+          type: string
+

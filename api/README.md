@@ -6,7 +6,7 @@
 - [x] Usuwanie użytkownika
 - [x] Rejestracja przez przesłanie linku z tokenem
 - [x] Zmiana hasła przez przesłanie linku z tokenem
-- [ ] Kontroler do materiałów szkoleniowych
+- [x] Kontroler do materiałów szkoleniowych (files)
 - [x] Kontroler do wyposażenia i kategorii - `InventoryController / InventoryCategoryController`
 - [x] Kontroler do wyświetlania / modyfikacji zarządu
 - [ ] Uprawniania

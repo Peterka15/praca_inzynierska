@@ -9,11 +9,10 @@ use App\Models\Image;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
-use Response;
-use Storage;
-
 class ImagesController extends Controller
 {
     public function store(Request $request): JsonResponse
@@ -46,7 +45,7 @@ class ImagesController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response | JsonResponse
+     * @return Response | JsonResponse
      * @throws FileNotFoundException
      */
     public function show(string $uuid)
