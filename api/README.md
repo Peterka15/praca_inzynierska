@@ -19,44 +19,44 @@
     - login: Publiczne
     - logout: Publiczne
     - setPassword: Publiczne
-    - POST:
-    - PATCH:
-    - DELETE:
+    - POST: Administrator
+    - PATCH: Administrator
+    - DELETE: Administrator
   - [ ] Komentarze
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Publiczne
+    - POST: Publiczne
+    - PATCH: nikt (nie ma sensu, żeby ktokolwiek mógł edytować komentarz)
+    - DELETE: Moderator tylko swoje OSP, Administrator
   - [ ] Pliki
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Niepubliczne (po zalogowaniu), Komandant i Admin wszystko, Moderator i user tylko swoje OSP
+    - POST: Moderator tylko swoje OSP, Administrator
+    - PATCH: Moderator tylko swoje OSP, Administrator
+    - DELETE: Moderator tylko swoje OSP, Administrator
   - [ ] Zdjęcia
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Publiczne
+    - POST: Moderator tylko swoje OSP, Administator
+    - PATCH: Moderator tylko swoje OSP, Administator
+    - DELETE: Moderator tylko swoje OSP, Administator
   - [ ] Zarząd
-    - GET: Publiczne (???)
+    - GET: Publiczne
     - POST: Moderator tylko swoje OSP, Administator
     - PATCH: Moderator tylko swoje OSP, Administator
     - DELETE: Moderator tylko swoje OSP, Administator
   - [ ] Role
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Publiczne
+    - POST: Administator
+    - PATCH: Administator
+    - DELETE: Administator
   - [ ] Tagi
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Publiczne
+    - POST: Moderator tylko swoje OSP, Administator
+    - PATCH: Moderator tylko swoje OSP, Administator
+    - DELETE: Moderator tylko swoje OSP, Administator
   - [ ] Jednostki
-    - GET:
-    - POST:
-    - PATCH:
-    - DELETE:
+    - GET: Publiczne
+    - POST: Administator
+    - PATCH: Administator (Moderator tylko swoje OSP - tu raczej nie ma sensu)
+    - DELETE: Administator
   - [ ] Użytkownicy
     - GET: Niepubliczne (po zalogowaniu)
     - POST: Moderator tylko swoje OSP, Administrator
