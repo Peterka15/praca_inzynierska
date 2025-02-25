@@ -1,9 +1,10 @@
 <template>
   <b-col cols="3" class="panel">
     <h1 class="logo">
-      <router-link to="/"> OSP LATARNIA <span>GNIEZNO <b-img
-          src="http://localhost:8000/logo.png" fluid
-          alt="Fluid image"></b-img></span></router-link>
+      <router-link to="/">
+        <span v-if="!auth.loggedIn">POWIATOWY SYSTEM OSP</span>
+        <span v-else>{{auth.user.unit.name}}</span>
+      </router-link>
     </h1>
     <div class="nav-wrap">
       <nav class="main-nav" role="navigation">
@@ -17,10 +18,10 @@
               </form>
             </div>
           </li>
-          <li>
+          <li v-if="auth.loggedIn && (auth.user.role.isAdmin() || auth.user.role.isModerator())">
             <router-link to="/addarticle">Dodaj artykuł</router-link>
           </li>
-          <li>
+          <li v-if="auth.loggedIn">
             <router-link to="/materials">Materiały szkoleniowe</router-link>
           </li>
           <li>
@@ -44,6 +45,8 @@
 </template>
 
 <script>
+import auth from '@/Model/AuthInstance';
+
 export default {
   name: 'Sidebar',
 
@@ -53,7 +56,8 @@ export default {
       searchPhrase: '',
       showTagList: false,
       tags: ['Pożar', 'Sprzęt', 'Załoga'], // Replace with your actual tags or fetch dynamically
-      tagSearchPhrase: ''
+      tagSearchPhrase: '',
+      auth
     }
   },
   // TODO: Dodać wyszukiwanie nazw

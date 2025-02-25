@@ -1,7 +1,7 @@
 import ApiUrls from '@/api/ApiUrls';
 import readonly from '@/utils/readonly';
-import Bridge from "@/api/Bridge";
-import User from "@/Model/User";
+import Bridge from '@/api/Bridge';
+import User from '@/Model/User';
 
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 export default class Auth {
@@ -25,53 +25,42 @@ export default class Auth {
   /** @var {?User} */
   user = null;
 
-  restoreSession(callbackFn) {
+  restoreSession (callbackFn) {
+    this.wasSessionRestoreAttempted = true;
     this.token = localStorage.getItem('token');
 
-    if (this.token) {
-      this.tokenExpirationDate = Date.parse(localStorage.getItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE));
-
-      if (new Date() < this.tokenExpirationDate) {
-        Bridge.setBearerToken(this.token);
-
-        User.fetchCurrentUser()
-          .then((user) => {
-            this.user = user; console.log(this.user);
-            this.loggedIn = true;
-            this.wasSessionRestoreAttempted = true;
-
-            callbackFn(true);
-          })
-          .catch(() => {
-            this.user = null;
-            this.loggedIn = false;
-            this.wasSessionRestoreAttempted = true;
-
-            localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
-            localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);
-
-            callbackFn(false);
-          });
-      } else {
-        this.user = null;
-        this.loggedIn = false;
-        this.wasSessionRestoreAttempted = true;
-
-        localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
-        localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);
-
-        callbackFn(false);
-      }
-    } else {
-      this.user = null;
-      this.loggedIn = false;
-      this.wasSessionRestoreAttempted = true;
-
-      localStorage.removeItem(this.LOCAL_STORAGE_TOKEN);
-      localStorage.removeItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE);
-
+    if (!this.token) {
+      this.logout();
       callbackFn(false);
+      return;
     }
+
+    this.tokenExpirationDate = Date.parse(localStorage.getItem(this.LOCAL_STORAGE_TOKEN_EXPIRATION_DATE));
+
+    if (new Date() >= this.tokenExpirationDate) {
+      this.logout();
+      callbackFn(false);
+      return;
+    }
+
+    Bridge.setBearerToken(this.token);
+
+    if (this.user) {
+      callbackFn(true);
+      return;
+    }
+
+    User.fetchCurrentUser()
+      .then((user) => {
+        this.user = user;
+        this.loggedIn = true;
+
+        callbackFn(true);
+      })
+      .catch(() => {
+        this.logout();
+        callbackFn(false);
+      });
   }
 
   /**
@@ -83,7 +72,7 @@ export default class Auth {
    *
    * @return Promise
    */
-  register(email,password,name){
+  register (email, password, name) {
     let data = {
       email: email,
       password: password,
@@ -96,7 +85,6 @@ export default class Auth {
     );
   }
 
-
   /**
    * Login to api (retrieve JWT token)
    * Token is stored in localStorage
@@ -104,7 +92,7 @@ export default class Auth {
    * @param {string} password
    * @return Promise
    */
-  login(email, password) {
+  login (email, password) {
     let data = {
       email: email,
       password: password
@@ -131,7 +119,7 @@ export default class Auth {
     );
   }
 
-  logout() {
+  logout () {
     this.user = null;
     this.loggedIn = false;
 
@@ -141,11 +129,10 @@ export default class Auth {
     Bridge.setBearerToken();
   }
 
-
   /**
    * @return {?User}
    */
-  getCurrentUser() {
+  getCurrentUser () {
     return this.user;
   }
 
@@ -154,7 +141,7 @@ export default class Auth {
    * Returns empty string if token not found
    * @return string
    */
-  static getBearerToken() {
+  static getBearerToken () {
     let token = localStorage.getItem('token');
     return (token !== null) ? 'bearer ' + token : '';
   }
