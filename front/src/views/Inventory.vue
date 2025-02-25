@@ -109,11 +109,7 @@
 </template>
 
 <script>
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import Navbar from "@/components/Navbar.vue";
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
   name: 'Mainpage',
@@ -204,43 +200,6 @@ export default {
     }
   },
   methods: {
-    generatePDF() {
-      const docDefinition = {
-        content: [
-          { text: 'Lista Wyposażenia', style: 'header' },
-          {
-            table: {
-              headerRows: 1,
-              widths: ['*', '*', '*', '*', '*'],
-              body: [
-                ['Na stanie', 'Nazwa sprzętu', 'Ilość', 'Jednostka', 'Kategoria'],
-                ...this.equipment.map(item => [
-                  item.isInStock ? 'Tak' : 'Nie',
-                  item.name,
-                  item.amount,
-                  item.unit,
-                  item.category
-                ])
-              ]
-            }
-          }
-        ],
-        styles: {
-          header: {
-            fontSize: 18,
-            bold: true,
-            margin: [0, 0, 0, 10]
-          },
-          tableHeader: {
-            bold: true,
-            fontSize: 13,
-            color: 'black'
-          }
-        }
-      };
-
-      pdfMake.createPdf(docDefinition).download('equipment.pdf');
-    },
     addItem() {
       // Funkcja dodawania sprzętu
     },

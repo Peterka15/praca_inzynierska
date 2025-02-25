@@ -1,4 +1,4 @@
-export const baseApiUrl = 'http://localhost:8000/api';
+export const baseApiUrl = 'http://localhost:8090/api';
 
 export default {
   articles: 'articles',

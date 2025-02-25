@@ -82,11 +82,8 @@
 </template>
 
 <script>
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import Navbar from "@/components/Navbar.vue";
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default {
   name: 'Mainpage',
@@ -164,45 +161,6 @@ export default {
     Navbar
   },
   methods: {
-    generatePDF() {
-      const docDefinition = {
-        content: [
-          { text: 'Lista Członków Zarządu', style: 'header' },
-          {
-            table: {
-              headerRows: 1,
-              widths: ['auto', '*', '*', 'auto'],
-              body: [
-                [
-                  { text: 'Imię i nazwisko', style: 'tableHeader' },
-                  { text: 'Pełniona funkcja', style: 'tableHeader' },
-                  { text: 'Jednostka', style: 'tableHeader' },
-                ],
-                ...this.users.map(user => [
-                  user.name,
-                  user.position,
-                  user.unit,
-                ])
-              ]
-            }
-          }
-        ],
-        styles: {
-          header: {
-            fontSize: 18,
-            bold: true,
-            margin: [0, 0, 0, 10]
-          },
-          tableHeader: {
-            bold: true,
-            fontSize: 13,
-            color: 'black'
-          }
-        }
-      };
-
-      pdfMake.createPdf(docDefinition).download('zarzad_osp.pdf');
-    },
     addItem() {
       if (this.name && this.email && this.selectedUnit && this.selectedPosition) {
         this.users.push({
