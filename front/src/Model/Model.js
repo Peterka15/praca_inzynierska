@@ -1,15 +1,15 @@
-import ApiUrls from "@/api/ApiUrls";
-import Bridge, {BridgeRequestMethod} from "@/api/Bridge";
+import ApiUrls from '@/api/ApiUrls';
+import Bridge, { BridgeRequestMethod } from '@/api/Bridge';
 
 export default class Model {
   endpoint = ApiUrls.articles;
   id = 0;
 
-  static fromData(data) {
+  static fromData (data) {
     return (new this()).hydrate(data);
   }
 
-  refresh() {
+  refresh () {
     return Bridge.getData(this.endpoint, this.id)
       .then((response) => {
         if (response.message !== undefined) {
@@ -23,7 +23,7 @@ export default class Model {
       });
   }
 
-  static get(id) {
+  static get (id) {
     const model = new this();
 
     return Bridge.getData(model.endpoint, id)
@@ -38,7 +38,7 @@ export default class Model {
       });
   }
 
-  static getAll(args = null) {
+  static getAll (args = null) {
     const model = new this();
 
     return Bridge.getData(model.endpoint, null, args)
@@ -52,18 +52,18 @@ export default class Model {
       });
   }
 
-  post() {
+  post () {
     if (this.id !== 0) {
       throw new Error('Can\'t POST already created object.');
     }
-console.log("post1")
+    console.log('post1');
 
     return Bridge.postData(this.endpoint, this.dehydrate(BridgeRequestMethod.POST))
       .then((response) => {
         if (response.message !== undefined) {
           throw new Error(`POST failed with message ${response.message}`);
         }
-        console.log("post2")
+        console.log('post2');
         this.hydrate(response.data);
 
         /** @var Model this */
@@ -71,17 +71,17 @@ console.log("post1")
       });
   }
 
-  put() {
+  put () {
     if (this.id === 0) {
       throw new Error('Can\'t PUT non-existing object.');
     }
-    console.log("put1")
+    console.log('put1');
     return Bridge.putData(this.endpoint, this.id, this.dehydrate(BridgeRequestMethod.PUT))
       .then((response) => {
         if (response.message !== undefined) {
           throw new Error(`PUT failed with message ${response.message}`);
         }
-        console.log("put2")
+        console.log('put2');
         this.hydrate(response.data);
 
         /** @var Model this */
@@ -89,11 +89,11 @@ console.log("post1")
       });
   }
 
-  save() {
+  save () {
     return (this.id === 0) ? this.post() : this.put();
   }
 
-  delete() {
+  delete () {
     if (this.id === 0) {
       throw new Error('Can\'t DELETE non-existing object.');
     }
@@ -111,13 +111,13 @@ console.log("post1")
 
   /** @return Object */
   // eslint-disable-next-line no-unused-vars
-  hydrate(data) {
+  hydrate (data) {
     throw new Error('CANNOT USE HYDRATE');
   }
 
   /** @return Object */
   // eslint-disable-next-line no-unused-vars
-  dehydrate(method) {
+  dehydrate (method) {
     throw new Error('CANNOT USE DEHYDRATE');
   }
 }

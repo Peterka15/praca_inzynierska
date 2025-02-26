@@ -2,7 +2,7 @@ import Model from "@/Model/Model";
 import ApiUrls from "@/api/ApiUrls";
 
 export default class Tag extends Model {
-  endpoint = ApiUrls.articles;
+  endpoint = ApiUrls.tags;
 
   /** @var {string} */
   name;

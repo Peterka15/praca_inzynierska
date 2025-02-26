@@ -57,8 +57,6 @@ export default {
       return;
     }
 
-
-
     this.dataStorage.loadData().then(() => {
       console.log('[DATA_STORAGE]', this.dataStorage);
       this.isReady = true;

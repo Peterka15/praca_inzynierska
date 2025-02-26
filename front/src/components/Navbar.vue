@@ -4,13 +4,14 @@
       <b-navbar-nav>
         <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
-        <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Kategorie Artykułów" right>
-          <b-dropdown-item href="#">Pożar</b-dropdown-item>
-          <b-dropdown-item href="#">Wypadek</b-dropdown-item>
-          <b-dropdown-item href="#">Jubileusz</b-dropdown-item>
-          <b-dropdown-item href="#">Zabezpieczenie</b-dropdown-item>
+        <template v-if="tags.length <= 5">
+          <b-nav-item v-for="tag in tags" :key="tag.id" href="#">{{ tag.name }}</b-nav-item>
+        </template>
+        <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>
+          <b-dropdown-item v-for="tag in tags" :key="tag.id" href="#">{{ tag.name }}</b-dropdown-item>
         </b-nav-item-dropdown>
+
+
         <b-nav-item v-if="auth.loggedIn && (auth.user.role.isAdmin() || auth.user.role.isModerator())"
                     :to="{ path: '/addarticle'}">Nowy artykuł
         </b-nav-item>
@@ -30,13 +31,15 @@
 
 <script>
 import auth from '@/Model/AuthInstance';
+import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
   name: 'Navbar',
   data () {
     return {
       isSessionRestored: false,
-      auth
+      auth,
+      tags: dataStorage.tags.data
     };
   },
 

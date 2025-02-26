@@ -1,5 +1,5 @@
-import Model from "@/Model/Model";
-import ApiUrls from "@/api/ApiUrls";
+import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class Image extends Model {
   endpoint = ApiUrls.articles;
@@ -15,7 +15,7 @@ export default class Image extends Model {
   /** @var {string} */
   updated_at;
 
-  constructor(uuid = '', article_id = 0) {
+  constructor (uuid = '', article_id = 0) {
     super();
 
     this.uuid = uuid;
@@ -23,7 +23,7 @@ export default class Image extends Model {
   }
 
   /** @return Image */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.uuid = data.uuid;
     this.url = data.url;
@@ -35,11 +35,11 @@ export default class Image extends Model {
   }
 
   /** @return {{uuid: string, article_id: number}} */
-  dehydrate() {
+  dehydrate () {
     return (
       {
         uuid: this.uuid,
-        article_id: this.article_id,
+        article_id: this.article_id
       }
     );
   }

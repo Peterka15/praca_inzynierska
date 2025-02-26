@@ -1,5 +1,5 @@
-import Model from "@/Model/Model";
-import ApiUrls from "@/api/ApiUrls";
+import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class Comment extends Model {
   endpoint = ApiUrls.comments;
@@ -15,7 +15,7 @@ export default class Comment extends Model {
   /** @var {string} */
   updated_at;
 
-  constructor(article_id = 0, author = '', content = '') {
+  constructor (article_id = 0, author = '', content = '') {
     super();
 
     this.article_id = article_id;
@@ -24,7 +24,7 @@ export default class Comment extends Model {
   }
 
   /** @return Comment */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.article_id = data.article_id;
     this.author = data.author;
@@ -36,12 +36,12 @@ export default class Comment extends Model {
   }
 
   /** @return {{article_id: number, author: string, content: string}} */
-  dehydrate() {
+  dehydrate () {
     return (
       {
         article_id: this.article_id,
         author: this.author,
-        content: this.content,
+        content: this.content
       }
     );
   }

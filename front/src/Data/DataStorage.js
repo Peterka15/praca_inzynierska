@@ -1,108 +1,104 @@
 import DataContainer from '@/Data/DataContainer';
 
-
 export default class DataStorage {
-    /** @type {DataContainer} */
-    articles;
+  /** @type {DataContainer} */
+  articles;
 
-    /** @type {DataContainer} */
-    comments;
+  /** @type {DataContainer} */
+  comments;
 
-    /** @type {DataContainer} */
-    users;
+  /** @type {DataContainer} */
+  users;
 
-    /** @type {?number} */
-    loggedAsId = null;
+  /** @type {?number} */
+  loggedAsId = null;
 
-    /** @type {Boolean} */
-    ready = false;
+  /** @type {Boolean} */
+  ready = false;
 
-    constructor () {
-        this.articles = new DataContainer(DataContainer.TYPE_ARTICLE);
-        this.users = new DataContainer(DataContainer.TYPE_USER);
-        this.comments = new DataContainer(DataContainer.TYPE_COMMENT);
+  constructor () {
+    this.articles = new DataContainer(DataContainer.TYPE_ARTICLE);
+    this.users = new DataContainer(DataContainer.TYPE_USER);
+    this.comments = new DataContainer(DataContainer.TYPE_COMMENT);
+    this.tags = new DataContainer(DataContainer.TYPE_TAG);
+  }
+
+  loadData () {
+    return Promise.all([this.articles.load(), this.tags.load()])
+      .then(() => {
+        this.onDataAvailable();
+      });
+  }
+
+  onDataAvailable () {
+    this.ready = this.isReady();
+
+    if (this.ready) {
+      console.log('Data storage ready.');
     }
+  }
 
-    loadData () {
-        return this.articles.load().then(articles => {
-            this.onDataAvailable();
-            return articles;
-        });
-    }
+  /**
+   * @return {boolean}
+   */
+  isReady () {
+    return this.articles.ready;
+  }
 
-    onDataAvailable () {
-        this.ready = this.isReady();
+  /**
+   * @return {?Article[]}
+   */
+  getArticles () {
+    return this.articles.data;
+  }
 
-        if (this.ready) {
-            console.log('Data storage ready.');
-        }
-    }
+  /**
+   * @param {number} id
+   * @return {?Article}
+   */
+  getArticle (id) {
+    return this.articles.data.find(article => article.id === id);
+  }
 
-    /**
-     * @return {boolean}
-     */
-    isReady () {
-        return this.articles.ready
-    }
+  /**
+   * @param article
+   */
+  removeArticle (article) {
+    this.articles.data.splice(this.articles.data.indexOf(article), 1);
+  }
 
+  /**
+   * @param {Article} article
+   */
+  addArticle (article) {
+    this.articles.data.push(article);
+  }
 
-    /**
-     * @return {?Article[]}
-     */
-    getArticles () {
-        return this.articles.data;
-    }
+  /**
+   * @param {Comment} comment
+   */
+  addComment (comment) {
+    this.comments.data.push(comment);
+  }
 
+  /**
+   * @return {?Comment[]}
+   */
+  getComments () {
+    return this.comments.data;
+  }
 
-    /**
-     * @param {number} id
-     * @return {?Article}
-     */
-    getArticle (id) {
-        return this.articles.data.find(article => article.id === id );
-    }
+  /**
+   * @param {User} user
+   */
+  addUser (user) {
+    this.users.data.push(user);
+  }
 
-
-    /**
-     * @param article
-     */
-    removeArticle (article) {
-        this.articles.data.splice(this.articles.data.indexOf(article), 1);
-    }
-
-    /**
-     * @param {Article} article
-     */
-    addArticle (article) {
-        this.articles.data.push(article);
-    }
-
-    /**
-     * @param {Comment} comment
-     */
-    addComment (comment) {
-        this.comments.data.push(comment);
-    }
-
-    /**
-     * @return {?Comment[]}
-     */
-    getComments () {
-        return this.comments.data;
-    }
-
-    /**
-     * @param {User} user
-     */
-    addUser (user) {
-        this.users.data.push(user);
-    }
-
-
-    /**
-     * @return {?User}
-     */
-    getLoggedUser () {
-        return this.users.data.find(user => user.id === this.loggedAsId);
-    }
+  /**
+   * @return {?User}
+   */
+  getLoggedUser () {
+    return this.users.data.find(user => user.id === this.loggedAsId);
+  }
 }

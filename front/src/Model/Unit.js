@@ -1,32 +1,32 @@
-import Model from "@/Model/Model";
+import Model from '@/Model/Model';
 
 export default class Unit extends Model {
-    /** @var {string} */
-    name;
+  /** @var {string} */
+  name;
 
-    constructor(name = '') {
-        super();
+  constructor (name = '') {
+    super();
 
-        this.name = name;
-    }
+    this.name = name;
+  }
 
-    /**
-     * @param {{id: number, name: string}} data
-     * @return Unit
-     */
-    hydrate(data) {
-        this.id = data.id;
-        this.name = data.name;
+  /**
+   * @param {{id: number, name: string}} data
+   * @return Unit
+   */
+  hydrate (data) {
+    this.id = data.id;
+    this.name = data.name;
 
-        return this;
-    }
+    return this;
+  }
 
-    /**
-     * @return {{name: string}}
-     */
-    dehydrate() {
-        return {
-            name: this.name,
-        };
-    }
+  /**
+   * @return {{name: string}}
+   */
+  dehydrate () {
+    return {
+      name: this.name
+    };
+  }
 }

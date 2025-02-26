@@ -1,9 +1,9 @@
-import Model from "@/Model/Model";
-import ApiUrls from "@/api/ApiUrls";
-import User from "@/Model/User";
-import Tag from "@/Model/Tag";
-import Image from "@/Model/Image";
-import Comment from "@/Model/Comment";
+import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
+import User from '@/Model/User';
+import Tag from '@/Model/Tag';
+import Image from '@/Model/Image';
+import Comment from '@/Model/Comment';
 
 export default class Article extends Model {
   endpoint = ApiUrls.articles;
@@ -32,7 +32,7 @@ export default class Article extends Model {
    * @param {string} content
    * @param {Tag[]} tags
    */
-  constructor(title = '', content = '', tags = []) {
+  constructor (title = '', content = '', tags = []) {
     super();
 
     this.title = title;
@@ -41,7 +41,7 @@ export default class Article extends Model {
   }
 
   /** @return Article */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id ?? 0;
     this.title = data.title;
     this.author = (new User()).hydrate(data.author);
@@ -56,7 +56,7 @@ export default class Article extends Model {
   }
 
   /** @return {{title: string, content: string, tags: string}} */
-  dehydrate() {
+  dehydrate () {
     return (
       {
         title: this.title,

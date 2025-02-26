@@ -1,5 +1,5 @@
-import Model from "@/Model/Model";
-import ApiUrls from "@/api/ApiUrls";
+import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class File extends Model {
   endpoint = ApiUrls.articles;
@@ -17,7 +17,7 @@ export default class File extends Model {
   /** @var {string} */
   updated_at;
 
-  constructor(uuid = '', user_id = '', name = '', mime_type = '',) {
+  constructor (uuid = '', user_id = '', name = '', mime_type = '') {
     super();
 
     this.uuid = uuid;
@@ -27,7 +27,7 @@ export default class File extends Model {
   }
 
   /** @return File */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.uuid = data.uuid;
     this.user_id = data.user_id;
@@ -40,13 +40,13 @@ export default class File extends Model {
   }
 
   /** @return {{author: string, title: string, content: string}} */
-  dehydrate() {
+  dehydrate () {
     return (
       {
         uuid: this.uuid,
         user_id: this.user_id,
         name: this.name,
-        mime_type: this.mime_type,
+        mime_type: this.mime_type
       }
     );
   }
