@@ -39,16 +39,19 @@ export default class Bridge {
     const request = new Request(url, params);
 
     // eslint-disable-next-line no-console
-    console.log('[Bridge] Fetching', url);
+    console.info('[Bridge] Fetching', url);
 
     return fetch(request)
       .then((response) => this.handleErrors(response))
       .then((response) => response.text())
       .then((responseString) => (responseString ? JSON.parse(responseString) : {}))
       .then((responseObject) => {
-        console.log('[Bridge] Success', responseObject);
+        console.info('[Bridge] Success', url, responseObject);
 
         return responseObject;
+      })
+      .catch((error) => {
+        console.error('[Bridge] Error', url, error);
       });
   }
 
@@ -57,7 +60,6 @@ export default class Bridge {
     id = null,
     args = null
   ) {
-    console.log(endpoint, id, args);
     let url = this.getUrl(endpoint);
 
     if (id !== null) {

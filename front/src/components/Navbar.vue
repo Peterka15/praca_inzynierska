@@ -4,7 +4,7 @@
       <b-navbar-nav>
         <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
-        <template v-if="dataStorage.tags.data.length <= 5">
+        <template v-if="dataStorage.tags.data.length <= 5 && !auth.loggedIn">
           <b-nav-item v-for="tag in dataStorage.tags.data" :key="'x' + tag.id" href="#">{{ tag.name }}</b-nav-item>
         </template>
         <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>

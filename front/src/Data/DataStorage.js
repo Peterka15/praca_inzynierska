@@ -34,7 +34,7 @@ export default class DataStorage {
     this.ready = this.isReady();
 
     if (this.ready) {
-      console.log('Data storage ready.');
+      console.log('[Data Storage] Ready.');
     }
   }
 

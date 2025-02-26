@@ -33,11 +33,11 @@ export default class DataContainer {
   }
 
   load () {
-    console.log(`Load triggered for ${this.type} type.`);
+    console.info(`[Data Container] Load triggered for ${this.type} type.`);
     return this.classObj.getAll().then(obj => {
       this.data = obj;
       this.ready = true;
-      console.log(`Loaded ${obj.length} objects of ${this.type} type.`);
+      console.info(`[Data Container] Loaded ${obj.length} objects of ${this.type} type.`);
 
       return this.data;
     });
@@ -46,7 +46,7 @@ export default class DataContainer {
   onLoad (callback, dataAmount) {
     if (this.data.length === dataAmount) {
       this.ready = true;
-      console.log(`Loaded ${dataAmount} objects of ${this.type} type.`);
+      console.info(`[Data Container] Loaded ${dataAmount} objects of ${this.type} type.`);
 
       if (callback) {
         callback();
