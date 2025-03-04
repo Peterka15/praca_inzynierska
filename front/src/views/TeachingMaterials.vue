@@ -35,7 +35,6 @@
 </style>
 
 <script>
-import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
 import auth from "@/Model/AuthInstance";
 

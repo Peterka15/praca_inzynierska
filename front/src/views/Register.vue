@@ -54,8 +54,6 @@
 </style>
 
 <script>
-import './../style/style.css';
-
 import Navbar from "@/components/Navbar";
 import auth from "@/Model/AuthInstance";
 

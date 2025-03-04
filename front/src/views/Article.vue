@@ -60,7 +60,6 @@
 
 <script>
 
-import './../style/style.css';
 import CommentComponent from '@/components/CommentComponent';
 import Navbar from '@/components/Navbar';
 import Sidebar from '/src/components/Sidebar.vue';
@@ -74,9 +73,7 @@ import auth from "@/Model/AuthInstance";
 export default {
   name: 'Article',
 
-
   components: {
-    // eslint-disable-next-line vue/no-unused-components
     CommentComponent,
     Navbar,
     Sidebar,

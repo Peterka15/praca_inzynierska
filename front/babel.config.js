@@ -5,7 +5,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@': './src', // Ensures '@' resolves to the 'src' folder
+          '@': './src',
         },
       },
     ],

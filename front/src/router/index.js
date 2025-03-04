@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 import Loginscreen from "@/views/Loginscreen";
 import Mainpage from "@/views/Mainpage";
 import Article from "@/views/Article";
-import Teachingmaterials from "@/views/Teachingmaterials";
+import TeachingMaterials from "@/views/TeachingMaterials.vue";
 import Addarticle from "@/views/AddArticle.vue";
 import Register from "@/views/Register";
 import AdminPanel from "@/views/AdminPanel.vue";
 import Inventory from "@/views/Inventory.vue";
-import Managment from "@/views/Managment.vue";
+import Management from "@/views/Management.vue";
 import SetPassword from "@/views/SetPassword.vue";
 import AuthPassword from "@/views/AuthPassword.vue";
 
@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/materials',
     name: 'materials',
-    component: Teachingmaterials
+    component: TeachingMaterials
   },
   {
     path: '/adminpanel',
@@ -66,9 +66,9 @@ const routes = [
     component: Inventory
   },
   {
-    path: '/managment',
-    name: 'managment',
-    component: Managment
+    path: '/management',
+    name: 'management',
+    component: Management
   },
 
 

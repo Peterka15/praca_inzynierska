@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import './../style/style.css';
 import {VueEditor} from "vue2-editor";
 import Navbar from '/src/components/Navbar.vue';
 import Article from "@/Model/Article";

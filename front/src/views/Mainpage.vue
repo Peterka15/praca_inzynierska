@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navbar></navbar>
     <b-container>
       <b-row class="background">
         <Sidebar @submitSearch="handleSubmitSearch" @submitSearchTag="handleSubmitSearchTag"></Sidebar>
@@ -19,7 +18,6 @@
 </style>
 
 <script>
-import './../style/style.css';
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
 import Sidebar from '/src/components/Sidebar.vue';

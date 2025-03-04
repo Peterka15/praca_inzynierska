@@ -99,11 +99,6 @@
           </template>
         </b-table>
       </div>
-
-      <!-- Przycisk generujący PDF -->
-      <div class="export-button">
-        <b-button variant="success" @click="generatePDF">Generuj PDF</b-button>
-      </div>
     </div>
   </div>
 </template>
@@ -214,7 +209,7 @@ export default {
 </script>
 
 <style>
-/* Dodaj odpowiednie style */
+/* Dodaj odpowiednie styles */
 .export-button {
   margin-top: 20px;
   text-align: right;

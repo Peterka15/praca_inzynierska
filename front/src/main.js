@@ -7,6 +7,8 @@ import {BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '@/styles/style.scss';
+
 import router from './router'
 
 Vue.use(BootstrapVue)
