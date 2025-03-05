@@ -32,6 +32,7 @@ final class Management extends ApiModel
 
     public const ID = 'id';
     public const NAME = 'name';
+    public const UNIT = 'unit';
     public const UNIT_ID = 'unit_id';
     public const FUNCTION = 'function';
 

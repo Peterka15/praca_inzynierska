@@ -25,7 +25,7 @@ class ManagementResource extends JsonResource
             Management::ID => $management->id,
             Management::NAME => $management->name,
             Management::FUNCTION => $management->function,
-            Management::UNIT_ID => new UnitResource($management->unit)
+            Management::UNIT => new UnitResource($management->unit)
         ];
     }
 }
