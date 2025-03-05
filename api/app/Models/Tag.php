@@ -28,8 +28,8 @@ final class Tag extends ApiModel
     use HasFactory;
 
     public const TABLE_NAME = 'tags';
-
     public const NAME = 'name';
+    public const ID = 'id';
 
     public const ARTICLES = 'articles';
 

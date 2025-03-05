@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
                         CommentsSeeder::class,
                         InventoryCategoriesSeeder::class,
                         InventorySeeder::class,
-                        ManagmentSeeder::class
+                        ManagementSeeder::class
                     ]);
     }
 }
