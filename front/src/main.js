@@ -11,11 +11,16 @@ import '@/styles/style.scss';
 
 import router from './router'
 
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue, {
+  BButton: { variant: 'dark' },
+  BCard: { bgVariant: 'dark' }
+})
+console.log(BootstrapVue.setDefaults);
+
+
 Vue.use(BootstrapVueIcons)
 Vue.use(Vue2Editor)
 Vue.use(VueRouter)
-
 
 Vue.config.productionTip = false
 

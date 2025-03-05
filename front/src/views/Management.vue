@@ -1,71 +1,81 @@
 <template>
-    <div>
-      <b-button variant="primary" v-b-modal.my-modal>Dodaj członka zarządu +</b-button>
-      <div class="search-container">
-        <b-input-group class="mb-3" style="max-width: 300px; margin-left: auto;">
-          <b-form-input
-              v-model="searchQuery"
-              placeholder="Wyszukaj członka zarządu..."
-              style="margin: 10px"
-          ></b-form-input>
-        </b-input-group>
-      </div>
+  <div>
+    <b-button variant="primary" v-b-modal.my-modal>Dodaj członka zarządu +</b-button>
+    <div class="search-container">
+      <b-input-group class="mb-3" style="max-width: 300px; margin-left: auto;">
+        <b-form-input
+            v-model="searchQuery"
+            placeholder="Wyszukaj członka zarządu..."
+            style="margin: 10px"
+        ></b-form-input>
+      </b-input-group>
+    </div>
 
-      <b-modal id="my-modal">
-        <div>
-          <h3>Dodaj członka zarządu</h3>
-          <div class="logininput">
-            <b-form inline> Podaj imię i nazwisko
-              <label class="sr-only">Imię i nazwisko</label>
-              <b-form-input
-                  id="inline-form-input-name"
-                  v-model="name"
-                  placeholder="Imię i nazwisko"
-              ></b-form-input>
-            </b-form>
-          </div>
-          <div class="logininput"> Przypisz funkcję
-            <b-form inline>
-              <label for="position" class="sr-only">Pełniona funkcja</label>
-              <b-form-select
-                  id="position"
-                  v-model="selectedPosition"
-                  :options="position"
-                  placeholder="Proszę przypisać funkcję"
-              ></b-form-select>
-            </b-form>
-          </div>
-          <div class="logininput"> Wybierz jednostkę
-            <b-form inline>
-              <label for="unit" class="sr-only">Jednostka OSP</label>
-              <b-form-select
-                  id="unit"
-                  v-model="selectedUnit"
-                  :options="units"
-                  placeholder="Proszę przypisać jednostkę"
-              ></b-form-select>
-            </b-form>
-          </div>
-          <div class="logininput">
-            <b-button @click="addItem">Dodaj</b-button>
-          </div>
+    <b-modal id="my-modal">
+      <div>
+        <h3>Dodaj członka zarządu</h3>
+        <div class="logininput">
+          <b-form inline> Podaj imię i nazwisko
+            <label class="sr-only">Imię i nazwisko</label>
+            <b-form-input
+                id="inline-form-input-name"
+                v-model="name"
+                placeholder="Imię i nazwisko"
+            ></b-form-input>
+          </b-form>
         </div>
-      </b-modal>
+        <div class="logininput"> Przypisz funkcję
+          <b-form inline>
+            <label for="position" class="sr-only">Pełniona funkcja</label>
+            <b-form-select
+                id="position"
+                v-model="selectedPosition"
+                :options="position"
+                placeholder="Proszę przypisać funkcję"
+            ></b-form-select>
+          </b-form>
+        </div>
+        <div class="logininput"> Wybierz jednostkę
+          <b-form inline>
+            <label for="unit" class="sr-only">Jednostka OSP</label>
+            <b-form-select
+                id="unit"
+                v-model="selectedUnit"
+                :options="units"
+                placeholder="Proszę przypisać jednostkę"
+            ></b-form-select>
+          </b-form>
+        </div>
+        <div class="logininput">
+          <b-button @click="addItem">Dodaj</b-button>
+        </div>
+      </div>
+    </b-modal>
 
-    <div class="line"><h2 style="color: white;">Lista członków zarządu</h2></div>
-
-      <b-table
-          style="--bs-table-hover-color: yellow;background: rgba(161, 32, 58, 0.6);"
-          striped hover :items="filteredUsers" :fields="fields" @sort-changed="onSortChange ">
-        <template #cell(edit)="row">
-          <b-button @click="editUser(row.item)">Edytuj</b-button>
-        </template>
-      </b-table>
+    <b-card
+        title="Lista członków zarządu"
+        text-variant="white"
+    >
+      <b-card-body>
+        <b-table
+            striped
+            hover
+            :items="filteredUsers"
+            :fields="fields"
+            @sort-changed="onSortChange"
+        >
+          <template #cell(edit)="row">
+            <b-button @click="editUser(row.item)">Edytuj</b-button>
+          </template>
+        </b-table>
+      </b-card-body>
+    </b-card>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
   name: 'Mainpage',
@@ -76,33 +86,6 @@ export default {
       email: '',
       selectedUnit: null,
       selectedPosition: null,
-      users: [
-        {
-          name: 'Adam Nowak',
-          position: 'Prezes',
-          unit: 'Pszów'
-        },
-        {
-          name: 'Jan Kowalski',
-          position: 'Prezes',
-          unit: 'Krzyżkowice'
-        },
-        {
-          name: 'Piotr Wiśniewski',
-          position: 'Naczelnik',
-          unit: 'Pszów'
-        },
-        {
-          name: 'Katarzyna Zielińska',
-          position: 'Sekretarz',
-          unit: 'Rogów'
-        },
-        {
-          name: 'Marek Lewandowski',
-          position: 'Członek zarządu',
-          unit: 'Zawada'
-        }
-      ],
       units: [
         {
           value: 'Pszów',
@@ -179,21 +162,33 @@ export default {
       ]
     };
   },
+
+  created () {
+    dataStorage.managements.load();
+  },
+
   computed: {
     filteredUsers () {
-      return this.users.filter(user => {
-        const query = this.searchQuery.toLowerCase();
-        return (
-            user.name.toLowerCase().includes(query) ||
-            user.position.toLowerCase().includes(query) ||
-            user.unit.toLowerCase().includes(query)
-        );
-      });
+      const query = this.searchQuery.toLowerCase();
+
+      return dataStorage.managements.data.filter(managementEntry => (
+              managementEntry.name.toLowerCase().includes(query) ||
+              managementEntry.function.toLowerCase().includes(query) ||
+              managementEntry.unit.name.toLowerCase().includes(query)
+          )
+      ).map(managementEntry => ({
+            name: managementEntry.name,
+            position: managementEntry.function,
+            unit: managementEntry.unit.name
+          })
+      );
     }
   },
+
   components: {
     Navbar
   },
+
   methods: {
     addItem () {
       if (this.name && this.email && this.selectedUnit && this.selectedPosition) {
@@ -219,12 +214,3 @@ export default {
   }
 };
 </script>
-
-<style>
-/* Dodaj odpowiednie styles */
-.export-button {
-  margin-top: 20px;
-  text-align: right;
-  padding-right: 15px;
-}
-</style>

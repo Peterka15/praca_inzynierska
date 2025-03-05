@@ -1,14 +1,20 @@
 import DataContainer from '@/Data/DataContainer';
 
 export default class DataStorage {
-  /** @type {DataContainer} */
+  /** @type {DataContainer<Article>} */
   articles;
 
-  /** @type {DataContainer} */
+  /** @type {DataContainer<Comment>} */
   comments;
 
-  /** @type {DataContainer} */
+  /** @type {DataContainer<User>} */
   users;
+
+  /** @type {DataContainer<Tag>} */
+  tags;
+
+  /** @type {DataContainer<Management>} */
+  managements;
 
   /** @type {?number} */
   loggedAsId = null;
@@ -18,12 +24,13 @@ export default class DataStorage {
 
   constructor () {
     this.articles = new DataContainer(DataContainer.TYPE_ARTICLE);
-    this.users = new DataContainer(DataContainer.TYPE_USER);
     this.comments = new DataContainer(DataContainer.TYPE_COMMENT);
+    this.users = new DataContainer(DataContainer.TYPE_USER);
     this.tags = new DataContainer(DataContainer.TYPE_TAG);
+    this.managements = new DataContainer(DataContainer.TYPE_MANAGEMENT);
   }
 
-  loadData () {
+  loadBasicData () {
     return Promise.all([this.articles.load(), this.tags.load()])
       .then(() => {
         this.onDataAvailable();
@@ -36,6 +43,62 @@ export default class DataStorage {
     if (this.ready) {
       console.log('[Data Storage] Ready.');
     }
+  }
+
+  /**
+   * @param {Object} object
+   */
+  add (object) {
+    if (!object instanceof Object) {
+      throw new Error('Object must be an instance of Object.');
+    }
+
+    const containerType = DataContainer.getContainerTypes()[object.constructor.name];
+
+    if (containerType === undefined) {
+      throw new Error('Object must be an instance of one of DataContainer.TYPE_XXX classes.');
+    }
+
+    const containerName = `${containerType}s`;
+
+    if (!this.hasOwnProperty(containerName)) {
+      throw new Error('No DataContainer for given containerType.');
+    }
+
+    if(this[containerName].data.indexOf((item) => item.id === object.id)) {
+      console.warn(`[Data Storage] Object ${containerType}:${object.id} already exists.`);
+      return;
+    }
+
+    this[containerName].data.push(object);
+
+    console.log(`[Data Storage] Added object of ${containerType} type.`);
+  }
+
+  /**
+   * @param {Object[]} objects
+   */
+  set(objects) {
+    if (!Array.isArray(objects) || objects.some(obj => !(obj instanceof Object))) {
+      throw new Error('Input must be an array of objects.');
+    }
+
+    const containerType = DataContainer.getContainerTypes()[objects[0].constructor.name];
+
+    if (containerType === undefined) {
+      throw new Error('Objects must be instances of one of DataContainer.TYPE_XXX classes.');
+    }
+
+    const containerName = `${containerType}s`;
+
+    if (!this.hasOwnProperty(containerName)) {
+      throw new Error('No DataContainer for given containerType.');
+    }
+
+    this[containerName].data = objects;
+    this[containerName].ready = true;
+
+    console.log(`[Data Storage] Loaded ${objects.length} objects of ${containerType} type.`);
   }
 
   /**

@@ -23,32 +23,20 @@ export default class Model {
       });
   }
 
-  static get (id) {
+  static get (id = null, args = null) {
     const model = new this();
 
-    return Bridge.getData(model.endpoint, id)
+    return Bridge.getData(model.endpoint, id, args)
       .then((response) => {
         if (response.message !== undefined) {
           throw new Error(`GET failed with message ${response.message}`);
         }
 
-        model.hydrate(response.data);
-
-        return model;
-      });
-  }
-
-  static getAll (args = null) {
-    const model = new this();
-
-    return Bridge.getData(model.endpoint, null, args)
-      .then((response) => {
-        if (response.message !== undefined) {
-          throw new Error(`GET failed with message ${response.message}`);
+        if(Array.isArray(response.data)) {
+          return response.data.map((data) => (new this()).hydrate(data));
         }
 
-        // @ts-ignore
-        return response.data.map((data) => (new this()).hydrate(data));
+        return model.hydrate(response.data);
       });
   }
 
@@ -56,7 +44,6 @@ export default class Model {
     if (this.id !== 0) {
       throw new Error('Can\'t POST already created object.');
     }
-    console.log('post1');
 
     return Bridge.postData(this.endpoint, this.dehydrate(BridgeRequestMethod.POST))
       .then((response) => {
@@ -75,7 +62,7 @@ export default class Model {
     if (this.id === 0) {
       throw new Error('Can\'t PUT non-existing object.');
     }
-    console.log('put1');
+
     return Bridge.putData(this.endpoint, this.id, this.dehydrate(BridgeRequestMethod.PUT))
       .then((response) => {
         if (response.message !== undefined) {

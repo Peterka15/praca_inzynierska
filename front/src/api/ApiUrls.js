@@ -8,6 +8,7 @@ export default {
   images: 'images',
   files: 'files',
   profile: 'profile',
+  management: 'management',
   auth: {
     base: 'auth',
     register: 'register',

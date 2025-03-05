@@ -55,7 +55,7 @@ export default {
       return;
     }
 
-    this.dataStorage.loadData().then(() => {
+    this.dataStorage.loadBasicData().then(() => {
       this.isReady = true;
     });
   },

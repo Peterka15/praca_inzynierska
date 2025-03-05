@@ -3,7 +3,11 @@ import Article from '@/Model/Article';
 import Tag from '@/Model/Tag';
 import User from '@/Model/User';
 import Comment from '@/Model/Comment';
+import Management from '@/Model/Management';
 
+/**
+ * @template T
+ */
 export default class DataContainer {
   @readonly
   static TYPE_ARTICLE = 'article';
@@ -13,10 +17,12 @@ export default class DataContainer {
   static TYPE_COMMENT = 'comment';
   @readonly
   static TYPE_TAG = 'tag';
+  @readonly
+  static TYPE_MANAGEMENT = 'management';
 
   /** @type {?string} */
   type = null;
-  /** @type {*[]} */
+  /** @type {T[]} */
   data = [];
   /** @type {boolean} */
   ready = false;
@@ -34,7 +40,7 @@ export default class DataContainer {
 
   load () {
     console.info(`[Data Container] Load triggered for ${this.type} type.`);
-    return this.classObj.getAll().then(obj => {
+    return this.classObj.get().then(obj => {
       this.data = obj;
       this.ready = true;
       console.info(`[Data Container] Loaded ${obj.length} objects of ${this.type} type.`);
@@ -43,34 +49,34 @@ export default class DataContainer {
     });
   }
 
-  onLoad (callback, dataAmount) {
-    if (this.data.length === dataAmount) {
-      this.ready = true;
-      console.info(`[Data Container] Loaded ${dataAmount} objects of ${this.type} type.`);
-
-      if (callback) {
-        callback();
-      }
-    }
+  static getContainerTypes() {
+    return {
+      Article: DataContainer.TYPE_ARTICLE,
+      Comment: DataContainer.TYPE_COMMENT,
+      User: DataContainer.TYPE_USER,
+      Tag: DataContainer.TYPE_TAG,
+      Management: DataContainer.TYPE_MANAGEMENT,
+    };
   }
 
   /**
    * @param {string }type
-   * @return {Article}
+   * @return {Article|Tag|User|Comment|Management}
    * @throws Error
    */
   static #getClass (type) {
-    switch (type) {
-      case DataContainer.TYPE_ARTICLE:
-        return Article;
-      case DataContainer.TYPE_TAG:
-        return Tag;
-      case DataContainer.TYPE_USER:
-        return User;
-      case DataContainer.TYPE_COMMENT:
-        return Comment;
-      default:
-        throw Error(`[DataContainer] Class ${type} don't exists.`);
+    const typesMap = {
+      [DataContainer.TYPE_ARTICLE]: Article,
+      [DataContainer.TYPE_TAG]: Tag,
+      [DataContainer.TYPE_USER]: User,
+      [DataContainer.TYPE_COMMENT]: Comment,
+      [DataContainer.TYPE_MANAGEMENT]: Management,
+    };
+
+    if (!(type in typesMap)) {
+      throw Error(`[DataContainer] Class ${type} don't exists.`);
     }
+
+    return typesMap[type];
   }
 }

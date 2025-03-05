@@ -25,6 +25,8 @@ Route::resource('images', ImagesController::class)->only(['show']);
 Route::resource('files', FilesController::class)->only(['show']);
 Route::resource('units', UnitsController::class)->only(['index', 'show']);
 Route::resource('roles', RolesController::class)->only(['index', 'show']);
+Route::resource('management', ManagementController::class)->only(['index', 'show']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('articles', ArticlesController::class)->except(['index', 'show']);
@@ -35,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
 
     Route::resource('inventory', InventoryController::class);
     Route::resource('inventoryCategory', InventoryCategoryController::class);
-    Route::resource('management', ManagementController::class);
+    Route::resource('management', ManagementController::class)->except(['index', 'show']);
     Route::resource('users', UserController::class);
     Route::post('/users/resetPassword/{id}', [UserController::class, 'resetPassword']);
 

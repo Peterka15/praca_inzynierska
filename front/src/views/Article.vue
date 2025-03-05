@@ -9,7 +9,7 @@
           <div style="height: 200px"/>
 
           <div class="article_box shadow">
-            <div v-if="!this.isLoaded"><b-spinner label="Spinning"></b-spinner></div>
+            <div v-if="!this.article"><b-spinner label="Spinning"></b-spinner></div>
             <div v-else>
               <b-img v-if="this.article && this.article.images[0]" :src="this.article.images[0].url" fluid></b-img>
               <div>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="comments_box shadow">
-            <div v-if="!this.isLoaded"><b-spinner label="Spinning"></b-spinner></div>
+            <div v-if="!this.article"><b-spinner label="Spinning"></b-spinner></div>
             <div v-else>
               <CommentComponent
                   v-for="comment in this.article.comments"
@@ -69,7 +69,6 @@ import Comment from "@/Model/Comment";
 import Article from "@/Model/Article";
 import auth from "@/Model/AuthInstance";
 
-
 export default {
   name: 'Article',
 
@@ -81,7 +80,6 @@ export default {
 
   data() {
     return {
-      isLoaded: false,
       article: null,
       author: "",
       content: ""
@@ -96,11 +94,14 @@ export default {
 
   created() {
     const articleId = parseInt(this.$route.params.articleId);
-    Article.get(articleId).then((article) =>{
-      dataStorage.addArticle(article);
-      this.article = article;
-      this.isLoaded = true;
-    });
+    this.article = dataStorage.getArticle(articleId);
+
+    if(!this.article) {
+      Article.get(articleId).then((article) => {
+        dataStorage.add(article);
+        this.article = article;
+      });
+    }
   },
 
   methods: {

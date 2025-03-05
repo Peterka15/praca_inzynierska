@@ -1,42 +1,48 @@
 <template>
-  <div class="fixed-top">
-    <b-navbar type="dark" variant="dark" class="justify-content-between">
-      <b-navbar-nav>
-        <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
+  <div>
+    <div class="fixed-top" style="height: 4em">
+      <b-navbar type="dark" variant="dark" class="justify-content-between h-100">
+        <b-navbar-nav>
+          <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
-        <template v-if="dataStorage.tags.data.length <= 5 && !auth.loggedIn">
-          <b-nav-item v-for="tag in dataStorage.tags.data" :key="'x' + tag.id" href="#">{{ tag.name }}</b-nav-item>
-        </template>
-        <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>
-          <b-dropdown-item v-for="tag in dataStorage.tags.data" :key="tag.id" href="#">{{ tag.name }}</b-dropdown-item>
-        </b-nav-item-dropdown>
+          <template v-if="dataStorage.tags.data.length <= 5 && !auth.loggedIn">
+            <b-nav-item v-for="tag in dataStorage.tags.data" :key="'x' + tag.id" href="#">{{ tag.name }}</b-nav-item>
+          </template>
+          <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>
+            <b-dropdown-item v-for="tag in dataStorage.tags.data" :key="tag.id" href="#">{{
+                tag.name
+              }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
 
-        <b-nav-item
-            v-if="auth.loggedIn && (auth.user.role.isAdmin() || auth.user.role.isModerator())"
-            :to="{ path: '/addarticle'}"
-        >
-          Nowy artykuł
-        </b-nav-item>
-        <b-nav-item v-if="auth.loggedIn" :to="{ path: '/materials'}">
-          Materiały szkoleniowe
-        </b-nav-item>
-        <b-nav-item v-if="auth.loggedIn && auth.user.role.isAdmin()" :to="{ path: '/users'}">
-          Lista użytkowników
-        </b-nav-item>
-        <b-nav-item v-if="auth.loggedIn" :to="{ path: '/equipment'}">
-          Lista sprzętu
-        </b-nav-item>
-        <b-nav-item :to="{ path: '/management'}">
-          Zarząd
-        </b-nav-item>
+          <b-nav-item
+              v-if="auth.loggedIn && (auth.user.role.isAdmin() || auth.user.role.isModerator())"
+              :to="{ path: '/addarticle'}"
+          >
+            Nowy artykuł
+          </b-nav-item>
+          <b-nav-item v-if="auth.loggedIn" :to="{ path: '/materials'}">
+            Materiały szkoleniowe
+          </b-nav-item>
+          <b-nav-item v-if="auth.loggedIn && auth.user.role.isAdmin()" :to="{ path: '/users'}">
+            Lista użytkowników
+          </b-nav-item>
+          <b-nav-item v-if="auth.loggedIn" :to="{ path: '/equipment'}">
+            Lista sprzętu
+          </b-nav-item>
+          <b-nav-item :to="{ path: '/management'}">
+            Zarząd
+          </b-nav-item>
 
-      </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item :to="{ path: '/login'}" v-if="!username">Zaloguj</b-nav-item>
-        <b-nav-item v-if="username" @click="logOut()">Wyloguj</b-nav-item>
-        <b-nav-item v-if="username">{{ username }}</b-nav-item>
-      </b-navbar-nav>
-    </b-navbar>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item :to="{ path: '/login'}" v-if="!username">Zaloguj</b-nav-item>
+          <b-nav-item v-if="username" @click="logOut()">Wyloguj</b-nav-item>
+          <b-nav-item v-if="username">{{ username }}</b-nav-item>
+        </b-navbar-nav>
+      </b-navbar>
+    </div>
+    <div style="height: 4em"></div>
   </div>
 </template>
 
