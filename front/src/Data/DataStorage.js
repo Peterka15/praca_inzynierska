@@ -16,6 +16,9 @@ export default class DataStorage {
   /** @type {DataContainer<Management>} */
   managements;
 
+  /** @type {DataContainer<Unit>} */
+  units;
+
   /** @type {?number} */
   loggedAsId = null;
 
@@ -28,10 +31,11 @@ export default class DataStorage {
     this.users = new DataContainer(DataContainer.TYPE_USER);
     this.tags = new DataContainer(DataContainer.TYPE_TAG);
     this.managements = new DataContainer(DataContainer.TYPE_MANAGEMENT);
+    this.units = new DataContainer(DataContainer.TYPE_UNIT);
   }
 
   loadBasicData () {
-    return Promise.all([this.articles.load(), this.tags.load()])
+    return Promise.all([this.articles.load(), this.tags.load(), this.units.load()])
       .then(() => {
         this.onDataAvailable();
       });
@@ -65,7 +69,7 @@ export default class DataStorage {
       throw new Error('No DataContainer for given containerType.');
     }
 
-    if(this[containerName].data.indexOf((item) => item.id === object.id)) {
+    if (this[containerName].data.indexOf((item) => item.id === object.id)) {
       console.warn(`[Data Storage] Object ${containerType}:${object.id} already exists.`);
       return;
     }
@@ -78,7 +82,7 @@ export default class DataStorage {
   /**
    * @param {Object[]} objects
    */
-  set(objects) {
+  set (objects) {
     if (!Array.isArray(objects) || objects.some(obj => !(obj instanceof Object))) {
       throw new Error('Input must be an array of objects.');
     }

@@ -4,6 +4,7 @@ import Tag from '@/Model/Tag';
 import User from '@/Model/User';
 import Comment from '@/Model/Comment';
 import Management from '@/Model/Management';
+import Unit from '@/Model/Unit';
 
 /**
  * @template T
@@ -19,6 +20,8 @@ export default class DataContainer {
   static TYPE_TAG = 'tag';
   @readonly
   static TYPE_MANAGEMENT = 'management';
+  @readonly
+  static TYPE_UNIT = 'unit';
 
   /** @type {?string} */
   type = null;
@@ -38,7 +41,14 @@ export default class DataContainer {
     }
   }
 
+  /**
+   * @returns {Promise<T[]>}
+   */
   load () {
+    if(this.ready) {
+      return Promise.resolve(this.data).then();
+    }
+
     console.info(`[Data Container] Load triggered for ${this.type} type.`);
     return this.classObj.get().then(obj => {
       this.data = obj;
@@ -56,6 +66,7 @@ export default class DataContainer {
       User: DataContainer.TYPE_USER,
       Tag: DataContainer.TYPE_TAG,
       Management: DataContainer.TYPE_MANAGEMENT,
+      Unit: DataContainer.TYPE_UNIT
     };
   }
 
@@ -71,6 +82,7 @@ export default class DataContainer {
       [DataContainer.TYPE_USER]: User,
       [DataContainer.TYPE_COMMENT]: Comment,
       [DataContainer.TYPE_MANAGEMENT]: Management,
+      [DataContainer.TYPE_UNIT]: Unit
     };
 
     if (!(type in typesMap)) {

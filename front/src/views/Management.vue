@@ -1,15 +1,11 @@
 <template>
   <div>
-    <b-button variant="primary" v-b-modal.my-modal>Dodaj członka zarządu +</b-button>
-    <div class="search-container">
-      <b-input-group class="mb-3" style="max-width: 300px; margin-left: auto;">
-        <b-form-input
-            v-model="searchQuery"
-            placeholder="Wyszukaj członka zarządu..."
-            style="margin: 10px"
-        ></b-form-input>
-      </b-input-group>
-    </div>
+    <b-button
+        v-if="auth.loggedIn && auth.user.role.isAdmin()"
+        variant="primary"
+    >
+      Dodaj członka zarządu +
+    </b-button>
 
     <b-modal id="my-modal">
       <div>
@@ -53,16 +49,31 @@
     </b-modal>
 
     <b-card
-        title="Lista członków zarządu"
-        text-variant="white"
+        class="m-4"
+        header-tag="header"
     >
+      <template #header>
+        <h3 class="mb-0 text-left">Lista członków zarządu</h3>
+      </template>
+      <b-container>
+        <b-row>
+          <b-col>
+            <b-form-group label-for="filer-search" label="Wyszukaj członka zarządu">
+              <b-form-input id="filer-search" v-model="searchQuery" placeholder="Wyszukaj członka zarządu..."/>
+            </b-form-group>
+          </b-col>
+          <b-col>
+            <b-form-group label-for="filer-position" label="Jednostka">
+              <b-form-select id="filter-unit" v-model="selectedUnit" :options="units" placeholder="Wybierz jednostkę"/>
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-container>
+
       <b-card-body>
         <b-table
-            striped
-            hover
             :items="filteredUsers"
             :fields="fields"
-            @sort-changed="onSortChange"
         >
           <template #cell(edit)="row">
             <b-button @click="editUser(row.item)">Edytuj</b-button>
@@ -76,34 +87,19 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
+import auth from '@/Model/AuthInstance';
 
 export default {
   name: 'Mainpage',
   data () {
     return {
+      auth,
+      isReady: false,
       searchQuery: '',
       name: '',
       email: '',
       selectedUnit: null,
       selectedPosition: null,
-      units: [
-        {
-          value: 'Pszów',
-          text: 'Pszów'
-        },
-        {
-          value: 'Krzyżkowice',
-          text: 'Krzyżkowice'
-        },
-        {
-          value: 'Zawada',
-          text: 'Zawada'
-        },
-        {
-          value: 'Rogów',
-          text: 'Rogów'
-        }
-      ],
       position: [
         {
           value: 'Prezes',
@@ -156,7 +152,7 @@ export default {
         },
         {
           key: 'edit',
-          label: '',
+          label: 'Akcje',
           sortable: false
         }
       ]
@@ -164,7 +160,12 @@ export default {
   },
 
   created () {
-    dataStorage.managements.load();
+    Promise.all([
+      dataStorage.managements.load(),
+      dataStorage.units.load()
+    ]).then(() => {
+      this.isReady = true;
+    });
   },
 
   computed: {
@@ -172,16 +173,31 @@ export default {
       const query = this.searchQuery.toLowerCase();
 
       return dataStorage.managements.data.filter(managementEntry => (
-              managementEntry.name.toLowerCase().includes(query) ||
-              managementEntry.function.toLowerCase().includes(query) ||
-              managementEntry.unit.name.toLowerCase().includes(query)
+                  managementEntry.name.toLowerCase().includes(query) ||
+                  managementEntry.function.toLowerCase().includes(query) ||
+                  managementEntry.unit.name.toLowerCase().includes(query)
+              )
           )
-      ).map(managementEntry => ({
-            name: managementEntry.name,
-            position: managementEntry.function,
-            unit: managementEntry.unit.name
-          })
-      );
+          .filter(managementEntry => this.selectedUnit === null || managementEntry.unit.id === this.selectedUnit)
+          .map(managementEntry => ({
+                name: managementEntry.name,
+                position: managementEntry.function,
+                unit: managementEntry.unit.name
+              })
+          );
+    },
+
+    units () {
+      return [
+        ...dataStorage.units.data,
+        {
+          id: null,
+          name: 'Brak'
+        }
+      ].map(unit => ({
+        value: unit.id,
+        text: unit.name
+      }));
     }
   },
 
@@ -190,6 +206,9 @@ export default {
   },
 
   methods: {
+    auth () {
+      return auth;
+    },
     addItem () {
       if (this.name && this.email && this.selectedUnit && this.selectedPosition) {
         this.users.push({
@@ -207,9 +226,6 @@ export default {
     editUser (item) {
       // Funkcja edytowania użytkownika
       console.log(item);
-    },
-    onSortChange () {
-      // Funkcja obsługi sortowania tabeli
     }
   }
 };

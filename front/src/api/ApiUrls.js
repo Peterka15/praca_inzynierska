@@ -4,6 +4,7 @@ export default {
   articles: 'articles',
   users: 'users',
   tags: 'tags',
+  units: 'units',
   comments: 'comments',
   images: 'images',
   files: 'files',

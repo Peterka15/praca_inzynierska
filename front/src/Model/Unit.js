@@ -1,6 +1,9 @@
 import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class Unit extends Model {
+  endpoint = ApiUrls.units;
+
   /** @var {string} */
   name;
 
