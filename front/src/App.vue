@@ -23,9 +23,11 @@ nav a {
   color: #2c3e50;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.card {
+  border-radius: 0.75em !important;
+  overflow: hidden;
 }
+
 </style>
 
 <script>
