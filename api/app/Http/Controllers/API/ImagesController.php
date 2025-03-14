@@ -57,12 +57,15 @@ class ImagesController extends Controller
         }
 
         $path = "images/$image->uuid";
+
+        if (!Storage::exists($path)) {
+            throw new FileNotFoundException("File not found: $path");
+        }
+
         $file = Storage::get($path);
+        $mimeType = Storage::mimeType($path);
 
-        $response = Response::make($file);
-        $response->header('Content-Type', $image->mime_type);
-
-        return $response;
+        return response($file, 200)->header('Content-Type', $mimeType);
     }
 
     public function destroy(string $uuid): JsonResponse
