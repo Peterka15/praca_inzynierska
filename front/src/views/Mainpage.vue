@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <b-container>
-      <b-row class="background">
+  <b-container>
+    <b-row>
+      <b-col>
         <Sidebar @submitSearch="handleSubmitSearch" @submitSearchTag="handleSubmitSearchTag"></Sidebar>
-        <b-col cols="9" class="right_column">
-          <div>
-            <feed v-for="article in filteredArticles" :key="article.id" :article="article"></feed>
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
-  <!--TODO: Dodać paginację-->
+      </b-col>
+      <b-col cols="9">
+        <Feed v-for="article in filteredArticles" :key="article.id" :article="article"></Feed>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
-<style>
-</style>
 
 <script>
 import Navbar from '/src/components/Navbar.vue';
@@ -35,12 +30,6 @@ export default {
       searchPhrase: '',
       searchTag: '',
     };
-  },
-
-  watch: {
-    isLoggedIn(newValue) {
-      console.log("LOGGED", newValue);
-    },
   },
 
   components: {
@@ -68,6 +57,7 @@ export default {
 
       return this.dataStorage.getArticles();
     },
+
     filteredArticles() {
       const searchTermLower = this.searchPhrase.toLowerCase();
 
@@ -90,10 +80,6 @@ export default {
   },
 
   methods: {
-    isDateStorageReady: function () {
-      return this.dataStorage && this.dataStorage.isReady();
-    },
-
     handleSubmitSearch(searchPhrase) {
       this.searchPhrase = searchPhrase;
     },

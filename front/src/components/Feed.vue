@@ -7,7 +7,7 @@
     <b-row no-gutters class="p-0">
       <b-col md="6"
              class="article-image"
-             :style="`background-image: url(${article.images[0] ? article.images[0].url : 'media/cover.webp'}); min-height: 200px`"
+             :style="`background-image: url(${article.images[0] ? article.images[0].url : '/media/cover.webp'}); min-height: 200px`"
       >
       </b-col>
       <b-col md="6">
@@ -17,9 +17,14 @@
           </b-card-text>
 
           <b-card-text>
-            <b-button to="#" variant="secondary" v-for="tag in this.article.tags" :key="tag.id"
-                      style="font-size: 0.7em"
-                      class="p-1 m-1">{{ tag.name }}
+            <b-button
+                to="#"
+                variant="secondary"
+                v-for="tag in this.article.tags" :key="tag.id"
+                style="font-size: 0.7em"
+                class="p-1 m-1"
+            >
+              {{ tag.name }}
             </b-button>
           </b-card-text>
 

@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="fixed-top" style="height: 4em">
-      <b-navbar type="dark" variant="dark" class="justify-content-between h-100">
-        <b-navbar-nav>
+      <b-navbar type="dark" style="background-color: #003a57" class="justify-content-between h-100">
+        <b-navbar-nav class="font-weight-bold">
           <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
 
           <template v-if="dataStorage.tags.data.length <= 5 && !auth.loggedIn">
             <b-nav-item v-for="tag in dataStorage.tags.data" :key="'x' + tag.id" href="#">{{ tag.name }}</b-nav-item>
           </template>
+
           <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>
             <b-dropdown-item v-for="tag in dataStorage.tags.data" :key="tag.id" href="#">{{
                 tag.name
@@ -52,7 +53,7 @@ import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
   name: 'Navbar',
-  data () {
+  data() {
     return {
       isSessionRestored: false,
       auth,
@@ -60,7 +61,7 @@ export default {
     };
   },
 
-  mounted () {
+  mounted() {
     auth.restoreSession(resolved => {
       if (resolved) {
         this.isSessionRestored = true;
@@ -69,7 +70,7 @@ export default {
   },
 
   computed: {
-    username () {
+    username() {
       // This will recompute whenever isSessionRestored changes
       if (this.isSessionRestored && auth.user != null) {
         return auth.user.name;
@@ -80,9 +81,9 @@ export default {
   },
 
   methods: {
-    logOut () {
+    logOut() {
       auth.logout();
-      this.$router.push({ path: '/' });
+      this.$router.push({path: '/'});
       window.location.reload();
     }
   }

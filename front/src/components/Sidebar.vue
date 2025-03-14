@@ -1,5 +1,5 @@
 <template>
-  <b-col cols="3" class="panel">
+  <div>
     <h1 class="logo">
       <router-link to="/">
         <span v-if="!auth.loggedIn">POWIATOWY SYSTEM OSP</span>
@@ -8,7 +8,7 @@
     </h1>
     <div class="nav-wrap">
       <nav class="main-nav" role="navigation">
-        <ul class="unstyled list-hover-slide">
+        <ul class="list-hover-slide">
           <li>
             <a @click="showSearchForm = true" style="color: #DFDBD9">Wyszukaj</a>
             <div v-if="showSearchForm">
@@ -41,7 +41,7 @@
         </ul>
       </nav>
     </div>
-  </b-col>
+  </div>
 </template>
 
 <script>
