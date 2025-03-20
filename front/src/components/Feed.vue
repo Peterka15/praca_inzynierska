@@ -5,9 +5,10 @@
       tag="article"
   >
     <b-row no-gutters class="p-0">
-      <b-col md="6"
-             class="article-image"
-             :style="`background-image: url(${article.images[0] ? article.images[0].url : '/media/cover.webp'}); min-height: 200px`"
+      <b-col
+          md="6"
+          class="article-image"
+          :style="`background-image: url(${article.images[0] ? article.images[0].url : '/media/cover.webp'}); min-height: 200px`"
       >
       </b-col>
       <b-col md="6">
@@ -45,6 +46,7 @@
 
 .clamp-text {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;

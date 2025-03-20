@@ -28,6 +28,10 @@ $button-size: 4.5rem;
 
 $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
 
+.text-muted {
+    color: #a2adb7 !important;
+}
+
 #login_screen {
     color: $color-primary;
     background-color: $color-gray-void;
@@ -147,7 +151,6 @@ $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
     color: $color-primary !important;
     border: none !important;
     border-bottom: 2px solid $color-gray-bright !important;
-    border-radius: 0 !important;
 
     &.custom-select {
         width: 100% !important;
@@ -160,18 +163,6 @@ $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
         cursor: pointer;
     }
 }
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
 
 .left_column {
     background: #A1203A;

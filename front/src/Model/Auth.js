@@ -119,7 +119,7 @@ export default class Auth {
     );
   }
 
-  logout () {
+  logout () { 
     this.user = null;
     this.loggedIn = false;
 

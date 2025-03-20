@@ -1,51 +1,53 @@
 <template>
-  <div>
-  <navbar/>
+  <div
+      class="w-100 d-flex align-items-center justify-content-center"
+      style="height: 100vh; position: fixed; top: 0; left: 0;"
+  >
+    <b-card
+        title="POWIATOWY SYSTEM OSP"
+        sub-title="Zaloguj się do portalu i uzyskaj dostęp do szczegółowych danych OSP."
+        style="width: 600px; height: fit-content"
+    >
+      <b-alert show v-if="loginError" variant="danger" class="mt-3 text-center">{{ loginError }}</b-alert>
+      <b-form @submit.prevent="login">
+        <b-form-group
+            label="Adres email:"
+            label-for="input-form-input-name"
+            description="Wprowadź Twój adres email."
+            class="mt-4"
+        >
+          <b-form-input
+              id="inline-form-input-name"
+              v-model="email"
+              type="email"
+              placeholder="Adres email"
+              required
+          ></b-form-input>
+        </b-form-group>
 
-
-    <div class="m_boxcenter m_boxcenterp shadow">
-      <h3 class="m_boxfont">LOGOWANIE</h3>
-    </div>
-
-    <div class="center centerp shadow">
-      <div>
-        <h3 class="left_column">POWIATOWY SYSTEM OSP</h3>
-      </div>
-      <div>
-        <div class="logininput">
-          <b-form @submit.prevent="login" style="margin: 5px">
-            <label class="sr-only">E-mail</label>
-            <b-form-input
-                id="inline-form-input-name"
-                v-model="email"
-                class="mb-2 mr-sm-2 mb-sm-0"
-                placeholder="E-mail"
-
-            ></b-form-input>
-            <label class="sr-only">Hasło</label>
-            <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
-              <b-form-input type="password" id="inline-form-input-username" v-model="password"
-                            placeholder="Hasło"></b-form-input>
-            </b-input-group>
-            <b-button variant="primary" type="submit">Zaloguj</b-button>
-          </b-form>
-          <b-button :to="{ path: '/register'}">Rejestracja</b-button>
-
+        <b-form-group label="Hasło:" label-for="inline-form-input-password" description="Wprowadź Twoje hasło.">
+          <b-form-input
+              id="inline-form-input-password"
+              v-model="password"
+              type="password"
+              placeholder="Hasło"
+              required
+          ></b-form-input>
+        </b-form-group>
+        <div class="d-flex justify-content-end">
+          <b-button variant="primary" type="submit" class="d-inline">Zaloguj</b-button>
         </div>
-        <b-alert v-if="loginError" variant="danger" show>{{ loginError }}</b-alert>
-      </div>
-    </div>
+      </b-form>
+      <template #footer>
+        <b-card-text class="text-center">Nie posiadasz konta? Skontaktuj się z administratorem portalu.</b-card-text>
+      </template>
+    </b-card>
   </div>
-
 </template>
 
-<style>
-</style>
-
-
 <script>
-import auth from "@/Model/AuthInstance";
-import Navbar from "@/components/Navbar";
+import auth from '@/Model/AuthInstance';
+import Navbar from '@/components/Navbar';
 
 export default {
   components: {
@@ -53,8 +55,8 @@ export default {
   },
   data() {
     return {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       loginError: null,
     };
   },
@@ -67,8 +69,12 @@ export default {
             this.$router.push({path: '/'});
           })
           .catch((error) => {
-            // Obsługa błędu nieprawidłowego hasła
-            if (error.response && error.response.status === 400) {
+            console.log('CATCH!')
+            console.warn(error.body)
+
+            if (error.body) {
+              this.loginError = error.body.message.error?.email?.[0] ?? error.body.message.error?.password?.[0];
+            } else if (error.response && error.response.status === 401) {
               this.loginError = 'Nieprawidłowe login lub hasło. Spróbuj ponownie.';
             } else {
               this.loginError = 'Wystąpił błąd podczas logowania. Spróbuj ponownie później.';

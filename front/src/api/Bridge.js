@@ -49,9 +49,6 @@ export default class Bridge {
         console.info('[Bridge] Success', url, responseObject);
 
         return responseObject;
-      })
-      .catch((error) => {
-        console.error('[Bridge] Error', url, error);
       });
   }
 
@@ -115,9 +112,9 @@ export default class Bridge {
     return `${baseApiUrl}/${endpoint}`;
   }
 
-  static handleErrors(response) {
+  static async handleErrors(response) {
     if (!response.ok) {
-      throw new ApiResponseError(response);
+      throw new ApiResponseError(response, await response.json());
     }
 
     return response;

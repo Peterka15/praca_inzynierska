@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $validationRules = [
-            User::EMAIL => 'required|string|email|max:255|exists:App\Models\User,email',
+            User::EMAIL => 'required|string|email|max:255',
             User::PASSWORD => 'required|string|min:8',
         ];
 
