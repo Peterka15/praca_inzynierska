@@ -1,4 +1,17 @@
 services:
+  frontend:
+    image: node:14
+    working_dir: /front
+    volumes:
+      - ../front:/front
+    command: sh -c "npm install && npm run serve"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+    networks:
+      - default
+
   api:
     build:
       context: ../
@@ -9,11 +22,15 @@ services:
     ports:
       - "8090:8000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     volumes:
       - ../api:/api
     command: >
-      sh -c "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+      sh -c "cp -n .env.example .env &&
+             composer install &&
+             php artisan migrate:fresh --seed &&
+             php artisan serve --host=0.0.0.0 --port=8000"
     networks:
       - default
 
@@ -36,7 +53,13 @@ services:
     volumes:
       - "./mysql/init:/docker-entrypoint-initdb.d"
       - "./mysql/logs:/var/log/mysql"
-
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+      
 networks:
   default:
     driver: bridge

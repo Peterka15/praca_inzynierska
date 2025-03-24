@@ -1,9 +1,11 @@
 # projekt_osp
- 
-This project do require ancient NODE/NPM versions.
-Use node 14 and npm 6.
 
-## Project setup
-To run API just start the docker container as described in `api/README.md`.
+Ten projekt wymaga bardzo starych wersji NODE/NPM.  
+Użyj Node 14 i npm 6.
 
-To run frontend go into `/front`, make `npm install` and then run `npm run serve`.
+## Uruchomienie i konfiguracja projektu
+Nie trzeba nic konfigurować, docker sam zainstaluje, skonfiguruje i odpali wszystko.
+Trzeba go tylko uruchomić z `docker-compose.yaml`.
+Użyj PhpStorm lub terminala, aby uruchomić `docker compose up -d` w katalogu `/docker`.
+
+Aplikacja będzie dostępna na `http://localhost:8080` (front) i `http://localhost:8090` (api).

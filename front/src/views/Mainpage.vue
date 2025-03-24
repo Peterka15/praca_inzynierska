@@ -11,13 +11,11 @@
   </b-container>
 </template>
 
-
 <script>
 import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
 import Sidebar from '/src/components/Sidebar.vue';
 import dataStorageInstance from "@/Data/DataStorageInstance";
-
 
 export default {
   name: 'Mainpage',
