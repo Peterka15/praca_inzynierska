@@ -360,17 +360,21 @@ body {
     margin-bottom: 15px;
 }
 
-///////////////add article
+// VueEditor Dark Theme
+.quillWrapper {
+    .ql-fill {
+        fill: $color-primary !important;
+    }
+    
+    .ql-stroke{
+        stroke: $color-primary !important;
+    }
 
-.addphotos {
-    padding: 10px;
-    margin-left: 60px;
-    margin-top: 10px;
+    .ql-picker.ql-header, .ql-picker-label.ql-active {
+        color: $color-primary !important;
+    }
+    
+    .ql-picker-options {
+        background: $color-gray-void !important;
+    }
 }
-
-.add_article_button {
-    padding: 10px;
-    margin-left: 500px;
-    margin-top: 200px;
-}
-
