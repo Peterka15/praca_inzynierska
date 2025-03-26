@@ -25,7 +25,7 @@ class ArticlesController extends Controller
         $validationRules = [
             Article::TITLE => 'required|string',
             Article::CONTENT => 'required|string',
-            Article::TAGS => 'required|string'
+            Article::TAGS => 'nullable|string'
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {
@@ -58,7 +58,7 @@ class ArticlesController extends Controller
         $validationRules = [
             Article::TITLE => 'string',
             Article::CONTENT => 'string',
-            Article::TAGS => 'string'
+            Article::TAGS => 'nullable|string'
         ];
 
         if (!$this->validateRequestData($request, $validationRules)) {
@@ -82,10 +82,15 @@ class ArticlesController extends Controller
         return $this->successResponse();
     }
 
-    private function handleTags(Article $article, ?string $tags): void {
+    private function handleTags(Article $article, ?string $tags): void
+    {
         ArticleTag::whereArticleId($article->id)->delete();
 
-        $tagNamesArray = explode(',', $tags ?? '');
+        if (!$tags) {
+            return;
+        }
+
+        $tagNamesArray = explode(',', $tags);
 
         foreach ($tagNamesArray as $tagName) {
             $tag = Tag::whereName($tagName)->first();

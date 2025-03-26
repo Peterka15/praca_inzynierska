@@ -104,6 +104,24 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.DELETE, url, this.getHeaders(), null);
   }
 
+  static uploadFile(endpoint, formData) {
+    const url = this.getUrl(endpoint);
+
+    // DO NOT set Content-Type — browser handles boundary for FormData
+    const headers = {
+      Authorization: this.authorizationToken
+    };
+
+    return fetch(url, {
+      method: 'POST',
+      headers,
+      body: formData
+    })
+      .then((response) => this.handleErrors(response))
+      .then((res) => res.json());
+  }
+
+
   static setBearerToken(authorizationToken = '') {
     this.authorizationToken = `Bearer ${authorizationToken}`;
   }

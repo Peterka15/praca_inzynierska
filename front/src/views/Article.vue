@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="mt-4">
     <b-row>
       <b-col>
         <Sidebar></Sidebar>
@@ -15,22 +15,25 @@
             img-top
             tag="article"
         >
+          <b-card-text>
+            <HorizontalStack start>
+              <b-button
+                  to="#"
+                  variant="secondary"
+                  v-for="tag in this.article.tags" :key="tag.id"
+                  style="font-size: 0.7em"
+                  class="p-1"
+              >
+                {{ tag.name }}
+              </b-button>
+            </HorizontalStack>
+          </b-card-text>
 
           <b-card-text v-html="this.article.content"></b-card-text>
 
-          <b-card-text>
-            <b-button
-                to="#"
-                variant="secondary"
-                v-for="tag in this.article.tags" :key="tag.id"
-                style="font-size: 0.7em"
-                class="p-1 m-1"
-            >
-              {{ tag.name }}
-            </b-button>
-          </b-card-text>
-
-          <b-button v-if="loggedIn" :to="{ path: '/'}">EDYTUJ WPIS</b-button>
+          <HorizontalStack>
+            <b-button v-if="loggedIn" :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">Edytuj artykuł</b-button>
+          </HorizontalStack>
         </b-card>
 
         <div class="add_comment_box shadow">
@@ -77,11 +80,13 @@ import dataStorage from '@/Data/DataStorageInstance';
 import Comment from "@/Model/Comment";
 import Article from "@/Model/Article";
 import auth from "@/Model/AuthInstance";
+import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 
 export default {
   name: 'Article',
 
   components: {
+    HorizontalStack,
     CommentComponent,
     Navbar,
     Sidebar,

@@ -50,7 +50,7 @@ export default class Model {
         if (response.message !== undefined) {
           throw new Error(`POST failed with message ${response.message}`);
         }
-        console.log('post2');
+
         this.hydrate(response.data);
 
         /** @var Model this */
@@ -68,7 +68,7 @@ export default class Model {
         if (response.message !== undefined) {
           throw new Error(`PUT failed with message ${response.message}`);
         }
-        console.log('put2');
+
         this.hydrate(response.data);
 
         /** @var Model this */

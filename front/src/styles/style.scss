@@ -29,352 +29,357 @@ $button-size: 4.5rem;
 $sans: 'Source Sans Pro', Helvetica, Arial, sans-serif;
 
 .text-muted {
-    color: #a2adb7 !important;
+  color: #a2adb7 !important;
 }
 
 #login_screen {
-    color: $color-primary;
-    background-color: $color-gray-void;
+  color: $color-primary;
+  background-color: $color-gray-void;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .window {
-        display: block;
-        padding: 2rem;
+  .window {
+    display: block;
+    padding: 2rem;
 
-        background-color: $color-gray-dark;
-        box-shadow: $shadow-angle;
+    background-color: $color-gray-dark;
+    box-shadow: $shadow-angle;
 
-        span {
-            display: block;
-            text-align: center;
-            font-size: 1.1rem;
+    span {
+      display: block;
+      text-align: center;
+      font-size: 1.1rem;
 
-            &.title {
-                font-size: 2rem;
-                font-weight: bold;
-            }
+      &.title {
+        font-size: 2rem;
+        font-weight: bold;
+      }
 
-            &.text {
-                margin: 1rem;
-            }
+      &.text {
+        margin: 1rem;
+      }
 
-            &.label {
-                margin-top: 1rem;
-                padding: 0.5rem 0;
-                text-align: left;
-            }
-        }
-
-        button {
-            background-color: $color-gray-bright;
-            display: block;
-            margin: 2rem auto 0 auto;
-
-            &:hover {
-                background-color: $color-secondary;
-            }
-        }
+      &.label {
+        margin-top: 1rem;
+        padding: 0.5rem 0;
+        text-align: left;
+      }
     }
+
+    button {
+      background-color: $color-gray-bright;
+      display: block;
+      margin: 2rem auto 0 auto;
+
+      &:hover {
+        background-color: $color-secondary;
+      }
+    }
+  }
 }
 
 .overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 
-    background-color: $color-gray-overlay;
-    backdrop-filter: blur(2px);
+  background-color: $color-gray-overlay;
+  backdrop-filter: blur(2px);
 
-    .window {
-        display: block;
-        padding: 2rem;
+  .window {
+    display: block;
+    padding: 2rem;
 
-        background-color: $color-gray-dark;
-        box-shadow: $shadow-angle;
+    background-color: $color-gray-dark;
+    box-shadow: $shadow-angle;
 
-        .title {
-            display: block;
+    .title {
+      display: block;
 
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .input-row {
-            display: flex;
-            justify-content: center;
-            align-content: space-between;
-            align-items: center;
-
-            input {
-                margin-right: 1rem;
-            }
-
-            .icon {
-                font-size: 1.2rem;
-            }
-        }
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
     }
+
+    .input-row {
+      display: flex;
+      justify-content: center;
+      align-content: space-between;
+      align-items: center;
+
+      input {
+        margin-right: 1rem;
+      }
+
+      .icon {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }
 
 .icon:hover {
-    cursor: pointer;
-    color: $color-secondary !important;
+  cursor: pointer;
+  color: $color-secondary !important;
 }
 
 .b-icon {
-    &.green {
-        color: $color-green;
-    }
+  &.green {
+    color: $color-green;
+  }
 
-    &.yellow {
-        color: $color-yellow;
-    }
+  &.yellow {
+    color: $color-yellow;
+  }
 
-    &.red {
-        color: $color-red;
-    }
+  &.red {
+    color: $color-red;
+  }
 }
 
 //Override bootstrap
 .form-control, .custom-select {
-    background: $color-gray-light !important;
-    color: $color-primary !important;
-    border: none !important;
-    border-bottom: 2px solid $color-gray-bright !important;
+  background: $color-gray-light !important;
+  color: $color-primary !important;
+  border: none !important;
+  border-bottom: 2px solid $color-gray-bright !important;
 
-    &.custom-select {
-        width: 100% !important;
-        padding: 0.375rem 0.5rem !important;
-    }
+  &.custom-select {
+    width: 100% !important;
+    padding: 0.375rem 0.5rem !important;
+  }
 }
 
 .table {
-    tr:hover {
-        cursor: pointer;
-    }
+  tr:hover {
+    cursor: pointer;
+  }
 }
 
 .left_column {
-    background: #A1203A;
+  background: #A1203A;
 }
 
 .logo {
-    font: 300 2em $sans;
-    text-align: center;
-    padding: 0;
-    margin: -20;
+  font: 300 2em $sans;
+  text-align: center;
+  padding: 0;
+  margin: -20;
 
-    a {
-        display: block;
-        padding: 1em 0;
-        color: $white-off;
-        text-decoration: none;
-        transition: .15s linear color;
+  a {
+    display: block;
+    padding: 1em 0;
+    color: $white-off;
+    text-decoration: none;
+    transition: .15s linear color;
 
-        &:hover {
-            color: #fff;
+    &:hover {
+      color: #fff;
 
-            span {
-                color: #a1203a;
-            }
-        }
+      span {
+        color: #a1203a;
+      }
     }
+  }
 
-    span {
-        font-weight: 700;
-        transition: .15s linear color;
-    }
+  span {
+    font-weight: 700;
+    transition: .15s linear color;
+  }
 }
 
 
 // HOVER SLIDE EFFECT
 .list-hover-slide {
 
-    li {
-        position: relative;
-        overflow: hidden;
+  li {
+    position: relative;
+    overflow: hidden;
+  }
+
+  a {
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: .35s ease color;
+
+    &:before {
+      content: '';
+      display: block;
+      z-index: -1;
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-right: solid 5px white;
+      background: $gray-shine;
+      transition: .35s ease left;
     }
 
-    a {
-        display: block;
-        position: relative;
-        z-index: 1;
-        transition: .35s ease color;
+    &.is-current,
+    &:hover {
 
-        &:before {
-            content: '';
-            display: block;
-            z-index: -1;
-            position: absolute;
-            left: -100%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border-right: solid 5px white;
-            background: $gray-shine;
-            transition: .35s ease left;
-        }
-
-        &.is-current,
-        &:hover {
-
-            &:before {
-                left: 0;
-            }
-        }
+      &:before {
+        left: 0;
+      }
     }
+  }
 }
 
 ///////////newslist
 
 li:hover {
-    background: #a1203a;
-    cursor: pointer;
+  background: #a1203a;
+  cursor: pointer;
 }
 
 body {
-    background-color: $color-gray-void !important;
+  background-color: $color-gray-void !important;
 }
 
-.article_header{
-    cursor: pointer;
+.article_header {
+  cursor: pointer;
 }
 
 .article_header:hover {
-    background-color: #a11d28
+  background-color: #a11d28
 }
 
 .green {
-    background: green;
-    color: white;
-    border-radius: 3px;
-    padding: 4px;
+  background: green;
+  color: white;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 .red {
-    background: red;
-    color: white;
-    border-radius: 3px;
-    padding: 4px;
+  background: red;
+  color: white;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 .orange {
-    background: orange;
-    color: white;
-    border-radius: 3px;
-    padding: 4px;
+  background: orange;
+  color: white;
+  border-radius: 3px;
+  padding: 4px;
 }
 
 
 ////////////article
 .article_box {
-    height: auto;
-    background: #D9D9D9;
-    margin: auto;
-    text-align: left;
-    padding: 32px;
+  height: auto;
+  background: #D9D9D9;
+  margin: auto;
+  text-align: left;
+  padding: 32px;
 }
 
 .title {
-    color: #A1203A;
-    font-size: 3rem;
-    padding: 24px;
+  color: #A1203A;
+  font-size: 3rem;
+  padding: 24px;
 }
 
 .article_text {
-    font-size: 1.2rem;
-    padding: 22px;
-    margin-top: -17px;
-    text-align: justify
+  font-size: 1.2rem;
+  padding: 22px;
+  margin-top: -17px;
+  text-align: justify
 }
 
 .add_comment_box {
-    position: relative;
-    background: #C6C2C2;
-    margin: auto;
-    margin-top: 59px;
-    padding: 20px;
+  position: relative;
+  background: #C6C2C2;
+  margin: auto;
+  margin-top: 59px;
+  padding: 20px;
 }
 
 .article_tagposition {
-    text-align: right;
-    margin-right: 16px;
-    padding: 1px;
+  text-align: right;
+  margin-right: 16px;
+  padding: 1px;
 }
 
 .name_form {
-    padding: 10px;
-    text-align: left;
-    margin-left: 60px;
+  padding: 10px;
+  text-align: left;
+  margin-left: 60px;
 }
 
 .name_formp {
-    width: 378px;
-    padding: 9px;
+  width: 378px;
+  padding: 9px;
 }
 
 
 .comment_box {
-    font-size: 1rem;
-    padding: 20px;
+  font-size: 1rem;
+  padding: 20px;
 }
 
 .comments_box {
-    height: auto;
-    position: relative;
-    background: #D9D9D9;
-    width: 837px;
-    margin: auto;
-    margin-top: 20px;
-    text-align: left;
-    padding: 32px;
+  height: auto;
+  position: relative;
+  background: #D9D9D9;
+  width: 837px;
+  margin: auto;
+  margin-top: 20px;
+  text-align: left;
+  padding: 32px;
 }
 
 .commentator_name {
-    color: #A1203A;
-    font-size: 16px;
-    font-weight: bold;
+  color: #A1203A;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .comment_text {
-    font-size: 14px;
-    padding: 10px;
-    margin-left: 35px;
+  font-size: 14px;
+  padding: 10px;
+  margin-left: 35px;
 }
 
 .comment {
-    background: #ffff;
-    padding: 10px;
-    border-radius: 7px;
-    width: 634px;
-    margin-bottom: 15px;
+  background: #ffff;
+  padding: 10px;
+  border-radius: 7px;
+  width: 634px;
+  margin-bottom: 15px;
 }
 
 // VueEditor Dark Theme
 .quillWrapper {
-    .ql-fill {
-        fill: $color-primary !important;
-    }
-    
-    .ql-stroke{
-        stroke: $color-primary !important;
-    }
+  .ql-fill {
+    fill: $color-primary !important;
+  }
 
-    .ql-picker.ql-header, .ql-picker-label.ql-active {
-        color: $color-primary !important;
-    }
-    
-    .ql-picker-options {
-        background: $color-gray-void !important;
-    }
+  .ql-stroke {
+    stroke: $color-primary !important;
+  }
+
+  .ql-picker.ql-header, .ql-picker-label.ql-active {
+    color: $color-primary !important;
+  }
+
+  .ql-picker-options {
+    background: $color-gray-void !important;
+  }
+}
+
+// According to https://getbootstrap.com/docs/4.0/utilities/spacing/
+.gap-3 {
+  gap: 1rem;
 }

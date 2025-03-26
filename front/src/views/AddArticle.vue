@@ -1,90 +1,105 @@
 <template>
-  <b-card
-      title="Dodaj artykuł"
-  >
-    <b-form @submit.prevent="saveArticle">
-      <b-form-group
-          label="Tytuł"
-          label-for="input-form-input-title"
-          description="Wprowadź tytuł artykułu."
-          class="mt-4"
-      >
-        <b-form-input
-            id="input-form-input-title"
-            v-model="title"
-            type="text"
-            placeholder="Tytuł"
-            required
-        ></b-form-input>
-      </b-form-group>
+  <b-container class="mt-4">
+    <b-card
+        :title="this.id ? 'Edytuj artykuł' : 'Dodaj artykuł'"
+    >
+      <b-form @submit.prevent="saveArticle">
+        <b-form-group
+            label="Tytuł"
+            label-for="input-form-input-title"
+            description="Wprowadź tytuł artykułu."
+        >
+          <b-form-input
+              id="input-form-input-title"
+              v-model="title"
+              type="text"
+              placeholder="Tytuł"
+              required
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group
-          label="Treść"
-          label-for="input-form-input-tags"
-          description="Wprowadź treść artykułu."
-          class="mt-4"
-      >
-        <vue-editor v-model="content" :editor-toolbar="customToolbar" id="input-form-editor"/>
-      </b-form-group>
+        <b-form-group
+            label="Treść"
+            label-for="input-form-input-tags"
+            description="Wprowadź treść artykułu."
+        >
+          <vue-editor v-model="content" :editor-toolbar="customToolbar" id="input-form-editor"/>
+        </b-form-group>
 
-      <b-form-group
-          label="Tagi"
-          label-for="input-form-input-tags"
-          description="Wprowadź tagi oddzielone przecinkami."
-          class="mt-4"
-      >
-        <b-form-input
-            id="input-form-input-tags"
-            v-model="raw_tags"
-            type="text"
-            placeholder="Pożar, Akcja, OSP, Latarnia"
-            required
-        ></b-form-input>
-      </b-form-group>
+        <b-row>
+          <b-col>
+            <b-form-group
+                label="Tagi"
+                label-for="input-form-input-tags"
+                description="Wprowadź tagi oddzielone przecinkami."
+            >
+              <b-form-input
+                  id="input-form-input-tags"
+                  v-model="raw_tags"
+                  type="text"
+                  placeholder="Pożar, Akcja, OSP, Latarnia"
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
 
-      <b-form-group
-          label="Zdjęcia"
-          label-for="input-form-input-photos"
-          description="Dodaj zdjęcia do artykułu."
-          class="mt-4"
-      >
-        <b-form-file v-model="photos" class="mt-3" multiple accept="image/*"></b-form-file>
+          <b-col>
+            <b-form-group
+                label="Zdjęcia"
+                label-for="input-form-input-photos"
+                description="Dodaj zdjęcia do artykułu."
+            >
+              <b-form-file v-model="photos" multiple accept="image/*"></b-form-file>
 
-        <div class="mt-3 d-flex flex-wrap" style="gap: 1em">
-          <div v-for="(img, index) in photoPreviews" :key="index">
-            <img :src="img" alt="Podgląd obrazka" style="height: 100px; object-fit: cover"/>
-          </div>
-        </div>
-      </b-form-group>
+              <HorizontalStack>
+                <div v-for="(img, index) in photoPreviews" :key="index">
+                  <img :src="img" alt="Podgląd obrazka" style="height: 100px; object-fit: cover"/>
+                </div>
+              </HorizontalStack>
+            </b-form-group>
+          </b-col>
+        </b-row>
 
-      <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">{{ validationError }}</b-alert>
+        <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">{{ validationError }}</b-alert>
+        <b-alert show v-if="confirmationMessage" variant="success" class="mt-3 text-center">
+          {{ confirmationMessage }}
+        </b-alert>
 
-      <div class="d-flex justify-content-end">
-        <b-button variant="primary" type="submit" class="d-inline">Dodaj artykuł</b-button>
-      </div>
-    </b-form>
-  </b-card>
+        <HorizontalStack>
+          <b-button v-if="this.id" :to="{ path: '/article/' + this.id }" variant="danger" type="submit" class="d-inline">
+            Anuluj
+          </b-button>
+          <b-button variant="primary" type="submit" class="d-inline">
+            {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
+          </b-button>
+        </HorizontalStack>
+      </b-form>
+    </b-card>
+  </b-container>
 </template>
 
 <script>
 import {VueEditor} from 'vue2-editor';
-import Navbar from '/src/components/Navbar.vue';
 import Article from '@/Model/Article';
 import Tag from '@/Model/Tag';
 import dataStorage from '@/Data/DataStorageInstance';
+import Bridge from '@/api/Bridge';
+import Image from '@/Model/Image';
+import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 
 export default {
   name: 'Mainpage',
-  components: {VueEditor, Navbar},
+  components: {HorizontalStack, VueEditor},
 
   data() {
     return {
+      id: null,
       title: '',
       content: '',
       raw_tags: '',
       photos: null,
       photoPreviews: [],
       validationError: null,
+      confirmationMessage: null,
       customToolbar: [
         ['bold', 'italic', 'underline', 'strike'],
         [{list: 'ordered'}, {list: 'bullet'}],
@@ -95,15 +110,33 @@ export default {
     }
   },
 
+  created() {
+    this.id = parseInt(this.$route.params.id);
+
+    if (!this.id) {
+      return;
+    }
+
+    const article = dataStorage.articles.data.find(e => e.id === this.id);
+
+    if (article) {
+      this.title = article.title;
+      this.content = article.content;
+      this.raw_tags = article.tags.map(tag => tag.name).join(', ');
+    } else {
+      this.validationError = 'Nie znaleziono artykułu do edycji.';
+    }
+  },
+
   methods: {
     saveArticle: function () {
-      if (!this.title.trim() || !this.content.trim() || !this.raw_tags.trim()) {
+      if (!this.title.trim() || !this.content.trim()) {
         this.validationError = 'Wypełnij wszystkie pola przed dodaniem artykułu.';
         return;
       }
 
-      if (!this.isValidTagsFormat(this.raw_tags)) {
-        this.validationError = 'Tagi muszą być oddzielone przecinkami.';
+      if (!/^(([\wąćęłńóżź](,\s+)?)*)$/i.test(this.raw_tags)) {
+        this.validationError = 'Tagi muszą być oddzielone przecinkami i nie mogą być puste.';
         return;
       }
 
@@ -113,20 +146,40 @@ export default {
           .filter(tagText => tagText.length)
           .map(tagText => new Tag(tagText.trim()));
 
-      const article = new Article(this.title, this.content, tags);
+      const article =
+          this.id
+              ? dataStorage.articles.data.find(e => e.id === this.id)
+              : new Article();
+
+      article.title = this.title;
+      article.content = this.content;
+      article.tags = tags;
 
       article.save().then((article) => {
-        console.log('Udało się!');
         dataStorage.addArticle(article);
         this.validationError = null;
-      }).catch(() => {
-        this.validationError = 'Wystąpił błąd podczas dodawania artykułu. Spróbuj ponownie później.';
-      });
-    },
 
-    isValidTagsFormat(tags) {
-      const tagsArray = tags.split(',');
-      return tagsArray.length > 1;
+        if (!this.photos || !this.photos.length) {
+          return article;
+        }
+
+        // Upload images simultaneously
+        const uploadPromises = Array.from(this.photos).map(async (file) => {
+          const formData = new FormData();
+          formData.append('article_id', article.id);
+          formData.append('image', file);
+
+          let response = await Bridge.uploadFile('images', formData);
+          article.images.push((new Image()).hydrate(response.data));
+          return article;
+        });
+
+        return Promise.all(uploadPromises);
+      }).then(() => {
+        this.confirmationMessage = 'Artykuł zapisany.'
+      }).catch((error) => {
+        this.validationError = 'Wystąpił błąd podczas dodawania artykułu. ' + error.body.message;
+      });
     },
   },
 
