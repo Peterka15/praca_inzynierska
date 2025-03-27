@@ -18,6 +18,7 @@ class CreateManagementsTable extends Migration
             $table->string(Management::NAME);
             $table->string(Management::FUNCTION);
             $table->foreignId(Management::UNIT_ID)->references(Unit::ID)->on(Unit::TABLE_NAME);
+            $table->timestamps();
         });
     }
 

@@ -64,7 +64,6 @@ export default {
       const searchTermLower = this.searchPhrase.toLowerCase();
 
       return this.articles.filter((article) => {
-        console.log(article);
         const isTitleMatch = article.title.toLowerCase().includes(searchTermLower);
         const isTagMatch = article.tags.filter((tag) => tag.name.toLowerCase().includes(searchTermLower)).length > 0;
 

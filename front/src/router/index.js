@@ -8,7 +8,7 @@ import Addarticle from "@/views/AddArticle.vue";
 import Register from "@/views/Register";
 import AdminPanel from "@/views/AdminPanel.vue";
 import Inventory from "@/views/Inventory.vue";
-import Management from "@/views/Management.vue";
+import Management from "@/views/Management/Management.vue";
 import SetPassword from "@/views/SetPassword.vue";
 import AuthPassword from "@/views/AuthPassword.vue";
 

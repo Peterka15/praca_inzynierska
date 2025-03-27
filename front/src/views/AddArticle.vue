@@ -156,7 +156,7 @@ export default {
       article.tags = tags;
 
       article.save().then((article) => {
-        dataStorage.addArticle(article);
+        dataStorage.articles.data.push(article);
         this.validationError = null;
 
         if (!this.photos || !this.photos.length) {

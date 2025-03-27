@@ -7,12 +7,15 @@
       </router-link>
     </h1>
 
-    <b-card title="Szukaj..." sub-title="Wyszukaj artykuły lub tagi">
-      <b-form-input
-          v-model="inputValue"
-          type="text"
-          placeholder="Akcja gaśnicza"
-      ></b-form-input>
+    <b-card title="Szukaj">
+      <b-form-group label-for="input-search" label="Wyszukaj artykuły lub tagi">
+        <b-form-input
+            id="input-search"
+            v-model="inputValue"
+            type="text"
+            placeholder="Akcja gaśnicza"
+        ></b-form-input>
+      </b-form-group>
     </b-card>
   </div>
 </template>
@@ -28,7 +31,7 @@ export default {
     prop: 'modelValue',
     event: 'update:modelValue'
   },
-  
+
   data() {
     return {
       tags: dataStorage.tags.data,
