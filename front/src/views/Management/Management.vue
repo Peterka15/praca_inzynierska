@@ -56,6 +56,13 @@
               </HorizontalStack>
             </template>
           </b-table>
+
+          <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">
+            {{ validationError }}
+          </b-alert>
+          <b-alert show v-if="confirmationMessage" variant="success" class="mt-3 text-center">
+            {{ confirmationMessage }}
+          </b-alert>
         </b-card>
       </b-col>
     </b-row>
@@ -63,7 +70,7 @@
     <AdminOnly>
       <b-modal
           id="addEditManagementModal"
-          title="Dodaj członka zarządu"
+          :title="this.addManagementId ? 'Edytuj członka zarządu' : 'Dodaj członka zarządu'"
           :ok-title="this.addManagementId ? 'Zapisz' : 'Dodaj'"
           cancel-title="Anuluj"
           @ok="saveManagementEntry"
@@ -126,7 +133,7 @@ import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import auth from '@/Model/AuthInstance';
 
 export default {
-  name: 'Mainpage',
+  name: 'Management',
   components: {HorizontalStack, AdminOnly, VerticalStack},
 
   data() {
@@ -141,6 +148,9 @@ export default {
       addManagementName: '',
       addManagementFunction: '',
       addManagementUnitId: null,
+
+      validationError: null,
+      confirmationMessage: null,
     };
   },
 

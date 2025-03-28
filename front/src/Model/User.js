@@ -1,6 +1,6 @@
 import Model from './Model';
 import ApiUrls from '@/api/ApiUrls';
-import Bridge, { BridgeRequestMethod } from '@/api/Bridge';
+import Bridge from '@/api/Bridge';
 import Role from '@/Model/Role';
 import Unit from '@/Model/Unit';
 
@@ -24,7 +24,7 @@ export default class User extends Model {
   /** @var {boolean} */
   password_change_is_required = false;
 
-  constructor (name = '', email = '') {
+  constructor(name = '', email = '') {
     super();
 
     this.name = name;
@@ -32,7 +32,7 @@ export default class User extends Model {
   }
 
   /** @return User */
-  hydrate (data) {
+  hydrate(data) {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
@@ -45,22 +45,20 @@ export default class User extends Model {
     return this;
   }
 
-  dehydrate (method) {
+  /** @return {{name: string, email: string, unit_id: number, role_id: number}} */
+  dehydrate(method) {
     return (
-      (method === BridgeRequestMethod.POST)
-        ? {
-          name: this.name,
-          email: this.email,
-          password: this.password
-        } : {
-          name: this.name,
-          email: this.email
-        }
+      {
+        name: this.name,
+        email: this.email,
+        unit_id: this.unit.id,
+        role_id: this.role.id
+      }
     );
   }
 
   /** @return {Promise<User>} */
-  static fetchCurrentUser () {
+  static fetchCurrentUser() {
     return Bridge.getData(ApiUrls.profile).then((user) => (new User()).hydrate(user.data));
   }
 }

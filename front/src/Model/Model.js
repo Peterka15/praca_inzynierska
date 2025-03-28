@@ -87,7 +87,7 @@ export default class Model {
 
     return Bridge.deleteData(this.endpoint, this.id)
       .then((response) => {
-        if (response.data !== null) {
+        if (response?.data) {
           throw new Error(`DELETE failed with message ${response.message}`);
         }
 

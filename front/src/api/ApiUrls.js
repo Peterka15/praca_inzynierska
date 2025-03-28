@@ -5,6 +5,7 @@ export default {
   users: 'users',
   tags: 'tags',
   units: 'units',
+  roles: 'roles',
   comments: 'comments',
   images: 'images',
   files: 'files',

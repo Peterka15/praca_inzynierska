@@ -11,6 +11,7 @@ import Inventory from "@/views/Inventory.vue";
 import Management from "@/views/Management/Management.vue";
 import SetPassword from "@/views/SetPassword.vue";
 import AuthPassword from "@/views/AuthPassword.vue";
+import Users from '@/views/Users/Users.vue';
 
 Vue.use(VueRouter)
 
@@ -70,8 +71,11 @@ const routes = [
     name: 'management',
     component: Management
   },
-
-
+  {
+    path: '/users',
+    name: 'users',
+    component: Users
+  },
 ]
 
 const router = new VueRouter({

@@ -5,6 +5,7 @@ import User from '@/Model/User';
 import Comment from '@/Model/Comment';
 import Management from '@/Model/Management';
 import Unit from '@/Model/Unit';
+import Role from '@/Model/Role';
 
 /**
  * @template T
@@ -22,6 +23,8 @@ export default class DataContainer {
   static TYPE_MANAGEMENT = 'management';
   @readonly
   static TYPE_UNIT = 'unit';
+  @readonly
+  static TYPE_ROLE = 'role';
 
   /** @type {?string} */
   type = null;
@@ -82,7 +85,8 @@ export default class DataContainer {
       [DataContainer.TYPE_USER]: User,
       [DataContainer.TYPE_COMMENT]: Comment,
       [DataContainer.TYPE_MANAGEMENT]: Management,
-      [DataContainer.TYPE_UNIT]: Unit
+      [DataContainer.TYPE_UNIT]: Unit,
+      [DataContainer.TYPE_ROLE]: Role
     };
 
     if (!(type in typesMap)) {

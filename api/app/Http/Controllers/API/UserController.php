@@ -54,7 +54,8 @@ class UserController extends Controller
         $user->password_change_is_required = true;
         $user->save();
 
-        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
+//        ['set_password_url' => $user->getSetPasswordUrl()]
+        return $this->successResponse(new UserResource($user));
     }
 
     public function resetPassword($id): JsonResponse
@@ -78,7 +79,8 @@ class UserController extends Controller
         $user->password_change_is_required = true;
         $user->save();
 
-        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
+//        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
+        return $this->successResponse(new UserResource($user));
     }
 
     public function show(int $id): JsonResponse
@@ -96,7 +98,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             User::NAME => 'string|max:255',
-            User::EMAIL => 'string|email|max:255|unique:users',
+            User::EMAIL => 'string|email|max:255|unique:users,email,' . $user->id,
         ]);
 
         if ($validator->fails()) {

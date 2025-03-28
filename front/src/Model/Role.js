@@ -1,7 +1,10 @@
 import Model from '@/Model/Model';
 import UserRole from '@/enum/UserRole';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class Role extends Model {
+  endpoint = ApiUrls.roles;
+  
   /** @var {string} */
   name;
 

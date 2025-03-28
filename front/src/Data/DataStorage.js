@@ -19,6 +19,9 @@ export default class DataStorage {
   /** @type {DataContainer<Unit>} */
   units;
 
+  /** @type {DataContainer<Role>} */
+  roles;
+
   /** @type {Boolean} */
   ready = false;
 
@@ -29,6 +32,7 @@ export default class DataStorage {
     this.tags = new DataContainer(DataContainer.TYPE_TAG);
     this.managements = new DataContainer(DataContainer.TYPE_MANAGEMENT);
     this.units = new DataContainer(DataContainer.TYPE_UNIT);
+    this.roles = new DataContainer(DataContainer.TYPE_ROLE);
   }
 
   loadBasicData () {
