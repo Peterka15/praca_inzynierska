@@ -19,9 +19,6 @@ export default class DataStorage {
   /** @type {DataContainer<Unit>} */
   units;
 
-  /** @type {?number} */
-  loggedAsId = null;
-
   /** @type {Boolean} */
   ready = false;
 
@@ -58,28 +55,28 @@ export default class DataStorage {
     }
 
     const containerType = DataContainer.getContainerTypes()[object.constructor.name];
-
     if (containerType === undefined) {
       throw new Error('Object must be an instance of one of DataContainer.TYPE_XXX classes.');
     }
 
     const containerName = `${containerType}s`;
-
     if (!this.hasOwnProperty(containerName)) {
       throw new Error('No DataContainer for given containerType.');
     }
 
-    if (this[containerName].data.indexOf((item) => item.id === object.id)) {
+    const container = this[containerName];
+    if (container.data.has(object.id)) {
       console.warn(`[Data Storage] Object ${containerType}:${object.id} already exists.`);
       return;
     }
 
-    this[containerName].data.push(object);
+    container.data.set(object.id, object);
 
     console.log(`[Data Storage] Added object of ${containerType} type.`);
   }
 
   /**
+   * Warning, this replaces whole DataContainer's data!
    * @param {Object[]} objects
    */
   set (objects) {
@@ -88,18 +85,16 @@ export default class DataStorage {
     }
 
     const containerType = DataContainer.getContainerTypes()[objects[0].constructor.name];
-
     if (containerType === undefined) {
       throw new Error('Objects must be instances of one of DataContainer.TYPE_XXX classes.');
     }
 
     const containerName = `${containerType}s`;
-
     if (!this.hasOwnProperty(containerName)) {
       throw new Error('No DataContainer for given containerType.');
     }
 
-    this[containerName].data = objects;
+    this[containerName].data = new Map(objects.map(obj => [obj.id, obj]));
     this[containerName].ready = true;
 
     console.log(`[Data Storage] Loaded ${objects.length} objects of ${containerType} type.`);
@@ -110,62 +105,5 @@ export default class DataStorage {
    */
   isReady () {
     return this.articles.ready;
-  }
-
-  /**
-   * @return {?Article[]}
-   */
-  getArticles () {
-    return this.articles.data;
-  }
-
-  /**
-   * @param {number} id
-   * @return {?Article}
-   */
-  getArticle (id) {
-    return this.articles.data.find(article => article.id === id);
-  }
-
-  /**
-   * @param article
-   */
-  removeArticle (article) {
-    this.articles.data.splice(this.articles.data.indexOf(article), 1);
-  }
-
-  /**
-   * @param {Article} article
-   */
-  addArticle (article) {
-    this.articles.data.push(article);
-  }
-
-  /**
-   * @param {Comment} comment
-   */
-  addComment (comment) {
-    this.comments.data.push(comment);
-  }
-
-  /**
-   * @return {?Comment[]}
-   */
-  getComments () {
-    return this.comments.data;
-  }
-
-  /**
-   * @param {User} user
-   */
-  addUser (user) {
-    this.users.data.push(user);
-  }
-
-  /**
-   * @return {?User}
-   */
-  getLoggedUser () {
-    return this.users.data.find(user => user.id === this.loggedAsId);
   }
 }

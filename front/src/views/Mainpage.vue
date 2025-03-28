@@ -48,22 +48,18 @@ export default {
   },
 
   computed: {
-    articles: function () {
-      if (!this.isReady) {
-        return [];
-      }
-
-      return this.dataStorage.getArticles();
-    },
-
     filteredArticles() {
-      if (this.searchPhrase === '') {
-        return this.articles;
-      }
+      const articles = this.dataStorage.articles
+          .getDataAsArray()
+          .sort((a, b) => b.created_at >= a.created_at);
       
+      if (this.searchPhrase === '') {
+        return articles;
+      }
+
       const searchTermLower = this.searchPhrase.toLowerCase();
 
-      return this.articles.filter((article) => {
+      return articles.filter((article) => {
         const isTitleMatch = article.title.toLowerCase().includes(searchTermLower);
         const isTagMatch = article.tags.filter((tag) => tag.name.toLowerCase().includes(searchTermLower)).length > 0;
 

@@ -106,7 +106,7 @@
         >
           <b-form-select
               id="input-add-management-unit"
-              v-model="addManagementUnit"
+              v-model="addManagementUnitId"
               :options="selectUnits"
               placeholder="Wybierz jednostkę"
               required
@@ -127,8 +127,11 @@ import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 export default {
   name: 'Mainpage',
   components: {HorizontalStack, AdminOnly, VerticalStack},
+  
   data() {
     return {
+      updateTick: 0,
+      
       searchQuery: '',
       selectedUnit: null,
       selectedManagementFunction: null,
@@ -136,7 +139,7 @@ export default {
       addManagementId: null,
       addManagementName: '',
       addManagementFunction: '',
-      addManagementUnit: null,
+      addManagementUnitId: null,
 
       tableFields: [
         {
@@ -175,12 +178,10 @@ export default {
 
   methods: {
     saveManagementEntry() {
-      const index = dataStorage.managements.data.findIndex(e => e.id === this.addManagementId);
-
       const managementEntry = new Management(
           this.addManagementName,
           this.addManagementFunction,
-          dataStorage.units.data.find(e => e.id === this.addManagementUnit)
+          dataStorage.units.data.get(this.addManagementUnitId)
       );
 
       if (this.addManagementId) {
@@ -188,15 +189,11 @@ export default {
       }
 
       managementEntry.save().then((savedEntry) => {
-        if (index !== -1) {
-          dataStorage.managements.data.splice(index, 1, savedEntry);
-        } else {
-          dataStorage.managements.data.push(savedEntry);
-        }
-
-        this.clearManagementEntryPopup();
-      }).then(() => {
+        dataStorage.managements.data.set(savedEntry.id, savedEntry);
         this.confirmationMessage = 'Zapisano.';
+        
+        this.clearManagementEntryPopup();
+        this.forceUpdate();
       }).catch((error) => {
         this.validationError = 'Wystąpił błąd podczas dodawania wpisu. ' + error.body.message;
       });
@@ -207,31 +204,27 @@ export default {
         return;
       }
 
-      const model = dataStorage.managements.data.find(e => e.id === entry.id);
+      const model = dataStorage.managements.data.get(entry.id);
       if (!model) {
         return;
       }
 
       model.delete().then(() => {
-        const index = dataStorage.managements.data.findIndex(e => e.id === entry.id);
-
-        if (index !== -1) {
-          dataStorage.managements.data.splice(index, 1);
-        }
-
+        dataStorage.managements.data.delete(entry.id); 
         this.confirmationMessage = 'Usunięto wpis.';
+        this.forceUpdate();
       }).catch((error) => {
         this.validationError = 'Wystąpił błąd podczas usuwania wpisu. ' + error.body.message;
       });
     },
 
     openManagementEntryEditModal(entry) {
-      const managementEntity = dataStorage.managements.data.find(e => e.id === entry.id);
+      const managementEntity = dataStorage.managements.data.get(entry.id);
 
       this.addManagementId = managementEntity.id;
       this.addManagementName = managementEntity.name;
       this.addManagementFunction = managementEntity.function;
-      this.addManagementUnit = managementEntity.unit.id;
+      this.addManagementUnitId = managementEntity.unit.id;
 
       this.$nextTick(() => {
         this.$bvModal.show('addEditManagementModal');
@@ -242,15 +235,22 @@ export default {
       this.addManagementId = null;
       this.addManagementName = '';
       this.addManagementFunction = '';
-      this.addManagementUnit = null;
+      this.addManagementUnitId = null;
+    },
+    
+    forceUpdate() {
+      this.updateTick++;
     }
   },
 
   computed: {
     filteredEntries() {
+      void this.updateTick;
+      
       const query = this.searchQuery.toLowerCase();
 
-      return dataStorage.managements.data
+      return dataStorage.managements
+          .getDataAsArray()
           .filter(managementEntry =>
               this.selectedUnit === null
               || managementEntry.unit.id === this.selectedUnit
@@ -274,8 +274,11 @@ export default {
     },
 
     selectUnits() {
+      void this.updateTick;
+      
       return [
-        ...dataStorage.units.data
+        ...dataStorage.units
+            .getDataAsArray()
             .map(unit => ({
               value: unit.id,
               text: unit.name
@@ -288,8 +291,11 @@ export default {
     },
 
     selectManagementFunctions() {
+      void this.updateTick;
+      
       return [
-        ...dataStorage.managements.data
+        ...dataStorage.managements
+            .getDataAsArray()
             .map(unit => ({
               value: unit.function,
               text: unit.function

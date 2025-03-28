@@ -25,8 +25,8 @@ export default class DataContainer {
 
   /** @type {?string} */
   type = null;
-  /** @type {T[]} */
-  data = [];
+  /** @type {Map<number, T>} */
+  data = new Map();
   /** @type {boolean} */
   ready = false;
   /** @type {Object} */
@@ -42,7 +42,7 @@ export default class DataContainer {
   }
 
   /**
-   * @returns {Promise<T[]>}
+   * @returns {Promise<Map<number, T>>}
    */
   load () {
     if(this.ready) {
@@ -50,10 +50,10 @@ export default class DataContainer {
     }
 
     console.info(`[Data Container] Load triggered for ${this.type} type.`);
-    return this.classObj.get().then(obj => {
-      this.data = obj;
+    return this.classObj.get().then(arrayOfItems => {
+      this.data = new Map(arrayOfItems.map(item => [item.id, item]));
       this.ready = true;
-      console.info(`[Data Container] Loaded ${obj.length} objects of ${this.type} type.`);
+      console.info(`[Data Container] Loaded ${arrayOfItems.length} objects of ${this.type} type.`);
 
       return this.data;
     });
@@ -90,5 +90,20 @@ export default class DataContainer {
     }
 
     return typesMap[type];
+  }
+
+  /**
+   * @param id
+   * @returns {T|null}
+   */
+  getById(id) {
+    return this.data.get(id) || null;
+  }
+  
+  /**
+   * @return {T[]}
+   */
+  getDataAsArray() {
+    return Array.from(this.data.values());
   }
 }

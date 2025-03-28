@@ -32,7 +32,9 @@
           <b-card-text v-html="this.article.content"></b-card-text>
 
           <HorizontalStack>
-            <b-button v-if="loggedIn" :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">Edytuj artykuł</b-button>
+            <b-button v-if="loggedIn" :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">
+              Edytuj artykuł
+            </b-button>
           </HorizontalStack>
         </b-card>
 
@@ -108,7 +110,7 @@ export default {
 
   created() {
     const articleId = parseInt(this.$route.params.articleId);
-    this.article = dataStorage.getArticle(articleId);
+    this.article = dataStorage.articles.data.get(articleId);
 
     if (!this.article) {
       Article.get(articleId).then((article) => {
@@ -125,7 +127,6 @@ export default {
       const comment = new Comment(articleId, this.author, this.content);
 
       comment.save().then((comment) => {
-        console.log('Udało się!');
         this.article.comments.push(comment);
       });
     }

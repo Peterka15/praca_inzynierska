@@ -65,7 +65,13 @@
         </b-alert>
 
         <HorizontalStack>
-          <b-button v-if="this.id" :to="{ path: '/article/' + this.id }" variant="danger" type="submit" class="d-inline">
+          <b-button
+              v-if="this.id"
+              :to="{ path: '/article/' + this.id }"
+              variant="danger"
+              type="submit"
+              class="d-inline"
+          >
             Anuluj
           </b-button>
           <b-button variant="primary" type="submit" class="d-inline">
@@ -117,7 +123,7 @@ export default {
       return;
     }
 
-    const article = dataStorage.articles.data.find(e => e.id === this.id);
+    const article = dataStorage.articles.data.get(this.id);
 
     if (article) {
       this.title = article.title;
@@ -148,7 +154,7 @@ export default {
 
       const article =
           this.id
-              ? dataStorage.articles.data.find(e => e.id === this.id)
+              ? dataStorage.articles.data.get(this.id)
               : new Article();
 
       article.title = this.title;
@@ -156,7 +162,7 @@ export default {
       article.tags = tags;
 
       article.save().then((article) => {
-        dataStorage.articles.data.push(article);
+        dataStorage.articles.data.set(article.id, article);
         this.validationError = null;
 
         if (!this.photos || !this.photos.length) {
