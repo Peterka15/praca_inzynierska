@@ -31,11 +31,13 @@
 
           <b-card-text v-html="this.article.content"></b-card-text>
 
-          <HorizontalStack>
-            <b-button v-if="loggedIn" :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">
-              Edytuj artykuł
-            </b-button>
-          </HorizontalStack>
+          <AdminOnly>
+            <HorizontalStack>
+              <b-button :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">
+                Edytuj artykuł
+              </b-button>
+            </HorizontalStack>
+          </AdminOnly>
         </b-card>
 
         <div class="add_comment_box shadow">
@@ -79,15 +81,16 @@ import Navbar from '@/components/Navbar';
 import Sidebar from '/src/components/Sidebar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
-import Comment from "@/Model/Comment";
-import Article from "@/Model/Article";
-import auth from "@/Model/AuthInstance";
+import Comment from '@/Model/Comment';
+import Article from '@/Model/Article';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
+import AdminOnly from '@/components/guards/AdminOnly';
 
 export default {
   name: 'Article',
 
   components: {
+    AdminOnly,
     HorizontalStack,
     CommentComponent,
     Navbar,
@@ -97,15 +100,9 @@ export default {
   data() {
     return {
       article: null,
-      author: "",
-      content: ""
+      author: '',
+      content: ''
     };
-  },
-
-  computed: {
-    loggedIn: function () {
-      return auth.loggedIn
-    },
   },
 
   created() {

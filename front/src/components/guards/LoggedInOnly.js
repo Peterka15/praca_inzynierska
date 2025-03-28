@@ -1,7 +1,7 @@
 import auth from '@/Model/AuthInstance';
 
 export default {
-  name: 'AdminOnly',
+  name: 'LoggedInOnly',
   functional: true,
 
   props: {
@@ -9,9 +9,9 @@ export default {
   },
 
   render(h, context) {
-    const isAdmin = auth?.user?.role?.isAdmin?.();
+    const isLoggedIn = auth?.loggedIn;
 
-    if (isAdmin) {
+    if (isLoggedIn) {
       return context.children;
     }
 

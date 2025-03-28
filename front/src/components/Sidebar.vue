@@ -22,7 +22,6 @@
 
 <script>
 import auth from '@/Model/AuthInstance';
-import dataStorage from '@/Data/DataStorageInstance';
 
 export default {
   name: 'Sidebar',
@@ -34,7 +33,6 @@ export default {
 
   data() {
     return {
-      tags: dataStorage.tags.data,
       auth
     }
   },

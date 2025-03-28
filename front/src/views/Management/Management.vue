@@ -123,15 +123,16 @@ import VerticalStack from '@/components/ui/VerticalStack.vue';
 import AdminOnly from '@/components/guards/AdminOnly.js';
 import Management from '@/Model/Management';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
+import auth from '@/Model/AuthInstance';
 
 export default {
   name: 'Mainpage',
   components: {HorizontalStack, AdminOnly, VerticalStack},
-  
+
   data() {
     return {
       updateTick: 0,
-      
+
       searchQuery: '',
       selectedUnit: null,
       selectedManagementFunction: null,
@@ -140,30 +141,6 @@ export default {
       addManagementName: '',
       addManagementFunction: '',
       addManagementUnitId: null,
-
-      tableFields: [
-        {
-          key: 'name',
-          label: 'Imię i nazwisko',
-          sortable: true
-        },
-        {
-          key: 'position',
-          label: 'Pełniona funkcja',
-          sortable: true
-        },
-        {
-          key: 'unit',
-          label: 'Jednostka',
-          sortable: true
-        },
-        {
-          key: 'edit',
-          label: 'Akcje',
-          sortable: false,
-          class: 'text-right'
-        }
-      ]
     };
   },
 
@@ -191,7 +168,7 @@ export default {
       managementEntry.save().then((savedEntry) => {
         dataStorage.managements.data.set(savedEntry.id, savedEntry);
         this.confirmationMessage = 'Zapisano.';
-        
+
         this.clearManagementEntryPopup();
         this.forceUpdate();
       }).catch((error) => {
@@ -210,7 +187,7 @@ export default {
       }
 
       model.delete().then(() => {
-        dataStorage.managements.data.delete(entry.id); 
+        dataStorage.managements.data.delete(entry.id);
         this.confirmationMessage = 'Usunięto wpis.';
         this.forceUpdate();
       }).catch((error) => {
@@ -237,16 +214,47 @@ export default {
       this.addManagementFunction = '';
       this.addManagementUnitId = null;
     },
-    
+
     forceUpdate() {
       this.updateTick++;
     }
   },
 
   computed: {
+    tableFields() {
+      const fields = [
+        {
+          key: 'name',
+          label: 'Imię i nazwisko',
+          sortable: true
+        },
+        {
+          key: 'position',
+          label: 'Pełniona funkcja',
+          sortable: true
+        },
+        {
+          key: 'unit',
+          label: 'Jednostka',
+          sortable: true
+        }
+      ];
+
+      if (auth?.user?.role?.isAdmin()) {
+        fields.push({
+          key: 'edit',
+          label: 'Akcje',
+          sortable: false,
+          class: 'text-right'
+        });
+      }
+
+      return fields;
+    },
+
     filteredEntries() {
       void this.updateTick;
-      
+
       const query = this.searchQuery.toLowerCase();
 
       return dataStorage.managements
@@ -275,7 +283,7 @@ export default {
 
     selectUnits() {
       void this.updateTick;
-      
+
       return [
         ...dataStorage.units
             .getDataAsArray()
@@ -292,7 +300,7 @@ export default {
 
     selectManagementFunctions() {
       void this.updateTick;
-      
+
       return [
         ...dataStorage.managements
             .getDataAsArray()

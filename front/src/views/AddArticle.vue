@@ -1,86 +1,88 @@
 <template>
-  <b-container class="mt-4">
-    <b-card
-        :title="this.id ? 'Edytuj artykuł' : 'Dodaj artykuł'"
-    >
-      <b-form @submit.prevent="saveArticle">
-        <b-form-group
-            label="Tytuł"
-            label-for="input-form-input-title"
-            description="Wprowadź tytuł artykułu."
-        >
-          <b-form-input
-              id="input-form-input-title"
-              v-model="title"
-              type="text"
-              placeholder="Tytuł"
-              required
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-            label="Treść"
-            label-for="input-form-input-tags"
-            description="Wprowadź treść artykułu."
-        >
-          <vue-editor v-model="content" :editor-toolbar="customToolbar" id="input-form-editor"/>
-        </b-form-group>
-
-        <b-row>
-          <b-col>
-            <b-form-group
-                label="Tagi"
-                label-for="input-form-input-tags"
-                description="Wprowadź tagi oddzielone przecinkami."
-            >
-              <b-form-input
-                  id="input-form-input-tags"
-                  v-model="raw_tags"
-                  type="text"
-                  placeholder="Pożar, Akcja, OSP, Latarnia"
-              ></b-form-input>
-            </b-form-group>
-          </b-col>
-
-          <b-col>
-            <b-form-group
-                label="Zdjęcia"
-                label-for="input-form-input-photos"
-                description="Dodaj zdjęcia do artykułu."
-            >
-              <b-form-file v-model="photos" multiple accept="image/*"></b-form-file>
-
-              <HorizontalStack>
-                <div v-for="(img, index) in photoPreviews" :key="index">
-                  <img :src="img" alt="Podgląd obrazka" style="height: 100px; object-fit: cover"/>
-                </div>
-              </HorizontalStack>
-            </b-form-group>
-          </b-col>
-        </b-row>
-
-        <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">{{ validationError }}</b-alert>
-        <b-alert show v-if="confirmationMessage" variant="success" class="mt-3 text-center">
-          {{ confirmationMessage }}
-        </b-alert>
-
-        <HorizontalStack>
-          <b-button
-              v-if="this.id"
-              :to="{ path: '/article/' + this.id }"
-              variant="danger"
-              type="submit"
-              class="d-inline"
+  <AdminOnly displayError>
+    <b-container class="mt-4">
+      <b-card
+          :title="this.id ? 'Edytuj artykuł' : 'Dodaj artykuł'"
+      >
+        <b-form @submit.prevent="saveArticle">
+          <b-form-group
+              label="Tytuł"
+              label-for="input-form-input-title"
+              description="Wprowadź tytuł artykułu."
           >
-            Anuluj
-          </b-button>
-          <b-button variant="primary" type="submit" class="d-inline">
-            {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
-          </b-button>
-        </HorizontalStack>
-      </b-form>
-    </b-card>
-  </b-container>
+            <b-form-input
+                id="input-form-input-title"
+                v-model="title"
+                type="text"
+                placeholder="Tytuł"
+                required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+              label="Treść"
+              label-for="input-form-input-tags"
+              description="Wprowadź treść artykułu."
+          >
+            <vue-editor v-model="content" :editor-toolbar="customToolbar" id="input-form-editor"/>
+          </b-form-group>
+
+          <b-row>
+            <b-col>
+              <b-form-group
+                  label="Tagi"
+                  label-for="input-form-input-tags"
+                  description="Wprowadź tagi oddzielone przecinkami."
+              >
+                <b-form-input
+                    id="input-form-input-tags"
+                    v-model="raw_tags"
+                    type="text"
+                    placeholder="Pożar, Akcja, OSP, Latarnia"
+                ></b-form-input>
+              </b-form-group>
+            </b-col>
+
+            <b-col>
+              <b-form-group
+                  label="Zdjęcia"
+                  label-for="input-form-input-photos"
+                  description="Dodaj zdjęcia do artykułu."
+              >
+                <b-form-file v-model="photos" multiple accept="image/*"></b-form-file>
+
+                <HorizontalStack>
+                  <div v-for="(img, index) in photoPreviews" :key="index">
+                    <img :src="img" alt="Podgląd obrazka" style="height: 100px; object-fit: cover"/>
+                  </div>
+                </HorizontalStack>
+              </b-form-group>
+            </b-col>
+          </b-row>
+
+          <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">{{ validationError }}</b-alert>
+          <b-alert show v-if="confirmationMessage" variant="success" class="mt-3 text-center">
+            {{ confirmationMessage }}
+          </b-alert>
+
+          <HorizontalStack>
+            <b-button
+                v-if="this.id"
+                :to="{ path: '/article/' + this.id }"
+                variant="danger"
+                type="submit"
+                class="d-inline"
+            >
+              Anuluj
+            </b-button>
+            <b-button variant="primary" type="submit" class="d-inline">
+              {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
+            </b-button>
+          </HorizontalStack>
+        </b-form>
+      </b-card>
+    </b-container>
+  </AdminOnly>
 </template>
 
 <script>
@@ -91,10 +93,11 @@ import dataStorage from '@/Data/DataStorageInstance';
 import Bridge from '@/api/Bridge';
 import Image from '@/Model/Image';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
+import AdminOnly from '@/components/guards/AdminOnly';
 
 export default {
   name: 'Mainpage',
-  components: {HorizontalStack, VueEditor},
+  components: {AdminOnly, HorizontalStack, VueEditor},
 
   data() {
     return {

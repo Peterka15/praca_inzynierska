@@ -4,37 +4,26 @@
       <b-navbar type="dark" style="background-color: #003a57" class="justify-content-between h-100">
         <b-navbar-nav class="font-weight-bold">
           <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
-
-          <template v-if="dataStorage.tags.data.length <= 5 && !auth.loggedIn">
-            <b-nav-item v-for="tag in dataStorage.tags.data" :key="'x' + tag.id" href="#">{{ tag.name }}</b-nav-item>
-          </template>
-
-          <b-nav-item-dropdown v-else text="Kategorie Artykułów" right>
-            <b-dropdown-item v-for="tag in dataStorage.tags.data" :key="tag.id" href="#">{{
-                tag.name
-              }}
+          
+          <b-nav-item-dropdown text="Kategorie Artykułów" right>
+            <b-dropdown-item v-for="tag in dataStorage.tags.getDataAsArray()" :key="tag.id" href="#">
+              {{ tag.name }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item
-              v-if="auth.loggedIn && (auth.user.role.isAdmin() || auth.user.role.isModerator())"
-              :to="{ path: '/addarticle'}"
-          >
-            Nowy artykuł
-          </b-nav-item>
-          <b-nav-item v-if="auth.loggedIn" :to="{ path: '/materials'}">
-            Materiały szkoleniowe
-          </b-nav-item>
-          <b-nav-item v-if="auth.loggedIn && auth.user.role.isAdmin()" :to="{ path: '/users'}">
-            Lista użytkowników
-          </b-nav-item>
-          <b-nav-item v-if="auth.loggedIn" :to="{ path: '/equipment'}">
-            Lista sprzętu
-          </b-nav-item>
+          <LoggedInOnly>
+            <b-nav-item :to="{ path: '/materials'}">Materiały szkoleniowe</b-nav-item>
+            <b-nav-item :to="{ path: '/equipment'}">Lista sprzętu</b-nav-item>
+          </LoggedInOnly>
+
+          <AdminOnly>
+            <b-nav-item :to="{ path: '/users'}">Lista użytkowników</b-nav-item>
+            <b-nav-item :to="{ path: '/addarticle'}">Nowy artykuł</b-nav-item>
+          </AdminOnly>
+
           <b-nav-item :to="{ path: '/management'}">
             Zarząd
           </b-nav-item>
-
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item :to="{ path: '/login'}" v-if="!username">Zaloguj</b-nav-item>
@@ -50,9 +39,12 @@
 <script>
 import auth from '@/Model/AuthInstance';
 import dataStorage from '@/Data/DataStorageInstance';
+import LoggedInOnly from '@/components/guards/LoggedInOnly';
+import AdminOnly from '@/components/guards/AdminOnly';
 
 export default {
   name: 'Navbar',
+  components: {AdminOnly, LoggedInOnly},
   data() {
     return {
       isSessionRestored: false,

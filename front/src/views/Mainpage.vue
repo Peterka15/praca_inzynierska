@@ -23,10 +23,8 @@ export default {
   data() {
     return {
       dataStorage: dataStorageInstance,
-      isLoggedIn: false,
       isReady: false,
       searchPhrase: '',
-      searchTag: '',
     };
   },
 
