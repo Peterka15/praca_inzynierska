@@ -33,7 +33,9 @@
 
           <AdminOnly>
             <b-card title="Edycja">
-              <b-button variant="primary" v-b-modal.my-modal class="w-100">Dodaj członka zarządu</b-button>
+              <b-button variant="primary" v-b-modal.addEditManagementModal class="w-100">
+                Dodaj członka zarządu
+              </b-button>
             </b-card>
           </AdminOnly>
         </VerticalStack>
@@ -48,7 +50,10 @@
               class="mt-4"
           >
             <template #cell(edit)="row">
-              <b-button @click="editUser(row.item)">Edytuj</b-button>
+              <HorizontalStack>
+                <b-button @click="openManagementEntryEditModal(row.item)" variant="primary">Edytuj</b-button>
+                <b-button @click="removeManagementEntry(row.item)" variant="danger">Usuń</b-button>
+              </HorizontalStack>
             </template>
           </b-table>
         </b-card>
@@ -57,12 +62,14 @@
 
     <AdminOnly>
       <b-modal
-          id="my-modal"
+          id="addEditManagementModal"
           title="Dodaj członka zarządu"
-          ok-title="Dodaj"
+          :ok-title="this.addManagementId ? 'Zapisz' : 'Dodaj'"
           cancel-title="Anuluj"
           @ok="saveManagementEntry"
-          visible
+          @close="clearManagementEntryPopup"
+          @cancel="clearManagementEntryPopup"
+          @hide="clearManagementEntryPopup"
       >
         <b-form-group
             label="Imię i nazwisko"
@@ -115,10 +122,11 @@ import dataStorage from '@/Data/DataStorageInstance';
 import VerticalStack from '@/components/ui/VerticalStack.vue';
 import AdminOnly from '@/components/guards/AdminOnly.js';
 import Management from '@/Model/Management';
+import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 
 export default {
   name: 'Mainpage',
-  components: {AdminOnly, VerticalStack},
+  components: {HorizontalStack, AdminOnly, VerticalStack},
   data() {
     return {
       searchQuery: '',
@@ -149,7 +157,8 @@ export default {
         {
           key: 'edit',
           label: 'Akcje',
-          sortable: false
+          sortable: false,
+          class: 'text-right'
         }
       ]
     };
@@ -166,23 +175,74 @@ export default {
 
   methods: {
     saveManagementEntry() {
+      const index = dataStorage.managements.data.findIndex(e => e.id === this.addManagementId);
+
       const managementEntry = new Management(
           this.addManagementName,
           this.addManagementFunction,
-          dataStorage.managements.data.find(e => e.id === this.addManagementUnit)
+          dataStorage.units.data.find(e => e.id === this.addManagementUnit)
       );
 
       if (this.addManagementId) {
         managementEntry.id = this.addManagementId;
       }
 
-      managementEntry.save().then((managementEntry) => {
-        dataStorage.managements.data.push(managementEntry);
+      managementEntry.save().then((savedEntry) => {
+        if (index !== -1) {
+          dataStorage.managements.data.splice(index, 1, savedEntry);
+        } else {
+          dataStorage.managements.data.push(savedEntry);
+        }
+
+        this.clearManagementEntryPopup();
       }).then(() => {
-        this.confirmationMessage = 'Zapisano.'
+        this.confirmationMessage = 'Zapisano.';
       }).catch((error) => {
         this.validationError = 'Wystąpił błąd podczas dodawania wpisu. ' + error.body.message;
       });
+    },
+
+    removeManagementEntry(entry) {
+      if (!window.confirm('Czy na pewno chcesz usunąć ten wpis?')) {
+        return;
+      }
+
+      const model = dataStorage.managements.data.find(e => e.id === entry.id);
+      if (!model) {
+        return;
+      }
+
+      model.delete().then(() => {
+        const index = dataStorage.managements.data.findIndex(e => e.id === entry.id);
+
+        if (index !== -1) {
+          dataStorage.managements.data.splice(index, 1);
+        }
+
+        this.confirmationMessage = 'Usunięto wpis.';
+      }).catch((error) => {
+        this.validationError = 'Wystąpił błąd podczas usuwania wpisu. ' + error.body.message;
+      });
+    },
+
+    openManagementEntryEditModal(entry) {
+      const managementEntity = dataStorage.managements.data.find(e => e.id === entry.id);
+
+      this.addManagementId = managementEntity.id;
+      this.addManagementName = managementEntity.name;
+      this.addManagementFunction = managementEntity.function;
+      this.addManagementUnit = managementEntity.unit.id;
+
+      this.$nextTick(() => {
+        this.$bvModal.show('addEditManagementModal');
+      });
+    },
+
+    clearManagementEntryPopup() {
+      this.addManagementId = null;
+      this.addManagementName = '';
+      this.addManagementFunction = '';
+      this.addManagementUnit = null;
     }
   },
 
@@ -205,6 +265,7 @@ export default {
               || managementEntry.unit.name.toLowerCase().includes(query)
           )
           .map(managementEntry => ({
+                id: managementEntry.id,
                 name: managementEntry.name,
                 position: managementEntry.function,
                 unit: managementEntry.unit.name
