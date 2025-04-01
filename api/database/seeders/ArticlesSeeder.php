@@ -17,8 +17,8 @@ class ArticlesSeeder extends Seeder
                 [
                     Article::ID => 1,
                     Article::AUTHOR_ID => 1,
-                    Article::TITLE => 'Nowy Jelecz dla OSP!',
-                    Article::CONTENT => '<p>Nasza jednostka otrzymała pojazd marki Jelecz, nowiutki!</p>',
+                    Article::TITLE => 'Nowy Jelcz dla OSP!',
+                    Article::CONTENT => '<p>Nasza jednostka otrzymała pojazd marki Jelcz, nowiutki!</p>',
                     Article::CREATED_AT => Date::now(),
                     Article::UPDATED_AT => Date::now(),
                 ],

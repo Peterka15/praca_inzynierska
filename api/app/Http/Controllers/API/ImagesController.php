@@ -33,7 +33,7 @@ class ImagesController extends Controller
 
         $imageHandle = $request->file('image');
         if ($imageHandle) {
-            $imageHandle->storeAs('images', $image->uuid);
+            $imageHandle->storeAs('images', "$image->uuid.webp");
         } else {
             return $this->errorResponse('Cannot store image.');
         }
@@ -56,7 +56,7 @@ class ImagesController extends Controller
             return $this->notFoundResponse();
         }
 
-        $path = "images/$image->uuid";
+        $path = "images/$image->uuid.webp";
 
         if (!Storage::exists($path)) {
             throw new FileNotFoundException("File not found: $path");

@@ -62,6 +62,14 @@ class ArticleImagesSeeder extends Seeder
                     Image::CREATED_AT => Date::now(),
                     Image::UPDATED_AT => Date::now()
                 ],
+                [
+                    Image::ID => 7,
+                    Image::UUID => 'e7cec780-8409-4f69-b72c-34fca80fbf35',
+                    Image::MIME_TYPE => 'image/webp',
+                    Image::ARTICLE_ID => 1,
+                    Image::CREATED_AT => Date::now(),
+                    Image::UPDATED_AT => Date::now()
+                ],
             ]
         );
     }
