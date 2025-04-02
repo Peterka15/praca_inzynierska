@@ -130,9 +130,7 @@ export default class Bridge {
   }
 
   static async handleErrors(response) {
-    console.log(response.status);
     if (!response.ok) {
-      console.log('It\'s not ok');
       throw new ApiResponseError(response, await response.json());
     }
 
