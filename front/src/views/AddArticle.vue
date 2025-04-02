@@ -98,11 +98,13 @@ import Path, {getPath} from '@/enum/Path';
 
 export default {
   name: 'Mainpage',
+  
   computed: {
     Path() {
       return Path
     }
   },
+  
   components: {AdminOnly, HorizontalStack, VueEditor},
 
   data() {

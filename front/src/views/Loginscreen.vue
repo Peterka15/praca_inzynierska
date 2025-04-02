@@ -4,7 +4,7 @@
       style="height: 100vh; position: fixed; top: 0; left: 0;"
   >
     <b-card
-        title="POWIATOWY SYSTEM OSP"
+        title="Zaloguj do POWIATOWY SYSTEM OSP"
         sub-title="Zaloguj się do portalu i uzyskaj dostęp do szczegółowych danych OSP."
         style="width: 600px; height: fit-content"
     >
@@ -34,9 +34,12 @@
               required
           ></b-form-input>
         </b-form-group>
-        <div class="d-flex justify-content-end">
-          <b-button variant="primary" type="submit" class="d-inline">Zaloguj</b-button>
-        </div>
+        <HorizontalStack class="mt-4">
+          <b-button variant="secondary" type="button" @click="$router.push({path: getPath(Path.home)})">
+            Wróć do strony głównej
+          </b-button>
+          <b-button variant="primary" type="submit">Zaloguj</b-button>
+        </HorizontalStack>
       </b-form>
       <template #footer>
         <b-card-text class="text-center">Nie posiadasz konta? Skontaktuj się z administratorem portalu.</b-card-text>
@@ -48,9 +51,17 @@
 <script>
 import auth from '@/Model/AuthInstance';
 import Navbar from '@/components/Navbar';
+import HorizontalStack from '@/components/ui/HorizontalStack.vue';
+import Path, {getPath} from '@/enum/Path';
 
 export default {
+  computed: {
+    Path() {
+      return Path
+    }
+  },
   components: {
+    HorizontalStack,
     Navbar,
   },
   data() {
@@ -63,19 +74,17 @@ export default {
 
 
   methods: {
+    getPath,
     login() {
       auth.login(this.email, this.password)
           .then(() => {
-            this.$router.push({path: '/'});
+            this.$router.push({path: Path.home});
           })
           .catch((error) => {
-            console.log('CATCH!')
-            console.warn(error.body)
-
             if (error.body) {
               this.loginError = error.body.message.error?.email?.[0] ?? error.body.message.error?.password?.[0];
             } else if (error.response && error.response.status === 401) {
-              this.loginError = 'Nieprawidłowe login lub hasło. Spróbuj ponownie.';
+              this.loginError = 'Nieprawidłowy email lub hasło. Spróbuj ponownie.';
             } else {
               this.loginError = 'Wystąpił błąd podczas logowania. Spróbuj ponownie później.';
             }

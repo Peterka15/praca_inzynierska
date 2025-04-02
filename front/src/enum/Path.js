@@ -2,7 +2,7 @@ export default {
   home: '/',
   login: '/login',
   register: '/register',
-  setPassword: '/set-password',
+  setPassword_Token: '/set-password/:token',
 
   article: '/article',
   article_Id: '/article/:articleId',

@@ -46,7 +46,7 @@ const routes = [
     component: Register
   },
   {
-    path: Path.setPassword,
+    path: Path.setPassword_Token,
     name: 'set-password',
     component: SetPassword
   },

@@ -1,82 +1,122 @@
 <template>
-  <div>
-    <navbar/>
-    <div class="m_boxcenter m_boxcenterp shadow">
-      <h3 class="m_boxfont">USTAW HASŁO</h3>
-    </div>
-    <div class="center centerp shadow">
-      <div>
-        <h3 class="left_column">POWIATOWY SYSTEM OSP</h3>
-      </div>
-      <div>
-        <div class="logininput">
-          <b-form inline>
-            <label class="sr-only">Hasło</label>
-            <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
-              <b-form-input id="inline-form-input-password" v-model="password"
-                            placeholder="Hasło" type="password"></b-form-input>
-            </b-input-group>
-          </b-form>
-        </div>
-        <div class="logininput">
-          <b-form inline>
-            <label class="sr-only">Potwierdź hasło</label>
-            <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
-              <b-form-input id="inline-form-input-confirm-password" v-model="confirmPassword"
-                            placeholder="Powtórz Hasło" type="password"></b-form-input>
-            </b-input-group>
-          </b-form>
-        </div>
-        <div class="logininput">
-          <b-button v-b-modal.modal-1 @click="addUser()">Zapisz nowe hasło</b-button>
-        </div>
-        <b-alert v-if="registrationError" variant="danger" show>{{ registrationError }}</b-alert>
-      </div>
-    </div>
+  <div
+      class="w-100 d-flex align-items-center justify-content-center"
+      style="height: 100vh; position: fixed; top: 0; left: 0;"
+  >
+    <b-card
+        title="Zmiana hasła"
+        sub-title="Wpisz nowe hasło dla Twojego konta"
+        style="width: 600px; height: fit-content"
+    >
+      <b-alert show v-if="setPasswordError" variant="danger" class="mt-3 text-center">{{ setPasswordError }}</b-alert>
+      <b-form @submit.prevent="setPassword">
+        <b-form-group
+            label="Hasło"
+            label-for="input-form-input-password"
+            description="Wpisz nowe hasło dla Twojego konta."
+            class="mt-4"
+        >
+          <b-form-input
+              id="inline-form-input-password"
+              v-model="password"
+              type="password"
+              placeholder="Nowe hasło"
+              required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+            label="Hasło:"
+            label-for="inline-form-input-password-repeat"
+            description="Wprowadź ponownie Twoje hasło."
+        >
+          <b-form-input
+              id="inline-form-input-password-repeat"
+              v-model="confirmPassword"
+              type="password"
+              placeholder="Powtórz nowe hasło"
+              required
+          ></b-form-input>
+        </b-form-group>
+        <HorizontalStack class="mt-4">
+          <b-button variant="secondary" type="button" @click="$router.push({path: getPath(Path.home)})">
+            Wróć do strony głównej
+          </b-button>
+          <b-button variant="primary" type="submit">Potwierdź zmianę hasła</b-button>
+        </HorizontalStack>
+      </b-form>
+      <template #footer>
+        <b-card-text class="text-center">
+          Link aktywacyjny nie działa? Skontaktuj się z administratorem portalu.
+        </b-card-text>
+      </template>
+    </b-card>
+
+    <b-modal
+        id="passwordSetModal"
+        title="Hasło zostało ustawione"
+        ok-title="Przejdź do logowania"
+        cancel-title="Wróć do strony głównej"
+        @ok="$router.push({path: getPath(Path.login)})"
+        @cancel="$router.push({path: getPath(Path.home)})"
+    >
+      <b-alert show variant="success" class="mt-3 text-center">
+        Hasło zostało ustawione poprawnie. Możesz teraz zalogować się na swoje konto.
+      </b-alert>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
-import auth from "@/Model/AuthInstance";
+import Navbar from '@/components/Navbar';
+import auth from '@/Model/AuthInstance';
+import Path, {getPath} from '@/enum/Path';
+import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 
 export default {
-  name: 'Mainpage',
+  name: 'SetPassword',
+  computed: {
+    Path() {
+      return Path
+    }
+  },
 
   data() {
     return {
       password: '',
       confirmPassword: '',
-      registrationError: null,
+      setPasswordError: null,
     }
   },
+
   components: {
+    HorizontalStack,
     Navbar,
   },
 
   methods: {
-    addUser: function () {
-      this.registrationError = null; // Resetuje błąd przed próbą rejestracji
+    getPath,
+    setPassword: function () {
+      this.setPasswordError = null;
 
-      // Sprawdź, czy hasła są zgodne
       if (this.password !== this.confirmPassword) {
-        this.registrationError = 'Hasła nie są zgodne.';
+        this.setPasswordError = 'Hasła muszą być takie same.';
         return;
       }
 
-      // Sprawdź, czy hasło ma minimum 8 znaków
       if (this.password.length < 8) {
-        this.registrationError = 'Hasło musi mieć minimum 8 znaków.';
+        this.setPasswordError = 'Hasło musi mieć conajmniej 8 znaków.';
         return;
       }
 
-      // Próba rejestracji użytkownika
-      auth.register(this.password)
+      const token = this.$route.params.token;
+      auth.setPassword(token, this.password)
           .then(() => {
-            this.$router.push({path: '/login'});
+            this.$bvModal.show('passwordSetModal');
           })
-          .catch(() => {
-            this.registrationError = 'Wystąpił błąd podczas rejestracji. Spróbuj ponownie później.';
+          .catch((error) => {
+            this.setPasswordError = 
+                'Wystąpił błąd podczas ustawiania hasła: ' + error.body.message.error?.password?.[0];
           });
     },
   }

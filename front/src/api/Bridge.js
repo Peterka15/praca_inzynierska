@@ -38,7 +38,6 @@ export default class Bridge {
 
     const request = new Request(url, params);
 
-    // eslint-disable-next-line no-console
     console.info('[Bridge] Fetching', url);
 
     return fetch(request)
@@ -131,7 +130,9 @@ export default class Bridge {
   }
 
   static async handleErrors(response) {
+    console.log(response.status);
     if (!response.ok) {
+      console.log('It\'s not ok');
       throw new ApiResponseError(response, await response.json());
     }
 

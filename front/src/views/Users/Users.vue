@@ -143,6 +143,19 @@
           cancel-disabled
       >
         <p>Poniżej podany został jednorazowy link do aktywacji konta. Przekaż go w bezpieczny sposób do użytkownika.</p>
+
+        <b-form-group
+            label="Adres email użytkownika"
+            label-for="input-password-set-email"
+            description="Adres email użytkownika."
+        >
+          <b-form-input
+              id="input-password-set-email"
+              v-model="addUserPasswordSetEmail"
+              readonly
+              type="text"
+          ></b-form-input>
+        </b-form-group>
         
         <b-form-group
             label="Link do aktywacji konta"
@@ -157,7 +170,9 @@
           ></b-form-input>
         </b-form-group>
         
-        <b-alert show variant="warning" class="mt-3 text-center">Skopiuj ten link przed zamknięciem okna. Jego ponowne wyświetlenie jest niemożliwe!</b-alert>
+        <b-alert show variant="warning" class="mt-3 text-center">
+          Skopiuj ten link przed zamknięciem okna. Jego ponowne wyświetlenie jest niemożliwe!
+        </b-alert>
       </b-modal>
     </b-container>
   </AdminOnly>
@@ -189,6 +204,7 @@ export default {
       addUserRoleId: null,
       addUserUnitId: null,
       addUserPasswordSetUrl: null,
+      addUserPasswordSetEmail: null,
       
       validationError: null,
       confirmationMessage: null,
@@ -250,8 +266,10 @@ export default {
 
       user.save().then((savedEntry) => {
         dataStorage.users.data.set(savedEntry.id, savedEntry);
-        
-        this.addUserPasswordSetUrl = dataStorage.users.getById(savedEntry.id).password_change_url;
+
+        const user = dataStorage.users.getById(savedEntry.id);
+        this.addUserPasswordSetUrl = user.password_change_url;
+        this.addUserPasswordSetEmail = user.email;
         
         this.$nextTick(() => {
           this.$bvModal.show('userAddedModal');

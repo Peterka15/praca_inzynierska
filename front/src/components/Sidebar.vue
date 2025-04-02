@@ -8,7 +8,7 @@
     </h1>
 
     <b-card title="Szukaj">
-      <b-form-group label-for="input-search" label="Wyszukaj artykuły lub tagi">
+      <b-form-group label-for="input-search" label="Wyszukaj artykułów lub tagów">
         <b-form-input
             id="input-search"
             v-model="inputValue"

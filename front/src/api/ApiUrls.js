@@ -16,6 +16,7 @@ export default {
     register: 'register',
     login: 'login',
     logout: 'logout',
-    refresh: 'refresh'
+    refresh: 'refresh',
+    setPassword: 'setPassword'
   }
 };
