@@ -134,6 +134,31 @@
           />
         </b-form-group>
       </b-modal>
+
+      <b-modal
+          id="userAddedModal"
+          title="Link do aktywacji konta użytkownika"
+          ok-title="Zamknij"
+          cancel-title="Anuluj"
+          cancel-disabled
+      >
+        <p>Poniżej podany został jednorazowy link do aktywacji konta. Przekaż go w bezpieczny sposób do użytkownika.</p>
+        
+        <b-form-group
+            label="Link do aktywacji konta"
+            label-for="input-password-set-url"
+            description="Jednorazowy link do aktywacji konta w systemie."
+        >
+          <b-form-input
+              id="input-password-set-url"
+              v-model="addUserPasswordSetUrl"
+              readonly
+              type="text"
+          ></b-form-input>
+        </b-form-group>
+        
+        <b-alert show variant="warning" class="mt-3 text-center">Skopiuj ten link przed zamknięciem okna. Jego ponowne wyświetlenie jest niemożliwe!</b-alert>
+      </b-modal>
     </b-container>
   </AdminOnly>
 </template>
@@ -163,6 +188,7 @@ export default {
       addUserEmail: '',
       addUserRoleId: null,
       addUserUnitId: null,
+      addUserPasswordSetUrl: null,
       
       validationError: null,
       confirmationMessage: null,
@@ -225,10 +251,12 @@ export default {
       user.save().then((savedEntry) => {
         dataStorage.users.data.set(savedEntry.id, savedEntry);
         
-        prompt(dataStorage.users.getById(savedEntry.id).password_change_url);
+        this.addUserPasswordSetUrl = dataStorage.users.getById(savedEntry.id).password_change_url;
         
-        this.confirmationMessage = 'Zapisano.';
-
+        this.$nextTick(() => {
+          this.$bvModal.show('userAddedModal');
+        });
+        
         this.clearUserEntryPopup();
         this.forceUpdate();
       }).catch((error) => {

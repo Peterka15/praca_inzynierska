@@ -27,6 +27,17 @@ Vue.use(BootstrapVue, {
     headerBorderVariant: 'secondary',
     footerBorderVariant: 'secondary'
   },
+  BModal: {
+    headerBgVariant: 'dark',
+    headerTextVariant: 'light',
+    footerBgVariant: 'dark',
+    footerTextVariant: 'light',
+    bodyBgVariant: 'dark',
+    bodyTextVariant: 'light',
+    borderVariant: 'secondary',
+    headerBorderVariant: 'secondary',
+    footerBorderVariant: 'secondary'
+  },
   BTable: {
     tableVariant: 'dark',
     striped: true,
