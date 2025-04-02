@@ -6,73 +6,62 @@ import Article from "@/views/Article";
 import TeachingMaterials from "@/views/TeachingMaterials.vue";
 import Addarticle from "@/views/AddArticle.vue";
 import Register from "@/views/Register";
-import AdminPanel from "@/views/AdminPanel.vue";
 import Inventory from "@/views/Inventory.vue";
 import Management from "@/views/Management/Management.vue";
 import SetPassword from "@/views/SetPassword.vue";
-import AuthPassword from "@/views/AuthPassword.vue";
 import Users from '@/views/Users/Users.vue';
+import Path from '@/enum/Path';
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: Path.home,
     name: 'home',
     component: Mainpage
   },
   {
-    path: '/login',
+    path: Path.login,
     name: 'login',
     component: Loginscreen
   },
   {
-    path: '/article/:articleId',
+    path: Path.article_Id,
     name: 'article',
     component: Article
   },
   {
-    path: '/addarticle/:id?',
+    path: Path.addArticle_Id,
     name: 'addarticle',
     component: Addarticle
   },
   {
-    path: '/materials',
+    path: Path.materials,
     name: 'materials',
     component: TeachingMaterials
   },
   {
-    path: '/adminpanel',
-    name: 'adminpanel',
-    component: AdminPanel
-  },
-  {
-    path: '/register',
+    path: Path.register,
     name: 'register',
     component: Register
   },
   {
-    path: '/setpassword',
-    name: 'setpassword',
+    path: Path.setPassword,
+    name: 'set-password',
     component: SetPassword
   },
   {
-    path: '/authpassword',
-    name: 'authpassword',
-    component: AuthPassword
-  },
-  {
-    path: '/inventory',
+    path: Path.inventory,
     name: 'inventory',
     component: Inventory
   },
   {
-    path: '/management',
+    path: Path.management,
     name: 'management',
     component: Management
   },
   {
-    path: '/users',
+    path: Path.users,
     name: 'users',
     component: Users
   },

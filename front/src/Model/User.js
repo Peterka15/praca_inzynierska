@@ -23,6 +23,8 @@ export default class User extends Model {
   role;
   /** @var {boolean} */
   password_change_is_required = false;
+  /** @var {?string} */
+  password_change_url;
 
   constructor(name = '', email = '') {
     super();
@@ -42,6 +44,8 @@ export default class User extends Model {
     this.unit = (new Unit()).hydrate(data.unit);
     this.role = (new Role()).hydrate(data.role);
     this.password_change_is_required = !!data.password_change_is_required;
+    this.password_change_url = data.password_change_url;
+    
     return this;
   }
 

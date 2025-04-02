@@ -27,7 +27,6 @@ Route::resource('units', UnitsController::class)->only(['index', 'show']);
 Route::resource('roles', RolesController::class)->only(['index', 'show']);
 Route::resource('management', ManagementController::class)->only(['index', 'show']);
 
-
 Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('articles', ArticlesController::class)->except(['index', 'show']);
     Route::resource('tags', TagsController::class)->except(['index', 'show']);

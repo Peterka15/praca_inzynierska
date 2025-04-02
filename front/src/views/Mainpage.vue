@@ -16,6 +16,7 @@ import Navbar from '/src/components/Navbar.vue';
 import Feed from '/src/components/Feed.vue';
 import Sidebar from '/src/components/Sidebar.vue';
 import dataStorageInstance from '@/Data/DataStorageInstance';
+import VerticalStack from '@/components/ui/VerticalStack.vue';
 
 export default {
   name: 'Mainpage',
@@ -29,6 +30,7 @@ export default {
   },
 
   components: {
+    VerticalStack,
     Navbar,
     Feed,
     Sidebar,

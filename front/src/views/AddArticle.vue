@@ -68,7 +68,7 @@
           <HorizontalStack>
             <b-button
                 v-if="this.id"
-                :to="{ path: '/article/' + this.id }"
+                :to="getPath(Path.article, this.id)"
                 variant="danger"
                 type="submit"
                 class="d-inline"
@@ -94,9 +94,15 @@ import Bridge from '@/api/Bridge';
 import Image from '@/Model/Image';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import AdminOnly from '@/components/guards/AdminOnly';
+import Path, {getPath} from '@/enum/Path';
 
 export default {
   name: 'Mainpage',
+  computed: {
+    Path() {
+      return Path
+    }
+  },
   components: {AdminOnly, HorizontalStack, VueEditor},
 
   data() {
@@ -138,6 +144,7 @@ export default {
   },
 
   methods: {
+    getPath,
     saveArticle: function () {
       if (!this.title.trim() || !this.content.trim()) {
         this.validationError = 'Wypełnij wszystkie pola przed dodaniem artykułu.';

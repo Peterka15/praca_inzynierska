@@ -224,6 +224,9 @@ export default {
 
       user.save().then((savedEntry) => {
         dataStorage.users.data.set(savedEntry.id, savedEntry);
+        
+        prompt(dataStorage.users.getById(savedEntry.id).password_change_url);
+        
         this.confirmationMessage = 'Zapisano.';
 
         this.clearUserEntryPopup();

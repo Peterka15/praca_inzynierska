@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <VerticalStack wideGaps>
     <h1 class="logo">
       <router-link to="/">
         <span v-if="!auth.loggedIn">POWIATOWY SYSTEM OSP</span>
@@ -17,14 +17,33 @@
         ></b-form-input>
       </b-form-group>
     </b-card>
-  </div>
+
+    <AdminOnly>
+      <b-card title="Administracja">
+        <VerticalStack>
+          <p class="m-0">Tu znajdziesz listę skrótów do funkcji administracyjnych.</p>
+          <b-button variant="secondary" class="w-100" :to="getPath(Path.addArticle)">
+            Dodaj nowy artykuł
+          </b-button>
+          <b-button variant="secondary" class="w-100" :to="getPath(Path.users)">
+            Dodaj użytkownika
+          </b-button>
+        </VerticalStack>
+      </b-card>
+    </AdminOnly>
+  </VerticalStack>
 </template>
 
 <script>
 import auth from '@/Model/AuthInstance';
+import VerticalStack from '@/components/ui/VerticalStack.vue';
+import AdminOnly from '@/components/guards/AdminOnly';
+import Path, {getPath} from '@/enum/Path';
 
 export default {
   name: 'Sidebar',
+  methods: {getPath},
+  components: {AdminOnly, VerticalStack},
 
   model: {
     prop: 'modelValue',
@@ -42,6 +61,9 @@ export default {
   },
 
   computed: {
+    Path() {
+      return Path
+    },
     inputValue: {
       get() {
         return this.modelValue

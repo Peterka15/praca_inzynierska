@@ -30,7 +30,7 @@
           </b-card-text>
 
           <div class="text-right">
-            <b-button :to="`/article/${article.id}`" variant="primary">Czytaj więcej</b-button>
+            <b-button :to="getPath(Path.article, article.id)" variant="primary">Czytaj więcej</b-button>
           </div>
         </b-card-body>
       </b-col>
@@ -57,8 +57,16 @@
 
 <script>
 
+import Path, {getPath} from '@/enum/Path';
+
 export default {
   name: 'Feed',
+  methods: {getPath},
+  computed: {
+    Path() {
+      return Path
+    }
+  },
   props: ['article'],
 };
 

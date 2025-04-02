@@ -3,32 +3,37 @@
     <div class="fixed-top" style="height: 4em">
       <b-navbar type="dark" style="background-color: #003a57" class="justify-content-between h-100">
         <b-navbar-nav class="font-weight-bold">
-          <b-nav-item :to="{ path: '/'}">Strona Główna</b-nav-item>
-          
-          <b-nav-item-dropdown text="Kategorie Artykułów" right>
-            <b-dropdown-item v-for="tag in dataStorage.tags.getDataAsArray()" :key="tag.id" href="#">
-              {{ tag.name }}
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
+          <b-nav-item :to="getPath(Path.home)">Strona Główna</b-nav-item>
+
+          <b-nav-item :to="getPath(Path.management)">
+            Zarząd OSP
+          </b-nav-item>
+
+          <!--          <b-nav-item-dropdown text="Kategorie Artykułów" right>-->
+          <!--            <b-dropdown-item v-for="tag in dataStorage.tags.getDataAsArray()" :key="tag.id" href="#">-->
+          <!--              {{ tag.name }}-->
+          <!--            </b-dropdown-item>-->
+          <!--          </b-nav-item-dropdown>-->
 
           <LoggedInOnly>
-            <b-nav-item :to="{ path: '/materials'}">Materiały szkoleniowe</b-nav-item>
-            <b-nav-item :to="{ path: '/equipment'}">Lista sprzętu</b-nav-item>
+            <b-nav-item :to="getPath(Path.materials)">Materiały szkoleniowe</b-nav-item>
+            <b-nav-item :to="getPath(Path.inventory)">Lista sprzętu</b-nav-item>
           </LoggedInOnly>
 
           <AdminOnly>
-            <b-nav-item :to="{ path: '/users'}">Lista użytkowników</b-nav-item>
-            <b-nav-item :to="{ path: '/addarticle'}">Nowy artykuł</b-nav-item>
+            <b-nav-item :to="getPath(Path.users)">Lista użytkowników</b-nav-item>
+            <b-nav-item :to="getPath(Path.addArticle)">Nowy artykuł</b-nav-item>
           </AdminOnly>
-
-          <b-nav-item :to="{ path: '/management'}">
-            Zarząd
-          </b-nav-item>
         </b-navbar-nav>
+        
         <b-navbar-nav class="ml-auto">
-          <b-nav-item :to="{ path: '/login'}" v-if="!username">Zaloguj</b-nav-item>
-          <b-nav-item v-if="username" @click="logOut()">Wyloguj</b-nav-item>
-          <b-nav-item v-if="username">{{ username }}</b-nav-item>
+          <NotLoggedInOnly>
+            <b-nav-item :to="getPath(Path.login)">Zaloguj</b-nav-item>
+          </NotLoggedInOnly>
+          <LoggedInOnly>
+            <b-nav-item @click="logOut()">Wyloguj</b-nav-item>
+            <b-nav-item>{{ auth?.user?.name ?? '' }}</b-nav-item>
+          </LoggedInOnly>
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -41,43 +46,43 @@ import auth from '@/Model/AuthInstance';
 import dataStorage from '@/Data/DataStorageInstance';
 import LoggedInOnly from '@/components/guards/LoggedInOnly';
 import AdminOnly from '@/components/guards/AdminOnly';
+import NotLoggedInOnly from '@/components/guards/NotLoggedInOnly';
+import Path, {getPath} from '@/enum/Path';
 
 export default {
   name: 'Navbar',
-  components: {AdminOnly, LoggedInOnly},
+  components: {NotLoggedInOnly, AdminOnly, LoggedInOnly},
   data() {
     return {
-      isSessionRestored: false,
+      updateTick: 0,
+
       auth,
       dataStorage
     };
   },
 
   mounted() {
-    auth.restoreSession(resolved => {
-      if (resolved) {
-        this.isSessionRestored = true;
-      }
-    });
+    auth.restoreSession(() => this.forceUpdate());
   },
 
   computed: {
-    username() {
-      // This will recompute whenever isSessionRestored changes
-      if (this.isSessionRestored && auth.user != null) {
-        return auth.user.name;
-      } else {
-        return null;
-      }
-    }
+    Path() {
+      return Path
+    },
   },
 
   methods: {
+    getPath,
+    
     logOut() {
       auth.logout();
-      this.$router.push({path: '/'});
-      window.location.reload();
+      this.$router.push({path: getPath(Path.home)});
+      this.forceUpdate();
+    },
+    
+    forceUpdate() {
+      this.updateTick++;
     }
-  }
+  },
 };
 </script>

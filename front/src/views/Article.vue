@@ -33,7 +33,7 @@
 
           <AdminOnly>
             <HorizontalStack>
-              <b-button :to="{ path: '/addarticle/' + this.article.id }" variant="secondary">
+              <b-button :to="getPath(Path.addArticle, this.article.id)" variant="secondary">
                 Edytuj artykuł
               </b-button>
             </HorizontalStack>
@@ -85,9 +85,15 @@ import Comment from '@/Model/Comment';
 import Article from '@/Model/Article';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import AdminOnly from '@/components/guards/AdminOnly';
+import Path, {getPath} from '@/enum/Path';
 
 export default {
   name: 'Article',
+  computed: {
+    Path() {
+      return Path
+    }
+  },
 
   components: {
     AdminOnly,
@@ -118,6 +124,7 @@ export default {
   },
 
   methods: {
+    getPath,
     saveComment: function () {
 
       const articleId = parseInt(this.$route.params.articleId);
