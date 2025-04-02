@@ -1000,7 +1000,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PasswordSetUrl'
+                  $ref: '#/components/schemas/UserCreated'
         401:
           description: Not authorized
         404:
@@ -1095,7 +1095,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PasswordSetUrl'
+                  $ref: '#/components/schemas/UserCreated'
         401:
           description: Not authorized
         404:
@@ -1257,10 +1257,28 @@ components:
         required_password_change:
           type: boolean
 
-    PasswordSetUrl:
+    UserCreated:
       type: object
       properties:
-        set_password_url:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        unit:
+          $ref: '#/components/schemas/Unit'
+        role:
+          $ref: '#/components/schemas/Role'
+        required_password_change:
+          type: boolean
+        password_change_url:
           type: string
 
     File:

@@ -52,6 +52,7 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereUpdatedAt($value)
  * @property int $password_change_is_required
  * @property string|null $password_change_token
+ * @property string|null $password_change_url
  * @method static Builder|User wherePasswordChangeIsRequired($value)
  * @method static Builder|User wherePasswordChangeToken($value)
  * @property-read UserRole $role_enum
@@ -78,6 +79,7 @@ final class User extends Authenticatable
     public const ROLE_ID = 'role_id';
 
     public const PASSWORD_CHANGE_IS_REQUIRED = "password_change_is_required";
+    public const PASSWORD_CHANGE_URL = "password_change_url";
 
     protected $fillable = [
         self::NAME,
@@ -122,12 +124,16 @@ final class User extends Authenticatable
      */
     public function isRoleIn(array $roles): bool
     {
-        return in_array($this->role_enum->getValue(), array_map(static fn(UserRole $role) => $role->getValue(), $roles), true);
+        return in_array(
+            $this->role_enum->getValue(),
+            array_map(static fn(UserRole $role) => $role->getValue(), $roles),
+            true
+        );
     }
 
-    public function getSetPasswordUrl(): ?string
+    public function getPasswordChangeUrlAttribute(): ?string
     {
-        if(!$this->password_change_token) {
+        if (!$this->password_change_token) {
             return null;
         }
 

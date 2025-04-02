@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCreatedResource;
 use App\Http\Resources\UserResource;
 use App\Models\Enums\UserRole;
 use App\Models\User;
@@ -54,8 +55,7 @@ class UserController extends Controller
         $user->password_change_is_required = true;
         $user->save();
 
-//        ['set_password_url' => $user->getSetPasswordUrl()]
-        return $this->successResponse(new UserResource($user));
+        return $this->successResponse(new UserCreatedResource($user));
     }
 
     public function resetPassword($id): JsonResponse
@@ -79,8 +79,7 @@ class UserController extends Controller
         $user->password_change_is_required = true;
         $user->save();
 
-//        return $this->successResponse(['set_password_url' => $user->getSetPasswordUrl()]);
-        return $this->successResponse(new UserResource($user));
+        return $this->successResponse(new UserCreatedResource($user));
     }
 
     public function show(int $id): JsonResponse

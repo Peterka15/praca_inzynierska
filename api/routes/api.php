@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('inventoryCategory', InventoryCategoryController::class);
     Route::resource('management', ManagementController::class)->except(['index', 'show']);
     Route::resource('users', UserController::class);
-    Route::post('/users/resetPassword/{id}', [UserController::class, 'resetPassword']);
+    Route::post('/users/{id}/resetPassword', [UserController::class, 'resetPassword']);
 
     Route::get('/profile', [UserController::class, 'getCurrent']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
