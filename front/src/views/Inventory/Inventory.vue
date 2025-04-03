@@ -2,7 +2,7 @@
   <AdminOnly>
     <b-container class="mt-4">
       <b-row>
-        <b-col>
+        <b-col cols="12" lg="3">
           <VerticalStack wideGaps>
             <b-card title="Szukaj">
               <b-form-group label-for="input-search" label="Szukaj po nazwie">
@@ -41,7 +41,7 @@
             </AdminOnly>
           </VerticalStack>
         </b-col>
-        <b-col cols="9">
+        <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
           <b-card
               title="Lista sprzętu"
           >

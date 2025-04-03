@@ -1,11 +1,13 @@
 <template>
   <b-container class="mt-4">
     <b-row>
-      <b-col>
+      <b-col cols="12" lg="3">
         <Sidebar v-model="searchPhrase"/>
       </b-col>
-      <b-col cols="9">
-        <Feed v-for="article in filteredArticles" :key="article.id" :article="article"></Feed>
+      <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
+        <VerticalStack>
+          <Feed v-for="article in filteredArticles" :key="article.id" :article="article"></Feed>
+        </VerticalStack>
       </b-col>
     </b-row>
   </b-container>

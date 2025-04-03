@@ -1,17 +1,16 @@
 <template>
   <b-card
       no-body
-      class="overflow-hidden m-2"
+      class="overflow-hidden"
       tag="article"
   >
-    <b-row no-gutters class="p-0">
+    <b-row no-gutters>
       <b-col
-          md="6"
           class="article-image"
-          :style="`background-image: url(${article.images[0] ? article.images[0].url : '/media/cover.webp'}); min-height: 200px`"
+          :style="`background-image: url(${article.images[0] ? article.images[0].url : '/media/cover.webp'}); min-height: 250px`"
       >
       </b-col>
-      <b-col md="6">
+      <b-col>
         <b-card-body :title="this.article.title" class="text-left">
           <b-card-text class="clamp-text">
             <div v-html="this.article.content"></div>
