@@ -47,17 +47,17 @@
           >
             <b-list-group class="border border-secondary">
               <div v-for="comment in this.article.comments" :key="comment.id" class="border-secondary border-top p-4">
-                <HorizontalStack class="align-items-center" start>
-                  <b-avatar variant="primary" :text="comment.author.slice(0, 2)" class="mb-2"></b-avatar>
-                  <div>
-                    <h5 class="m-0">{{ comment.author }}</h5>
+                <p class="mb-3">{{ comment.content }}</p>
+                <HorizontalStack class="align-items-center">
+                  <div class="text-right">
+                    <h6 class="m-0">{{ comment.author }}</h6>
                     <p class="m-0 text-secondary">{{
                         new Date(comment.created_at).toLocaleString('pl-PL',
                             {hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'})
                       }}</p>
                   </div>
+                  <b-avatar variant="primary" :text="comment.author.slice(0, 2)"></b-avatar>
                 </HorizontalStack>
-                <p class="mb-0 mt-3">{{ comment.content }}</p>
               </div>
             </b-list-group>
           </b-card>
@@ -142,7 +142,7 @@ export default {
 
   created() {
     const articleId = parseInt(this.$route.params.articleId);
-    this.article = dataStorage.articles.data.get(articleId);
+    this.article = dataStorage.articles.getById(articleId);
 
     if (!this.article) {
       Article.get(articleId).then((article) => {

@@ -257,8 +257,8 @@ export default {
           this.addUserEmail,
       );
       
-      user.role = dataStorage.roles.data.get(this.addUserRoleId);
-      user.unit = dataStorage.units.data.get(this.addUserUnitId);
+      user.role = dataStorage.roles.getById(this.addUserRoleId);
+      user.unit = dataStorage.units.getById(this.addUserUnitId);
 
       if (this.addUserId) {
         user.id = this.addUserId;
@@ -287,7 +287,7 @@ export default {
         return;
       }
 
-      const user = dataStorage.users.data.get(entry.id);
+      const user = dataStorage.users.getById(entry.id);
       if (!user) {
         return;
       }
@@ -302,7 +302,7 @@ export default {
     },
 
     openUserEditModal(entry) {
-      const user = dataStorage.users.data.get(entry.id);
+      const user = dataStorage.users.getById(entry.id);
 
       this.addUserId = user.id;
       this.addUserName = user.name;

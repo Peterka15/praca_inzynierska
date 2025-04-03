@@ -21,6 +21,7 @@ class CreateInventoriesTable extends Migration
             $table->foreignId(Inventory::CATEGORY_ID)->references(InventoryCategory::ID)->on(InventoryCategory::TABLE_NAME);
             $table->foreignId(Inventory::UNIT_ID)->references(Unit::ID)->on(Unit::TABLE_NAME);
             $table->boolean(Inventory::AVAILABLE);
+            $table->timestamps();
         });
     }
 

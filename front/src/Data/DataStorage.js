@@ -21,6 +21,12 @@ export default class DataStorage {
 
   /** @type {DataContainer<Role>} */
   roles;
+  
+  /** @type {DataContainer<InventoryCategory>} */
+  inventoryCategories;
+  
+  /** @type {DataContainer<InventoryItem>} */
+  inventoryItems;
 
   /** @type {Boolean} */
   ready = false;
@@ -33,6 +39,8 @@ export default class DataStorage {
     this.managements = new DataContainer(DataContainer.TYPE_MANAGEMENT);
     this.units = new DataContainer(DataContainer.TYPE_UNIT);
     this.roles = new DataContainer(DataContainer.TYPE_ROLE);
+    this.inventoryCategories = new DataContainer(DataContainer.TYPE_INVENTORY_CATEGORY);
+    this.inventoryItems = new DataContainer(DataContainer.TYPE_INVENTORY_ITEM);
   }
 
   loadBasicData () {

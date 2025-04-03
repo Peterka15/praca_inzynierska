@@ -134,7 +134,7 @@ export default {
       return;
     }
 
-    const article = dataStorage.articles.data.get(this.id);
+    const article = dataStorage.articles.getById(this.id);
 
     if (article) {
       this.title = article.title;
@@ -166,7 +166,7 @@ export default {
 
       const article =
           this.id
-              ? dataStorage.articles.data.get(this.id)
+              ? dataStorage.articles.getById(this.id)
               : new Article();
 
       article.title = this.title;

@@ -6,7 +6,7 @@ import Article from "@/views/Article";
 import TeachingMaterials from "@/views/TeachingMaterials.vue";
 import Addarticle from "@/views/AddArticle.vue";
 import Register from "@/views/Register";
-import Inventory from "@/views/Inventory.vue";
+import Inventory from "@/views/Inventory/Inventory.vue";
 import Management from "@/views/Management/Management.vue";
 import SetPassword from "@/views/SetPassword.vue";
 import Users from '@/views/Users/Users.vue';

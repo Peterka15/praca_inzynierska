@@ -9,12 +9,6 @@
             Zarząd OSP
           </b-nav-item>
 
-          <!--          <b-nav-item-dropdown text="Kategorie Artykułów" right>-->
-          <!--            <b-dropdown-item v-for="tag in dataStorage.tags.getDataAsArray()" :key="tag.id" href="#">-->
-          <!--              {{ tag.name }}-->
-          <!--            </b-dropdown-item>-->
-          <!--          </b-nav-item-dropdown>-->
-
           <LoggedInOnly>
             <b-nav-item :to="getPath(Path.materials)">Materiały szkoleniowe</b-nav-item>
             <b-nav-item :to="getPath(Path.inventory)">Lista sprzętu</b-nav-item>

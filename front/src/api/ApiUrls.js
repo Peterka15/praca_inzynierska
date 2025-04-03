@@ -11,6 +11,8 @@ export default {
   files: 'files',
   profile: 'profile',
   management: 'management',
+  inventoryCategory: 'inventoryCategory',
+  inventoryItem: 'inventory',
   auth: {
     base: 'auth',
     register: 'register',

@@ -23,8 +23,8 @@ class InventoryController extends Controller
         $validationRules = [
             Inventory::NAME => 'required|string',
             Inventory::AMOUNT => 'required|integer',
-            Inventory::CATEGORY_ID => 'required|integer|min:1|exists:inventoryCategories,id',
-            Inventory::UNIT_ID => 'required|integer|min:1|exists:unit,id',
+            Inventory::CATEGORY_ID => 'required|integer|min:1|exists:inventory_categories,id',
+            Inventory::UNIT_ID => 'required|integer|min:1|exists:units,id',
             Inventory::AVAILABLE => 'required|boolean'
         ];
 
@@ -54,8 +54,8 @@ class InventoryController extends Controller
         $validationRules = [
             Inventory::NAME => 'string',
             Inventory::AMOUNT => 'integer',
-            Inventory::CATEGORY_ID => 'integer|min:1|exists:inventoryCategories,id',
-            Inventory::UNIT_ID => 'integer|min:1|exists:unit,id',
+            Inventory::CATEGORY_ID => 'integer|min:1|exists:inventory_categories,id',
+            Inventory::UNIT_ID => 'integer|min:1|exists:units,id',
             Inventory::AVAILABLE => 'boolean'
         ];
 

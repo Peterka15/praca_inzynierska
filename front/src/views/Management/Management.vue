@@ -168,7 +168,7 @@ export default {
       const managementEntry = new Management(
           this.addManagementName,
           this.addManagementFunction,
-          dataStorage.units.data.get(this.addManagementUnitId)
+          dataStorage.units.getById(this.addManagementUnitId)
       );
 
       if (this.addManagementId) {
@@ -191,7 +191,7 @@ export default {
         return;
       }
 
-      const model = dataStorage.managements.data.get(entry.id);
+      const model = dataStorage.managements.getById(entry.id);
       if (!model) {
         return;
       }
@@ -206,7 +206,7 @@ export default {
     },
 
     openManagementEntryEditModal(entry) {
-      const managementEntity = dataStorage.managements.data.get(entry.id);
+      const managementEntity = dataStorage.managements.getById(entry.id);
 
       this.addManagementId = managementEntity.id;
       this.addManagementName = managementEntity.name;

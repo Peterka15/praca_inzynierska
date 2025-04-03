@@ -6,6 +6,8 @@ import Comment from '@/Model/Comment';
 import Management from '@/Model/Management';
 import Unit from '@/Model/Unit';
 import Role from '@/Model/Role';
+import InventoryItem from '@/Model/InventoryItem';
+import InventoryCategory from '@/Model/InventoryCategory';
 
 /**
  * @template T
@@ -25,6 +27,10 @@ export default class DataContainer {
   static TYPE_UNIT = 'unit';
   @readonly
   static TYPE_ROLE = 'role';
+  @readonly
+  static TYPE_INVENTORY_ITEM = 'inventory_item';
+  @readonly
+  static TYPE_INVENTORY_CATEGORY = 'inventory_category';
 
   /** @type {?string} */
   type = null;
@@ -69,13 +75,16 @@ export default class DataContainer {
       User: DataContainer.TYPE_USER,
       Tag: DataContainer.TYPE_TAG,
       Management: DataContainer.TYPE_MANAGEMENT,
-      Unit: DataContainer.TYPE_UNIT
+      Unit: DataContainer.TYPE_UNIT,
+      Role: DataContainer.TYPE_ROLE,
+      InventoryItem: DataContainer.TYPE_INVENTORY_ITEM,
+      InventoryCategory: DataContainer.TYPE_INVENTORY_CATEGORY
     };
   }
 
   /**
-   * @param {string }type
-   * @return {Article|Tag|User|Comment|Management}
+   * @param {string} type
+   * @return {Article|Tag|User|Comment|Management|Unit|Role|InventoryItem|InventoryCategory}
    * @throws Error
    */
   static #getClass (type) {
@@ -86,7 +95,9 @@ export default class DataContainer {
       [DataContainer.TYPE_COMMENT]: Comment,
       [DataContainer.TYPE_MANAGEMENT]: Management,
       [DataContainer.TYPE_UNIT]: Unit,
-      [DataContainer.TYPE_ROLE]: Role
+      [DataContainer.TYPE_ROLE]: Role,
+      [DataContainer.TYPE_INVENTORY_ITEM]: InventoryItem,
+      [DataContainer.TYPE_INVENTORY_CATEGORY]: InventoryCategory  
     };
 
     if (!(type in typesMap)) {
@@ -102,6 +113,20 @@ export default class DataContainer {
    */
   getById(id) {
     return this.data.get(id) || null;
+  }
+
+  /**
+   * @param {T} item
+   */
+  setUsingId(item) {
+    this.data.set(item.id, item);
+  }
+
+  /**
+   * @param {T} id
+   */
+  deleteById(id) {
+    this.data.delete(id);
   }
   
   /**
