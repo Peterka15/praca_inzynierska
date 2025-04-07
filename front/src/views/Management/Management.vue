@@ -2,7 +2,9 @@
   <b-container class="mt-4">
     <b-row>
       <b-col>
-        <b-card-img-lazy src="/media/management.webp" class="card-banner-image"/>
+        <div class="card-banner-bg" style="background-image: url('/media/management.webp')">
+          <span>Zarząd</span>
+        </div>
       </b-col>
     </b-row>
     <b-row class="mt-4">

@@ -3,7 +3,9 @@
     <b-container class="mt-4">
       <b-row>
         <b-col>
-          <b-card-img-lazy src="/media/users.webp" class="card-banner-image"/>
+          <div class="card-banner-bg" style="background-image: url('/media/users.webp')">
+            <span>Użytkownicy</span>
+          </div>
         </b-col>
       </b-row>
       <b-row class="mt-4">

@@ -239,6 +239,35 @@ body {
   overflow: scroll;
 }
 
-.card-banner-image {
-  height: 228px
+.card-banner-bg {
+  aspect-ratio: 5 / 1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  font-weight: bolder;
+  display: flex;
+  align-content: end;
+  align-items: end;
+  padding-left: 0.4em;
+  font-size: 3em;
+  
+  &>span {
+    text-shadow: $color-shadow 5px 5px 10px, $color-shadow 5px 5px 5px;
+  }
+}
+
+.card-logo-bg {
+  max-height: 255px;
+  max-width: 255px;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
 }
