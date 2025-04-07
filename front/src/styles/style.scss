@@ -229,13 +229,16 @@ body {
   font-size: 0.85rem;
 }
 
-
 // Better card radius
-.card {
+.card, .card-img {
   border-radius: 1rem;
 }
 
 .card-body {
   border-radius: 1rem;
   overflow: scroll;
+}
+
+.card-banner-image {
+  height: 228px
 }

@@ -2,6 +2,11 @@
   <AdminOnly>
     <b-container class="mt-4">
       <b-row>
+        <b-col>
+          <b-card-img-lazy src="/media/inventory.webp" class="card-banner-image"/>
+        </b-col>
+      </b-row>
+      <b-row class="mt-4">
         <b-col cols="12" lg="3">
           <VerticalStack wideGaps>
             <b-card title="Szukaj">

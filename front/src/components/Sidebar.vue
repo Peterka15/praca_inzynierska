@@ -1,7 +1,9 @@
 <template>
   <VerticalStack wideGaps>
-    <h1 class="logo">
-      <router-link to="/">
+    <b-img-lazy src="/media/logo.webp" style="max-width: 255px; max-height: 255px"/>
+    
+    <h1 class="logo m-0 p-0">
+      <router-link to="/" class="m-0 p-0">
         <span v-if="!auth.loggedIn">POWIATOWY SYSTEM OSP</span>
         <span v-else>{{ auth.user.unit.name }}</span>
       </router-link>

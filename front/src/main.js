@@ -27,6 +27,13 @@ Vue.use(BootstrapVue, {
     headerBorderVariant: 'secondary',
     footerBorderVariant: 'secondary'
   },
+  BCardImageLazy: {
+    bgVariant: 'dark',
+    textVariant: 'light',
+    borderVariant: 'secondary',
+    headerBorderVariant: 'secondary',
+    footerBorderVariant: 'secondary'
+  },
   BModal: {
     headerBgVariant: 'dark',
     headerTextVariant: 'light',

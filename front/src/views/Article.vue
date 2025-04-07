@@ -1,10 +1,10 @@
 <template>
   <b-container class="my-4">
     <b-row>
-      <b-col>
-        <Sidebar></Sidebar>
+      <b-col cols="12" lg="3">
+        <Sidebar/>
       </b-col>
-      <b-col cols="9">
+      <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
         <VerticalStack wide-gaps>
           <div v-if="!this.article">
             <b-spinner label="Spinning"></b-spinner>
