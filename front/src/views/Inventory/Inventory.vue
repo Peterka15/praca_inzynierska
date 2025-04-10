@@ -1,5 +1,5 @@
 <template>
-  <AdminOnly>
+  <Guard admin moderator user commandant display-error>
     <b-container class="mt-4">
       <b-row>
         <b-col>
@@ -39,18 +39,31 @@
               </b-form-group>
             </b-card>
 
-            <AdminOnly>
+            <Guard admin moderator>
               <b-card title="Edycja">
                 <b-button variant="primary" v-b-modal.addEditInventoryModal class="w-100">
                   Dodaj sprzęt
                 </b-button>
               </b-card>
-            </AdminOnly>
+            </Guard>
+
+            <Guard admin moderator commandant>
+              <b-card title="Raport">
+                <b-button
+                    variant="primary"
+                    @click="printInventoryReport"
+                    class="w-100"
+                >
+                  Wydrukuj raport sprzętu
+                </b-button>
+              </b-card>
+            </Guard>
           </VerticalStack>
         </b-col>
         <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
           <b-card
               title="Lista sprzętu"
+              class="print-only"
           >
             <b-table
                 :items="filteredEntries"
@@ -79,102 +92,110 @@
         </b-col>
       </b-row>
 
-      <b-modal
-          id="addEditInventoryModal"
-          :title="this.addInventoryId ? 'Edytuj sprzęt' : 'Dodaj sprzęt'"
-          :ok-title="this.addInventoryId ? 'Zapisz' : 'Dodaj'"
-          cancel-title="Anuluj"
-          @ok="saveNewInventoryEntry"
-          @close="clearInventoryEntryPopup"
-          @cancel="clearInventoryEntryPopup"
-          @hide="clearInventoryEntryPopup"
-      >
-        <b-form-group
-            label="Kategoria"
-            label-for="input-add-inventory-category"
-            description="Kategoria sprzętu"
+      <Guard admin moderator>
+        <b-modal
+            id="addEditInventoryModal"
+            :title="this.addInventoryId ? 'Edytuj sprzęt' : 'Dodaj sprzęt'"
+            :ok-title="this.addInventoryId ? 'Zapisz' : 'Dodaj'"
+            cancel-title="Anuluj"
+            @ok="saveNewInventoryEntry"
+            @close="clearInventoryEntryPopup"
+            @cancel="clearInventoryEntryPopup"
+            @hide="clearInventoryEntryPopup"
         >
-          <b-form-select
-              id="input-add-inventory-category"
-              v-model="addInventoryCategoryId"
-              :options="selectCategories"
-              placeholder="Sprzęt podręczny"
-              required
-          />
-        </b-form-group>
+          <b-form-group
+              label="Kategoria"
+              label-for="input-add-inventory-category"
+              description="Kategoria sprzętu"
+          >
+            <b-form-select
+                id="input-add-inventory-category"
+                v-model="addInventoryCategoryId"
+                :options="selectCategories"
+                placeholder="Sprzęt podręczny"
+                required
+            />
+          </b-form-group>
 
-        <b-form-group
-            label="Nazwa"
-            label-for="input-add-inventory-name"
-            description="Podaj nazwę sprzętu"
-        >
-          <b-form-input
-              id="input-add-inventory-name"
-              v-model="addInventoryName"
-              type="text"
-              placeholder="Wąż gaśniczy W-52"
-              required
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group
+              label="Nazwa"
+              label-for="input-add-inventory-name"
+              description="Podaj nazwę sprzętu"
+          >
+            <b-form-input
+                id="input-add-inventory-name"
+                v-model="addInventoryName"
+                type="text"
+                placeholder="Wąż gaśniczy W-52"
+                required
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-            label="Ilość"
-            label-for="input-add-inventory-amount"
-            description="Podaj ilość sprzętu"
-        >
-          <b-form-input
-              id="input-add-inventory-amount"
-              v-model="addInventoryAmount"
-              type="number"
-              placeholder="10"
-              required
-          ></b-form-input>
-        </b-form-group>
+          <b-form-group
+              label="Ilość"
+              label-for="input-add-inventory-amount"
+              description="Podaj ilość sprzętu"
+          >
+            <b-form-input
+                id="input-add-inventory-amount"
+                v-model="addInventoryAmount"
+                type="number"
+                placeholder="10"
+                required
+            ></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-            label="Dostępność"
-            label-for="input-add-inventory-availability"
-            description="Czy sprzęt jest dostępny do wykorzystania?"
-        >
-          <b-form-select
-              id="input-add-inventory-availability"
-              v-model="addInventoryAvailability"
-              :options="selectAvailability"
-              placeholder="TAK"
-              required
-          />
-        </b-form-group>
+          <b-form-group
+              label="Dostępność"
+              label-for="input-add-inventory-availability"
+              description="Czy sprzęt jest dostępny do wykorzystania?"
+          >
+            <b-form-select
+                id="input-add-inventory-availability"
+                v-model="addInventoryAvailability"
+                :options="selectAvailability"
+                placeholder="TAK"
+                required
+            />
+          </b-form-group>
 
-        <b-form-group
-            label="Jednostka OSP"
-            label-for="input-add-inventory-unit"
-            description="Przynależność do jednostki OSP"
-        >
-          <b-form-select
-              id="input-add-inventory-unit"
-              v-model="addInventoryUnitId"
-              :options="selectUnits"
-              placeholder="OSP PSZÓW"
-              required
-          />
-        </b-form-group>
-      </b-modal>
+          <b-form-group
+              label="Jednostka OSP"
+              label-for="input-add-inventory-unit"
+              description="Przynależność do jednostki OSP"
+          >
+            <b-form-select
+                id="input-add-inventory-unit"
+                v-model="addInventoryUnitId"
+                :options="selectUnits"
+                placeholder="OSP PSZÓW"
+                required
+            />
+          </b-form-group>
+        </b-modal>
+      </Guard>
     </b-container>
-  </AdminOnly>
+  </Guard>
 </template>
 
 <script>
 import dataStorage from '@/Data/DataStorageInstance';
 import VerticalStack from '@/components/ui/VerticalStack.vue';
-import AdminOnly from '@/components/guards/AdminOnly.js';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import InventoryItem from '@/Model/InventoryItem';
+import Guard from '@/components/guards/Guard';
+import auth from '@/Model/AuthInstance';
+import Bridge from '@/api/Bridge';
 
 export default {
   name: 'Users',
-  components: {HorizontalStack, AdminOnly, VerticalStack},
+  components: {
+    Guard,
+    HorizontalStack,
+    VerticalStack
+  },
 
-  data() {
+  data () {
     return {
       updateTick: 0,
 
@@ -190,9 +211,100 @@ export default {
       addInventoryUnitId: null,
 
       validationError: null,
-      confirmationMessage: null,
+      confirmationMessage: null
+    };
+  },
 
-      tableFields: [
+  created () {
+    Promise.all([
+      dataStorage.inventoryCategories.load(),
+      dataStorage.inventoryItems.load(),
+      dataStorage.units.load()
+    ]).then(() => {
+      this.isReady = true;
+      this.forceUpdate();
+    });
+  },
+
+  methods: {
+    async printInventoryReport() {
+      Bridge.downloadFile('inventory/pdf').catch((err) => {
+        console.error('Błąd podczas pobierania PDF:', err);
+      });
+    },
+
+    saveNewInventoryEntry () {
+      const item = new InventoryItem(
+          this.addInventoryName,
+          parseInt(this.addInventoryAmount),
+          dataStorage.inventoryCategories.getById(this.addInventoryCategoryId),
+          dataStorage.units.getById(this.addInventoryUnitId),
+          this.addInventoryAvailability
+      );
+
+      if (this.addInventoryId) {
+        item.id = this.addInventoryId;
+      }
+
+      item.save().then((savedEntry) => {
+        dataStorage.inventoryItems.setUsingId(savedEntry);
+
+        this.clearInventoryEntryPopup();
+        this.forceUpdate();
+      }).catch((error) => {
+        this.validationError = 'Wystąpił błąd podczas dodawania wpisu. ' + error.body.message;
+      });
+    },
+
+    removeInventory (entry) {
+      if (!window.confirm('Czy na pewno chcesz usunąć ten wpis?')) {
+        return;
+      }
+
+      const item = dataStorage.inventoryItems.getById(entry.id);
+      if (!item) {
+        return;
+      }
+
+      item.delete().then(() => {
+        dataStorage.inventoryItems.deleteById(entry.id);
+        this.confirmationMessage = 'Usunięto wpis.';
+        this.forceUpdate();
+      }).catch((error) => {
+        this.validationError = 'Wystąpił błąd podczas usuwania wpisu. ' + error.body.message;
+      });
+    },
+
+    openInventoryEditModal (entry) {
+      const item = dataStorage.inventoryItems.getById(entry.id);
+
+      this.addInventoryId = item.id;
+      this.addInventoryName = item.name;
+      this.addInventoryUnitId = item.unit.id;
+      this.addInventoryCategoryId = item.category.id;
+      this.addInventoryAmount = item.amount;
+
+      this.$nextTick(() => {
+        this.$bvModal.show('addEditInventoryModal');
+      });
+    },
+
+    clearInventoryEntryPopup () {
+      this.addInventoryId = null;
+      this.addInventoryName = '';
+      this.addInventoryUnitId = null;
+      this.addInventoryCategoryId = 1;
+      this.addInventoryAmount = 1;
+    },
+
+    forceUpdate () {
+      this.updateTick++;
+    }
+  },
+
+  computed: {
+    tableFields () {
+      let tableFields = [
         {
           key: 'name',
           label: 'Nazwa',
@@ -217,99 +329,21 @@ export default {
           key: 'available',
           label: 'Dostępność',
           sortable: true
-        },
-        {
+        }
+      ];
+
+      if (auth?.user?.role?.isAdmin() || auth?.user?.role?.isModerator()) {
+        tableFields.push({
           key: 'edit',
           label: 'Akcje',
           sortable: false,
           class: 'text-right'
-        }
-      ],
-    }
-  },
-
-  created() {
-    Promise.all([
-      dataStorage.inventoryCategories.load(),
-      dataStorage.inventoryItems.load(),
-      dataStorage.units.load()
-    ]).then(() => {
-      this.isReady = true;
-      this.forceUpdate();
-    });
-  },
-
-  methods: {
-    saveNewInventoryEntry() {
-      const item = new InventoryItem(
-          this.addInventoryName,
-          parseInt(this.addInventoryAmount),
-          dataStorage.inventoryCategories.getById(this.addInventoryCategoryId),
-          dataStorage.units.getById(this.addInventoryUnitId),
-          this.addInventoryAvailability
-      );
-
-      if (this.addInventoryId) {
-        item.id = this.addInventoryId;
+        });
       }
 
-      item.save().then((savedEntry) => {
-        dataStorage.inventoryItems.setUsingId(savedEntry);
-
-        this.clearInventoryEntryPopup();
-        this.forceUpdate();
-      }).catch((error) => {
-        this.validationError = 'Wystąpił błąd podczas dodawania wpisu. ' + error.body.message;
-      });
+      return tableFields;
     },
 
-    removeInventory(entry) {
-      if (!window.confirm('Czy na pewno chcesz usunąć ten wpis?')) {
-        return;
-      }
-
-      const item = dataStorage.inventoryItems.getById(entry.id);
-      if (!item) {
-        return;
-      }
-
-      item.delete().then(() => {
-        dataStorage.inventoryItems.deleteById(entry.id);
-        this.confirmationMessage = 'Usunięto wpis.';
-        this.forceUpdate();
-      }).catch((error) => {
-        this.validationError = 'Wystąpił błąd podczas usuwania wpisu. ' + error.body.message;
-      });
-    },
-
-    openInventoryEditModal(entry) {
-      const item = dataStorage.inventoryItems.getById(entry.id);
-
-      this.addInventoryId = item.id;
-      this.addInventoryName = item.name;
-      this.addInventoryUnitId = item.unit.id;
-      this.addInventoryCategoryId = item.category.id;
-      this.addInventoryAmount = item.amount;
-
-      this.$nextTick(() => {
-        this.$bvModal.show('addEditInventoryModal');
-      });
-    },
-
-    clearInventoryEntryPopup() {
-      this.addInventoryId = null;
-      this.addInventoryName = '';
-      this.addInventoryUnitId = null;
-      this.addInventoryCategoryId = 1;
-      this.addInventoryAmount = 1;
-    },
-
-    forceUpdate() {
-      this.updateTick++;
-    }
-  },
-
-  computed: {
     filteredEntries: function () {
       void this.updateTick;
 
@@ -338,7 +372,7 @@ export default {
           );
     },
 
-    selectUnits() {
+    selectUnits () {
       void this.updateTick;
 
       return [
@@ -355,7 +389,7 @@ export default {
       ];
     },
 
-    selectCategories() {
+    selectCategories () {
       void this.updateTick;
 
       return [
@@ -371,13 +405,19 @@ export default {
         }
       ];
     },
-    
-    selectAvailability() {
+
+    selectAvailability () {
       return [
-        { value: true, text: 'TAK' },
-        { value: false, text: 'NIE' }
-      ]
+        {
+          value: true,
+          text: 'TAK'
+        },
+        {
+          value: false,
+          text: 'NIE'
+        }
+      ];
     }
-  },
+  }
 };
 </script>

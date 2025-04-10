@@ -21,9 +21,9 @@ export default class Article extends Model {
   comments;
   /** @var {Tag[]} */
   tags;
-  /** @var {string} */
+  /** @var {Date} */
   created_at;
-  /** @var {string} */
+  /** @var {Date} */
   updated_at;
 
   /**
@@ -46,8 +46,8 @@ export default class Article extends Model {
     this.title = data.title;
     this.author = (new User()).hydrate(data.author);
     this.content = data.content;
-    this.created_at = data.created_at;
-    this.updated_at = data.updated_at;
+    this.created_at = new Date(Date.parse(data.created_at));
+    this.updated_at = new Date(Date.parse(data.updated_at));
     this.comments = data.comments.map(commentData => (new Comment()).hydrate(commentData));
     this.images = data.images.map(imageData => (new Image()).hydrate(imageData));
     this.tags = data.tags.map(tagData => (new Tag()).hydrate(tagData));

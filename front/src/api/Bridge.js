@@ -120,6 +120,23 @@ export default class Bridge {
       .then((res) => res.json());
   }
 
+  static async downloadFile(endpoint) {
+    const url = this.getUrl(endpoint);
+    const headers = {
+      Authorization: this.authorizationToken,
+      Accept: 'application/pdf'
+    };
+
+    const response = await fetch(url, { method: 'GET', headers });
+
+    if (!response.ok) {
+      throw new ApiResponseError(response, await response.json());
+    }
+
+    const blob = await response.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+    window.open(objectUrl, '_blank');
+  }
 
   static setBearerToken(authorizationToken = '') {
     this.authorizationToken = `Bearer ${authorizationToken}`;

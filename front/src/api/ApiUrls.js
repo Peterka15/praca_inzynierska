@@ -13,6 +13,7 @@ export default {
   management: 'management',
   inventoryCategory: 'inventoryCategory',
   inventoryItem: 'inventory',
+  inventoryPdf: 'inventory/pdf',
   auth: {
     base: 'auth',
     register: 'register',

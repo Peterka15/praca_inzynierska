@@ -12,9 +12,9 @@ export default class File extends Model {
   name;
   /** @var {string} */
   mime_type;
-  /** @var {string} */
+  /** @var {Date} */
   created_at;
-  /** @var {string} */
+  /** @var {Date} */
   updated_at;
 
   constructor (uuid = '', user_id = '', name = '', mime_type = '') {
@@ -33,8 +33,8 @@ export default class File extends Model {
     this.user_id = data.user_id;
     this.name = data.name;
     this.mime_type = data.mime_type;
-    this.created_at = data.created_at;
-    this.updated_at = data.updated_at;
+    this.created_at = new Date(Date.parse(data.created_at));
+    this.updated_at = new Date(Date.parse(data.updated_at));
 
     return this;
   }

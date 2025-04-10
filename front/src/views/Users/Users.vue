@@ -1,5 +1,5 @@
 <template>
-  <AdminOnly>
+  <Guard admin display-error>
     <b-container class="mt-4">
       <b-row>
         <b-col>
@@ -39,13 +39,13 @@
               </b-form-group>
             </b-card>
 
-            <AdminOnly>
+            <Guard admin>
               <b-card title="Edycja">
                 <b-button variant="primary" v-b-modal.addEditUserModal class="w-100">
                   Dodaj użytkownika
                 </b-button>
               </b-card>
-            </AdminOnly>
+            </Guard>
           </VerticalStack>
         </b-col>
         <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
@@ -163,7 +163,7 @@
               type="text"
           ></b-form-input>
         </b-form-group>
-        
+
         <b-form-group
             label="Link do aktywacji konta"
             label-for="input-password-set-url"
@@ -176,28 +176,32 @@
               type="text"
           ></b-form-input>
         </b-form-group>
-        
+
         <b-alert show variant="warning" class="mt-3 text-center">
           Skopiuj ten link przed zamknięciem okna. Jego ponowne wyświetlenie jest niemożliwe!
         </b-alert>
       </b-modal>
     </b-container>
-  </AdminOnly>
+  </Guard>
 </template>
 
 <script>
 import dataStorage from '@/Data/DataStorageInstance';
 import VerticalStack from '@/components/ui/VerticalStack.vue';
-import AdminOnly from '@/components/guards/AdminOnly.js';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import UserRole from '@/enum/UserRole';
 import User from '@/Model/User';
+import Guard from '@/components/guards/Guard';
 
 export default {
   name: 'Users',
-  components: {HorizontalStack, AdminOnly, VerticalStack},
+  components: {
+    Guard,
+    HorizontalStack,
+    VerticalStack
+  },
 
-  data() {
+  data () {
     return {
       updateTick: 0,
 
@@ -212,7 +216,7 @@ export default {
       addUserUnitId: null,
       addUserPasswordSetUrl: null,
       addUserPasswordSetEmail: null,
-      
+
       validationError: null,
       confirmationMessage: null,
 
@@ -243,11 +247,11 @@ export default {
           sortable: false,
           class: 'text-right'
         }
-      ],
-    }
+      ]
+    };
   },
 
-  created() {
+  created () {
     Promise.all([
       dataStorage.users.load(),
       dataStorage.units.load(),
@@ -258,12 +262,12 @@ export default {
   },
 
   methods: {
-    saveNewUserEntry() {
+    saveNewUserEntry () {
       const user = new User(
           this.addUserName,
-          this.addUserEmail,
+          this.addUserEmail
       );
-      
+
       user.role = dataStorage.roles.getById(this.addUserRoleId);
       user.unit = dataStorage.units.getById(this.addUserUnitId);
 
@@ -277,11 +281,11 @@ export default {
         const user = dataStorage.users.getById(savedEntry.id);
         this.addUserPasswordSetUrl = user.password_change_url;
         this.addUserPasswordSetEmail = user.email;
-        
+
         this.$nextTick(() => {
           this.$bvModal.show('userAddedModal');
         });
-        
+
         this.clearUserEntryPopup();
         this.forceUpdate();
       }).catch((error) => {
@@ -289,7 +293,7 @@ export default {
       });
     },
 
-    removeUser(entry) {
+    removeUser (entry) {
       if (!window.confirm('Czy na pewno chcesz usunąć ten wpis?')) {
         return;
       }
@@ -308,7 +312,7 @@ export default {
       });
     },
 
-    openUserEditModal(entry) {
+    openUserEditModal (entry) {
       const user = dataStorage.users.getById(entry.id);
 
       this.addUserId = user.id;
@@ -322,7 +326,7 @@ export default {
       });
     },
 
-    clearUserEntryPopup() {
+    clearUserEntryPopup () {
       this.addUserId = null;
       this.addUserName = '';
       this.addUserEmail = '';
@@ -330,7 +334,7 @@ export default {
       this.addUserRoleId = null;
     },
 
-    forceUpdate() {
+    forceUpdate () {
       this.updateTick++;
     }
   },
@@ -374,7 +378,7 @@ export default {
           );
     },
 
-    selectUnits() {
+    selectUnits () {
       void this.updateTick;
 
       return [
@@ -391,7 +395,7 @@ export default {
       ];
     },
 
-    selectRoles() {
+    selectRoles () {
       void this.updateTick;
 
       return [
@@ -413,6 +417,6 @@ export default {
         }
       ];
     }
-  },
+  }
 };
 </script>

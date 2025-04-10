@@ -2,7 +2,26 @@
   <b-container class="my-4">
     <b-row>
       <b-col cols="12" lg="3">
-        <Sidebar/>
+        <VerticalStack wideGaps>
+          <OspLogo/>
+
+          <Guard admin moderator>
+            <b-card title="Edycja">
+              <VerticalStack>
+                <p class="m-0">Edycja jest dostępna dla moderatorów i administratora portalu.</p>
+                <b-button variant="secondary" class="w-100" :to="getPath(Path.addArticle)">
+                  Dodaj nowy artykuł
+                </b-button>
+                <b-button :to="getPath(Path.addArticle, this.article.id)" variant="secondary">
+                  Edytuj artykuł
+                </b-button>
+                <b-button @click="removeArticle" variant="danger">
+                  Usuń artykuł
+                </b-button>
+              </VerticalStack>
+            </b-card>
+          </Guard>
+        </VerticalStack>
       </b-col>
       <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
         <VerticalStack wide-gaps>
@@ -33,33 +52,21 @@
 
             <b-card-text v-html="this.article.content"></b-card-text>
 
-            <AdminOnly>
-              <HorizontalStack>
-                <b-button :to="getPath(Path.addArticle, this.article.id)" variant="secondary">
-                  Edytuj artykuł
-                </b-button>
-              </HorizontalStack>
-            </AdminOnly>
+            <UserSignature :username="this.article.author.name" :date="this.article.created_at"/>
           </b-card>
 
           <b-card
               title="Wasze komentarze"
           >
-            <b-list-group class="border border-secondary">
+            <b-list-group class="border border-secondary" v-if="this.article.comments.length">
               <div v-for="comment in this.article.comments" :key="comment.id" class="border-secondary border-top p-4">
                 <p class="mb-3">{{ comment.content }}</p>
-                <HorizontalStack class="align-items-center">
-                  <div class="text-right">
-                    <h6 class="m-0">{{ comment.author }}</h6>
-                    <p class="m-0 text-secondary">{{
-                        new Date(comment.created_at).toLocaleString('pl-PL',
-                            {hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'})
-                      }}</p>
-                  </div>
-                  <b-avatar variant="primary" :text="comment.author.slice(0, 2)"></b-avatar>
-                </HorizontalStack>
+                <UserSignature :username="comment.author" :date="comment.created_at"/>
               </div>
             </b-list-group>
+            <b-alert show v-else variant="secondary" class="mb-0 text-center">
+              Jeszcze nikt nie skomentował tego artykułu.
+            </b-alert>
           </b-card>
 
           <b-card title="Weź udział w dyskusji - dodaj komentarz!">
@@ -74,7 +81,7 @@
                       id="comment"
                       class="w-100"
                       placeholder="Twój komentarz"
-                      v-model="content"
+                      v-model="newCommentContent"
                       required
                   />
                 </b-form-group>
@@ -88,7 +95,7 @@
                       type="text"
                       id="author"
                       placeholder="Krzysztof Kowalski"
-                      v-model="author"
+                      v-model="newCommentAuthor"
                   />
                 </b-form-group>
                 <b-button variant="primary" type="submit">Dodaj komentarz</b-button>
@@ -103,44 +110,44 @@
 
 <script>
 
-import CommentComponent from '@/components/CommentComponent';
-import Navbar from '@/components/Navbar';
-import Sidebar from '/src/components/Sidebar.vue';
 import dataStorage from '@/Data/DataStorageInstance';
 
 import Comment from '@/Model/Comment';
 import Article from '@/Model/Article';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
-import AdminOnly from '@/components/guards/AdminOnly';
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
 import VerticalStack from '@/components/ui/VerticalStack.vue';
+import OspLogo from '@/components/OspLogo.vue';
+import auth from '@/Model/AuthInstance';
+import Guard from '@/components/guards/Guard';
+import UserSignature from '@/components/ui/UserSignature.vue';
 
 export default {
   name: 'Article',
   computed: {
-    Path() {
-      return Path
+    Path () {
+      return Path;
     }
   },
 
   components: {
+    UserSignature,
+    Guard,
+    OspLogo,
     VerticalStack,
-    AdminOnly,
-    HorizontalStack,
-    CommentComponent,
-    Navbar,
-    Sidebar,
+    HorizontalStack
   },
 
-  data() {
+  data () {
     return {
+      /** @type {Article} */
       article: null,
-      author: '',
-      content: ''
+      newCommentAuthor: '',
+      newCommentContent: ''
     };
   },
 
-  created() {
+  created () {
     const articleId = parseInt(this.$route.params.articleId);
     this.article = dataStorage.articles.getById(articleId);
 
@@ -154,15 +161,32 @@ export default {
 
   methods: {
     getPath,
-    saveComment: function () {
 
+    saveComment: function () {
       const articleId = parseInt(this.$route.params.articleId);
-      const comment = new Comment(articleId, this.author, this.content);
+      const comment = new Comment(articleId, this.newCommentAuthor, this.newCommentContent);
 
       comment.save().then((comment) => {
         this.article.comments.push(comment);
       });
+    },
+
+    removeArticle: function () {
+      if (!window.confirm('Czy na pewno chcesz usunąć ten artykuł?')) {
+        return;
+      }
+
+      if (!(auth.user.role.isAdmin() || auth.user.role.isModerator())) {
+        return;
+      }
+
+      const articleId = parseInt(this.$route.params.articleId);
+
+      dataStorage.articles.getById(articleId)?.delete().then(() => {
+        dataStorage.articles.deleteById(articleId);
+        this.$router.push('/');
+      });
     }
   }
-}
+};
 </script>

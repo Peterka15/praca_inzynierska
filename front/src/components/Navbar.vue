@@ -9,25 +9,25 @@
             Zarząd OSP
           </b-nav-item>
 
-          <LoggedInOnly>
+          <Guard loggedIn>
             <b-nav-item :to="getPath(Path.materials)">Materiały szkoleniowe</b-nav-item>
             <b-nav-item :to="getPath(Path.inventory)">Lista sprzętu</b-nav-item>
-          </LoggedInOnly>
+          </Guard>
 
-          <AdminOnly>
+          <Guard admin>
             <b-nav-item :to="getPath(Path.users)">Lista użytkowników</b-nav-item>
             <b-nav-item :to="getPath(Path.addArticle)">Nowy artykuł</b-nav-item>
-          </AdminOnly>
+          </Guard>
         </b-navbar-nav>
-        
+
         <b-navbar-nav class="ml-auto">
-          <NotLoggedInOnly>
+          <Guard notLoggedIn>
             <b-nav-item :to="getPath(Path.login)">Zaloguj</b-nav-item>
-          </NotLoggedInOnly>
-          <LoggedInOnly>
+          </Guard>
+          <Guard loggedIn>
             <b-nav-item @click="logOut()">Wyloguj</b-nav-item>
             <b-nav-item>{{ auth?.user?.name ?? '' }}</b-nav-item>
-          </LoggedInOnly>
+          </Guard>
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -38,15 +38,15 @@
 <script>
 import auth from '@/Model/AuthInstance';
 import dataStorage from '@/Data/DataStorageInstance';
-import LoggedInOnly from '@/components/guards/LoggedInOnly';
-import AdminOnly from '@/components/guards/AdminOnly';
-import NotLoggedInOnly from '@/components/guards/NotLoggedInOnly';
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
+import Guard from '@/components/guards/Guard';
 
 export default {
   name: 'Navbar',
-  components: {NotLoggedInOnly, AdminOnly, LoggedInOnly},
-  data() {
+  components: {
+    Guard
+  },
+  data () {
     return {
       updateTick: 0,
 
@@ -55,28 +55,28 @@ export default {
     };
   },
 
-  mounted() {
+  mounted () {
     auth.restoreSession(() => this.forceUpdate());
   },
 
   computed: {
-    Path() {
-      return Path
-    },
+    Path () {
+      return Path;
+    }
   },
 
   methods: {
     getPath,
-    
-    logOut() {
+
+    logOut () {
       auth.logout();
-      this.$router.push({path: getPath(Path.home)});
+      this.$router.push({ path: getPath(Path.home) });
       this.forceUpdate();
     },
-    
-    forceUpdate() {
+
+    forceUpdate () {
       this.updateTick++;
     }
-  },
+  }
 };
 </script>

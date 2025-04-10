@@ -11,8 +11,8 @@ export default class Comment extends Model {
   /** @var {string} */
   content;
   /** @var {string} */
-  created_at;
-  /** @var {string} */
+  Auth_NotLoggedInOnly
+  /** @var {Date} */
   updated_at;
 
   constructor (article_id = 0, author = '', content = '') {
@@ -29,8 +29,8 @@ export default class Comment extends Model {
     this.article_id = data.article_id;
     this.author = data.author;
     this.content = data.content;
-    this.created_at = data.created_at;
-    this.updated_at = data.updated_at;
+    this.created_at = new Date(Date.parse(data.created_at));
+    this.updated_at = new Date(Date.parse(data.updated_at));
 
     return this;
   }

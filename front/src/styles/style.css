@@ -1,3 +1,11 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.text-muted {
+  color: #a2adb7 !important;
+}
+
 #login_screen {
   color: #fff;
   background-color: #262626;
@@ -37,42 +45,6 @@
   background-color: #ffbd5b;
 }
 
-.overlay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(38, 38, 38, 0.6274509804);
-  backdrop-filter: blur(2px);
-}
-.overlay .window {
-  display: block;
-  padding: 2rem;
-  background-color: #353535;
-  box-shadow: rgba(0, 0, 0, 0.3764705882) 5px 5px 4px;
-}
-.overlay .window .title {
-  display: block;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
-.overlay .window .input-row {
-  display: flex;
-  justify-content: center;
-  align-content: space-between;
-  align-items: center;
-}
-.overlay .window .input-row input {
-  margin-right: 1rem;
-}
-.overlay .window .input-row .icon {
-  font-size: 1.2rem;
-}
-
 .icon:hover {
   cursor: pointer;
   color: #ffbd5b !important;
@@ -93,7 +65,6 @@
   color: #fff !important;
   border: none !important;
   border-bottom: 2px solid #999 !important;
-  border-radius: 0 !important;
 }
 .form-control.custom-select, .custom-select.custom-select {
   width: 100% !important;
@@ -102,17 +73,6 @@
 
 .table tr:hover {
   cursor: pointer;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
 }
 
 .left_column {
@@ -170,136 +130,78 @@
   left: 0;
 }
 
-li:hover {
-  background: #a1203a;
-  cursor: pointer;
-}
-
 body {
   background-color: #262626 !important;
 }
 
-.article_header {
-  cursor: pointer;
+.quillWrapper .ql-fill {
+  fill: #fff !important;
+}
+.quillWrapper .ql-stroke {
+  stroke: #fff !important;
+}
+.quillWrapper .ql-picker.ql-header, .quillWrapper .ql-picker-label.ql-active {
+  color: #fff !important;
+}
+.quillWrapper .ql-picker-options {
+  background: #262626 !important;
 }
 
-.article_header:hover {
-  background-color: #a11d28;
+.gap-3 {
+  gap: 1rem;
 }
 
-.green {
-  background: green;
+.gap-4_5 {
+  gap: 2rem;
+}
+
+.mt-4_5 {
+  margin-top: 2rem;
+}
+
+.badge {
+  font-size: 0.85rem;
+}
+
+.card, .card-img {
+  border-radius: 1rem;
+}
+
+.card-body {
+  border-radius: 1rem;
+  overflow: scroll;
+}
+
+.card-banner-bg {
+  aspect-ratio: 5/1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
   color: white;
-  border-radius: 3px;
-  padding: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  font-weight: bolder;
+  display: flex;
+  align-content: end;
+  align-items: end;
+  padding-left: 0.4em;
+  font-size: 3em;
+}
+.card-banner-bg > span {
+  text-shadow: rgba(0, 0, 0, 0.3764705882) 5px 5px 10px, rgba(0, 0, 0, 0.3764705882) 5px 5px 5px;
 }
 
-.red {
-  background: red;
-  color: white;
-  border-radius: 3px;
-  padding: 4px;
-}
-
-.orange {
-  background: orange;
-  color: white;
-  border-radius: 3px;
-  padding: 4px;
-}
-
-.article_box {
-  height: auto;
-  background: #D9D9D9;
-  margin: auto;
-  text-align: left;
-  padding: 32px;
-}
-
-.title {
-  color: #A1203A;
-  font-size: 3rem;
-  padding: 24px;
-}
-
-.article_text {
-  font-size: 1.2rem;
-  padding: 22px;
-  margin-top: -17px;
-  text-align: justify;
-}
-
-.add_comment_box {
-  position: relative;
-  background: #C6C2C2;
-  margin: auto;
-  margin-top: 59px;
-  padding: 20px;
-}
-
-.article_tagposition {
-  text-align: right;
-  margin-right: 16px;
-  padding: 1px;
-}
-
-.name_form {
-  padding: 10px;
-  text-align: left;
-  margin-left: 60px;
-}
-
-.name_formp {
-  width: 378px;
-  padding: 9px;
-}
-
-.comment_box {
-  font-size: 1rem;
-  padding: 20px;
-}
-
-.comments_box {
-  height: auto;
-  position: relative;
-  background: #D9D9D9;
-  width: 837px;
-  margin: auto;
-  margin-top: 20px;
-  text-align: left;
-  padding: 32px;
-}
-
-.commentator_name {
-  color: #A1203A;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.comment_text {
-  font-size: 14px;
-  padding: 10px;
-  margin-left: 35px;
-}
-
-.comment {
-  background: white;
-  padding: 10px;
-  border-radius: 7px;
-  width: 634px;
-  margin-bottom: 15px;
-}
-
-.addphotos {
-  padding: 10px;
-  margin-left: 60px;
-  margin-top: 10px;
-}
-
-.add_article_button {
-  padding: 10px;
-  margin-left: 500px;
-  margin-top: 200px;
+.card-logo-bg {
+  max-height: 255px;
+  max-width: 255px;
+  aspect-ratio: 1/1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */

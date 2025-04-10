@@ -38,13 +38,13 @@
             </b-form-group>
           </b-card>
 
-          <AdminOnly>
+          <Guard admin moderator>
             <b-card title="Edycja">
               <b-button variant="primary" v-b-modal.addEditManagementModal class="w-100">
                 Dodaj członka zarządu
               </b-button>
             </b-card>
-          </AdminOnly>
+          </Guard>
         </VerticalStack>
       </b-col>
       <b-col cols="12" lg="9" class="mt-4 mt-lg-0">
@@ -74,7 +74,7 @@
       </b-col>
     </b-row>
 
-    <AdminOnly>
+    <Guard admin moderator>
       <b-modal
           id="addEditManagementModal"
           :title="this.addManagementId ? 'Edytuj członka zarządu' : 'Dodaj członka zarządu'"
@@ -127,21 +127,23 @@
           />
         </b-form-group>
       </b-modal>
-    </AdminOnly>
+    </Guard>
   </b-container>
 </template>
 
 <script>
 import dataStorage from '@/Data/DataStorageInstance';
 import VerticalStack from '@/components/ui/VerticalStack.vue';
-import AdminOnly from '@/components/guards/AdminOnly.js';
 import Management from '@/Model/Management';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import auth from '@/Model/AuthInstance';
+import Guard from '@/components/guards/Guard';
 
 export default {
   name: 'Management',
-  components: {HorizontalStack, AdminOnly, VerticalStack},
+  components: {
+    Guard,
+    HorizontalStack, VerticalStack},
 
   data() {
     return {
@@ -257,7 +259,7 @@ export default {
         }
       ];
 
-      if (auth?.user?.role?.isAdmin()) {
+      if (auth?.user?.role?.isAdmin() || auth?.user?.role?.isModerator()) {
         fields.push({
           key: 'edit',
           label: 'Akcje',

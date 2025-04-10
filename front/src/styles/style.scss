@@ -225,6 +225,10 @@ body {
   gap: 2rem;
 }
 
+.mt-4_5 {
+  margin-top: 2rem;
+}
+
 .badge {
   font-size: 0.85rem;
 }
@@ -255,7 +259,7 @@ body {
   align-items: end;
   padding-left: 0.4em;
   font-size: 3em;
-  
+
   &>span {
     text-shadow: $color-shadow 5px 5px 10px, $color-shadow 5px 5px 5px;
   }

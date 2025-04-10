@@ -1,5 +1,5 @@
 <template>
-  <AdminOnly displayError>
+  <Guard admin moderator displayError>
     <b-container class="mt-4">
       <b-card
           :title="this.id ? 'Edytuj artykuł' : 'Dodaj artykuł'"
@@ -69,11 +69,20 @@
             <b-button
                 v-if="this.id"
                 :to="getPath(Path.article, this.id)"
+                variant="secondary"
+                type="submit"
+                class="d-inline"
+            >
+              Przejdź do artykułu
+            </b-button>
+            <b-button
+                v-if="this.id"
+                :to="getPath(Path.article, this.id)"
                 variant="danger"
                 type="submit"
                 class="d-inline"
             >
-              Anuluj
+              Anuluj edycję
             </b-button>
             <b-button variant="primary" type="submit" class="d-inline">
               {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
@@ -82,32 +91,36 @@
         </b-form>
       </b-card>
     </b-container>
-  </AdminOnly>
+  </Guard>
 </template>
 
 <script>
-import {VueEditor} from 'vue2-editor';
+import { VueEditor } from 'vue2-editor';
 import Article from '@/Model/Article';
 import Tag from '@/Model/Tag';
 import dataStorage from '@/Data/DataStorageInstance';
 import Bridge from '@/api/Bridge';
 import Image from '@/Model/Image';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
-import AdminOnly from '@/components/guards/AdminOnly';
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
+import Guard from '@/components/guards/Guard';
 
 export default {
   name: 'Mainpage',
-  
+
   computed: {
-    Path() {
-      return Path
+    Path () {
+      return Path;
     }
   },
-  
-  components: {AdminOnly, HorizontalStack, VueEditor},
 
-  data() {
+  components: {
+    Guard,
+    HorizontalStack,
+    VueEditor
+  },
+
+  data () {
     return {
       id: null,
       title: '',
@@ -119,15 +132,15 @@ export default {
       confirmationMessage: null,
       customToolbar: [
         ['bold', 'italic', 'underline', 'strike'],
-        [{list: 'ordered'}, {list: 'bullet'}],
+        [{ list: 'ordered' }, { list: 'bullet' }],
         ['code-block'],
-        [{header: [1, 2, 3, 4, 5, 6]}],
+        [{ header: [1, 2, 3, 4, 5, 6] }],
         ['link']
       ]
-    }
+    };
   },
 
-  created() {
+  created () {
     this.id = parseInt(this.$route.params.id);
 
     if (!this.id) {
@@ -177,6 +190,8 @@ export default {
         dataStorage.articles.data.set(article.id, article);
         this.validationError = null;
 
+        this.id = article.id;
+
         if (!this.photos || !this.photos.length) {
           return article;
         }
@@ -194,17 +209,19 @@ export default {
 
         return Promise.all(uploadPromises);
       }).then(() => {
-        this.confirmationMessage = 'Artykuł zapisany.'
+        this.confirmationMessage = 'Artykuł zapisany.';
       }).catch((error) => {
         this.validationError = 'Wystąpił błąd podczas dodawania artykułu. ' + error.body.message;
       });
-    },
+    }
   },
 
   watch: {
-    photos(newFiles) {
+    photos (newFiles) {
       this.photoPreviews = [];
-      if (!newFiles) return;
+      if (!newFiles) {
+        return;
+      }
 
       Array.from(newFiles).forEach(file => {
         const reader = new FileReader();
@@ -212,6 +229,6 @@ export default {
         reader.readAsDataURL(file);
       });
     }
-  },
-}
+  }
+};
 </script>

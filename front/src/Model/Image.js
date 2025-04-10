@@ -10,9 +10,9 @@ export default class Image extends Model {
   url;
   /** @var {number} */
   article_id;
-  /** @var {string} */
+  /** @var {Date} */
   created_at;
-  /** @var {string} */
+  /** @var {Date} */
   updated_at;
 
   constructor (uuid = '', article_id = 0) {
@@ -28,8 +28,8 @@ export default class Image extends Model {
     this.uuid = data.uuid;
     this.url = data.url;
     this.article_id = data.article_id;
-    this.created_at = data.created_at;
-    this.updated_at = data.updated_at;
+    this.created_at = new Date(Date.parse(data.created_at));
+    this.updated_at = new Date(Date.parse(data.updated_at));
 
     return this;
   }

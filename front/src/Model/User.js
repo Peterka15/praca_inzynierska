@@ -39,8 +39,8 @@ export default class User extends Model {
     this.name = data.name;
     this.email = data.email;
     this.password = data.password || '';
-    this.created_at = data.created_at;
-    this.updated_at = data.updated_at;
+    this.created_at = new Date(Date.parse(data.created_at));
+    this.updated_at = new Date(Date.parse(data.updated_at));
     this.unit = (new Unit()).hydrate(data.unit);
     this.role = (new Role()).hydrate(data.role);
     this.password_change_is_required = !!data.password_change_is_required;
