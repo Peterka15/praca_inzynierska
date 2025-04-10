@@ -10,12 +10,13 @@ use App\Models\ArticleTag;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticlesController extends Controller
 {
     public function index(): JsonResponse
     {
-        $articles = Article::latest()->get();
+        $articles = Article::latest()->whereIsDeleted(false)->get();
 
         return $this->successResponse(ArticleResource::collection($articles));
     }
@@ -44,7 +45,7 @@ class ArticlesController extends Controller
 
     public function show(int $id): JsonResponse
     {
-        $article = Article::find($id);
+        $article = Article::find($id)->whereIsDeleted(false)->first();
 
         if ($article === null) {
             return $this->notFoundResponse();
@@ -77,9 +78,10 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article): JsonResponse
     {
-        $article->delete();
+        $article->is_deleted = true;
+        $article->save();
 
-        return $this->successResponse();
+        return $this->successResponse(null, Response::HTTP_NO_CONTENT);
     }
 
     private function handleTags(Article $article, ?string $tags): void

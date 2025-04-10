@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->foreignId(Article::AUTHOR_ID)->references(User::ID)->on(User::TABLE_NAME);
             $table->string(Article::TITLE);
             $table->text(Article::CONTENT);
+            $table->boolean(Article::IS_DELETED)->default(false);
             $table->timestamps();
         });
     }

@@ -34,8 +34,10 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::resource('images', ImagesController::class)->except(['show']);
     Route::resource('files', FilesController::class)->except(['show']);
 
+    Route::get('/inventory/pdf', [InventoryController::class, 'downloadPdf']);
     Route::resource('inventory', InventoryController::class);
     Route::resource('inventoryCategory', InventoryCategoryController::class);
+
     Route::resource('management', ManagementController::class)->except(['index', 'show']);
     Route::resource('users', UserController::class);
     Route::post('/users/{id}/resetPassword', [UserController::class, 'resetPassword']);

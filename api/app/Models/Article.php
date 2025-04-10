@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Eloquent;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property int $author_id
  * @property string $title
  * @property string $content
+ * @property boolean $is_deleted
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User|null $author
@@ -48,7 +49,7 @@ final class Article extends ApiModel
     public const AUTHOR_ID = 'author_id';
     public const TITLE = 'title';
     public const CONTENT = 'content';
-
+    public const IS_DELETED = 'is_deleted';
     public const AUTHOR = 'author';
     public const IMAGES = 'images';
     public const COMMENTS = 'comments';
@@ -58,6 +59,7 @@ final class Article extends ApiModel
         self::AUTHOR_ID,
         self::TITLE,
         self::CONTENT,
+        self::IS_DELETED,
         self::CREATED_AT,
         self::UPDATED_AT,
     ];

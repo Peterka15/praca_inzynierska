@@ -6,8 +6,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InventoryResource;
 use App\Models\Inventory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class InventoryController extends Controller
 {
@@ -76,5 +78,11 @@ class InventoryController extends Controller
         $inventory->delete();
 
         return $this->successResponse();
+    }
+
+    public function downloadPdf(): Response
+    {
+        $inventories = Inventory::with(['category', 'unit'])->get();
+        return Pdf::loadView('pdf.inventory_report', compact('inventories'))->download('raport_sprzetu.pdf');
     }
 }

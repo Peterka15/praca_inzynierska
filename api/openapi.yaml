@@ -215,7 +215,7 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        204:
           description: Article deleted
         404:
           description: Article not found
