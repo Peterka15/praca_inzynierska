@@ -6,7 +6,6 @@ export default class InventoryCategory extends Model {
 
   /** @var {string} */
   name;
-  
 
   constructor (name = '') {
     super();

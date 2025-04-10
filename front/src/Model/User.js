@@ -26,7 +26,7 @@ export default class User extends Model {
   /** @var {?string} */
   password_change_url;
 
-  constructor(name = '', email = '') {
+  constructor (name = '', email = '') {
     super();
 
     this.name = name;
@@ -34,7 +34,7 @@ export default class User extends Model {
   }
 
   /** @return User */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
@@ -45,12 +45,12 @@ export default class User extends Model {
     this.role = (new Role()).hydrate(data.role);
     this.password_change_is_required = !!data.password_change_is_required;
     this.password_change_url = data.password_change_url;
-    
+
     return this;
   }
 
   /** @return {{name: string, email: string, unit_id: number, role_id: number}} */
-  dehydrate(method) {
+  dehydrate (method) {
     return (
       {
         name: this.name,
@@ -62,7 +62,7 @@ export default class User extends Model {
   }
 
   /** @return {Promise<User>} */
-  static fetchCurrentUser() {
+  static fetchCurrentUser () {
     return Bridge.getData(ApiUrls.profile).then((user) => (new User()).hydrate(user.data));
   }
 }

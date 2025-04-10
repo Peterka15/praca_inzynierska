@@ -32,7 +32,7 @@ export default class Model {
           throw new Error(`GET failed with message ${response.message}`);
         }
 
-        if(Array.isArray(response.data)) {
+        if (Array.isArray(response.data)) {
           return response.data.map((data) => (new this()).hydrate(data));
         }
 

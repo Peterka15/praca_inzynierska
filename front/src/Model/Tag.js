@@ -1,5 +1,5 @@
-import Model from "@/Model/Model";
-import ApiUrls from "@/api/ApiUrls";
+import Model from '@/Model/Model';
+import ApiUrls from '@/api/ApiUrls';
 
 export default class Tag extends Model {
   endpoint = ApiUrls.tags;
@@ -7,14 +7,14 @@ export default class Tag extends Model {
   /** @var {string} */
   name;
 
-  constructor(name = '') {
+  constructor (name = '') {
     super();
 
     this.name = name;
   }
 
   /** @return Tag */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.name = data.name;
 
@@ -22,10 +22,10 @@ export default class Tag extends Model {
   }
 
   /** @return {{name: string}} */
-  dehydrate() {
+  dehydrate () {
     return (
       {
-        name: this.name,
+        name: this.name
       }
     );
   }

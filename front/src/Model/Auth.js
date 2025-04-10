@@ -84,19 +84,17 @@ export default class Auth {
       data
     );
   }
-  
+
   setPassword (token, password) {
     const data = {
       password: password
     };
-    
+
     return Bridge.postData(
       ApiUrls.auth.setPassword + '/' + token,
       data
     );
   }
-    
-    
 
   /**
    * Login to api (retrieve JWT token)
@@ -132,7 +130,7 @@ export default class Auth {
     );
   }
 
-  logout () { 
+  logout () {
     this.user = null;
     this.loggedIn = false;
 

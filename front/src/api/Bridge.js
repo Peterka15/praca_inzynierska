@@ -1,17 +1,17 @@
-import ApiResponseError from "@/api/ApiResponseError";
-import {baseApiUrl} from "@/api/ApiUrls";
+import ApiResponseError from '@/api/ApiResponseError';
+import { baseApiUrl } from '@/api/ApiUrls';
 
 export const BridgeRequestMethod = {
   GET: 'get',
   POST: 'post',
   PUT: 'put',
   DELETE: 'delete'
-}
+};
 
 export default class Bridge {
   static authorizationToken = '';
 
-  static getHeaders() {
+  static getHeaders () {
     return {
       Accept: 'application/json',
       'Content-type': 'application/json',
@@ -19,7 +19,7 @@ export default class Bridge {
     };
   }
 
-  static makeRequest(
+  static makeRequest (
     method,
     url,
     headers,
@@ -28,7 +28,7 @@ export default class Bridge {
     const params = {
       method,
       headers,
-      body: null,
+      body: null
       // credentials: 'include'
     };
 
@@ -51,7 +51,7 @@ export default class Bridge {
       });
   }
 
-  static getData(
+  static getData (
     endpoint,
     id = null,
     args = null
@@ -73,7 +73,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.GET, url, this.getHeaders(), null);
   }
 
-  static postData(
+  static postData (
     endpoint,
     data
   ) {
@@ -82,7 +82,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.POST, url, this.getHeaders(), data);
   }
 
-  static putData(
+  static putData (
     endpoint,
     id,
     data
@@ -93,7 +93,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.PUT, url, this.getHeaders(), data);
   }
 
-  static deleteData(
+  static deleteData (
     endpoint,
     id
   ) {
@@ -103,7 +103,7 @@ export default class Bridge {
     return this.makeRequest(BridgeRequestMethod.DELETE, url, this.getHeaders(), null);
   }
 
-  static uploadFile(endpoint, formData) {
+  static uploadFile (endpoint, formData) {
     const url = this.getUrl(endpoint);
 
     // DO NOT set Content-Type — browser handles boundary for FormData
@@ -120,14 +120,19 @@ export default class Bridge {
       .then((res) => res.json());
   }
 
-  static async downloadFile(endpoint) {
+  static async downloadFile (endpoint) {
     const url = this.getUrl(endpoint);
     const headers = {
       Authorization: this.authorizationToken,
       Accept: 'application/pdf'
     };
 
-    const response = await fetch(url, { method: 'GET', headers });
+    const response = await fetch(url,
+      {
+        method: 'GET',
+        headers
+      }
+    );
 
     if (!response.ok) {
       throw new ApiResponseError(response, await response.json());
@@ -138,15 +143,15 @@ export default class Bridge {
     window.open(objectUrl, '_blank');
   }
 
-  static setBearerToken(authorizationToken = '') {
+  static setBearerToken (authorizationToken = '') {
     this.authorizationToken = `Bearer ${authorizationToken}`;
   }
 
-  static getUrl(endpoint) {
+  static getUrl (endpoint) {
     return `${baseApiUrl}/${endpoint}`;
   }
 
-  static async handleErrors(response) {
+  static async handleErrors (response) {
     if (!response.ok) {
       throw new ApiResponseError(response, await response.json());
     }

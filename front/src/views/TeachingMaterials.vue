@@ -1,5 +1,5 @@
 <template>
-<!--TODO:Research zrobić dodawanie materiałów-->
+  <!--TODO:Research zrobić dodawanie materiałów-->
   <div v-if="loggedIn">
     <navbar>
     </navbar>
@@ -36,21 +36,30 @@
 
 <script>
 import Navbar from '/src/components/Navbar.vue';
-import auth from "@/Model/AuthInstance";
+import auth from '@/Model/AuthInstance';
 
 export default {
   name: 'Mainpage',
-  data() {
+  data () {
     return {
       file1: null,
       file2: null,
       fields: ['nazwa_pliku', 'data_dodania'],
       items: [
-        {data_dodania: '19.05.2020', nazwa_pliku: 'Wytyczne dotyczące covid',},
-        {data_dodania: '3.06.2021', nazwa_pliku: 'Pożary mieszkań',},
-        {data_dodania: '7.02.2022', nazwa_pliku: 'Pytania KPP 2022',}
+        {
+          data_dodania: '19.05.2020',
+          nazwa_pliku: 'Wytyczne dotyczące covid'
+        },
+        {
+          data_dodania: '3.06.2021',
+          nazwa_pliku: 'Pożary mieszkań'
+        },
+        {
+          data_dodania: '7.02.2022',
+          nazwa_pliku: 'Pytania KPP 2022'
+        }
       ]
-    }
+    };
   },
 
   components: {
@@ -59,9 +68,9 @@ export default {
 
   computed: {
     loggedIn: function () {
-      return auth.loggedIn
-    },
+      return auth.loggedIn;
+    }
   }
-}
+};
 
 </script>

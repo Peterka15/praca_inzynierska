@@ -1,7 +1,7 @@
 <script>
-  export default {
-    props: ['comment']
-  }
+export default {
+  props: ['comment']
+};
 </script>
 
 <template>

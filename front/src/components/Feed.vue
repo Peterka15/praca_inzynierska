@@ -56,17 +56,17 @@
 
 <script>
 
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
 
 export default {
   name: 'Feed',
-  methods: {getPath},
+  methods: { getPath },
   computed: {
-    Path() {
-      return Path
+    Path () {
+      return Path;
     }
   },
-  props: ['article'],
+  props: ['article']
 };
 
 

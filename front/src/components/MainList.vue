@@ -1,4 +1,4 @@
-<template >
+<template>
   <div>
     <b-carousel
         id="carousel-1"
@@ -57,13 +57,12 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       slide: 0,
       sliding: null
-    }
-  },
+    };
+  }
 
-
-}
+};
 </script>

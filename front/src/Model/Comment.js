@@ -11,7 +11,7 @@ export default class Comment extends Model {
   /** @var {string} */
   content;
   /** @var {string} */
-  Auth_NotLoggedInOnly
+  Auth_NotLoggedInOnly;
   /** @var {Date} */
   updated_at;
 

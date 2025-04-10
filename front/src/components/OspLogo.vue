@@ -16,10 +16,10 @@ import auth from '@/Model/AuthInstance';
 export default {
   name: 'OspLogo',
 
-  data() {
+  data () {
     return {
       auth
-    }
-  },
+    };
+  }
 };
 </script>

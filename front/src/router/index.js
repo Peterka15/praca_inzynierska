@@ -1,18 +1,17 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Loginscreen from "@/views/Loginscreen";
-import Mainpage from "@/views/Mainpage";
-import Article from "@/views/Article";
-import TeachingMaterials from "@/views/TeachingMaterials.vue";
-import Addarticle from "@/views/AddArticle.vue";
-import Register from "@/views/Register";
-import Inventory from "@/views/Inventory/Inventory.vue";
-import Management from "@/views/Management/Management.vue";
-import SetPassword from "@/views/SetPassword.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Loginscreen from '@/views/Loginscreen';
+import Mainpage from '@/views/Mainpage';
+import Article from '@/views/Article';
+import TeachingMaterials from '@/views/TeachingMaterials.vue';
+import Addarticle from '@/views/AddArticle.vue';
+import Inventory from '@/views/Inventory/Inventory.vue';
+import Management from '@/views/Management/Management.vue';
+import SetPassword from '@/views/SetPassword.vue';
 import Users from '@/views/Users/Users.vue';
 import Path from '@/enum/Path';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -41,11 +40,6 @@ const routes = [
     component: TeachingMaterials
   },
   {
-    path: Path.register,
-    name: 'register',
-    component: Register
-  },
-  {
     path: Path.setPassword_Token,
     name: 'set-password',
     component: SetPassword
@@ -64,13 +58,13 @@ const routes = [
     path: Path.users,
     name: 'users',
     component: Users
-  },
-]
+  }
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;

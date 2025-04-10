@@ -54,7 +54,7 @@ export default class DataContainer {
    * @returns {Promise<Map<number, T>>}
    */
   load () {
-    if(this.ready) {
+    if (this.ready) {
       return Promise.resolve(this.data).then();
     }
 
@@ -68,7 +68,7 @@ export default class DataContainer {
     });
   }
 
-  static getContainerTypes() {
+  static getContainerTypes () {
     return {
       Article: DataContainer.TYPE_ARTICLE,
       Comment: DataContainer.TYPE_COMMENT,
@@ -97,7 +97,7 @@ export default class DataContainer {
       [DataContainer.TYPE_UNIT]: Unit,
       [DataContainer.TYPE_ROLE]: Role,
       [DataContainer.TYPE_INVENTORY_ITEM]: InventoryItem,
-      [DataContainer.TYPE_INVENTORY_CATEGORY]: InventoryCategory  
+      [DataContainer.TYPE_INVENTORY_CATEGORY]: InventoryCategory
     };
 
     if (!(type in typesMap)) {
@@ -111,28 +111,28 @@ export default class DataContainer {
    * @param id
    * @returns {T|null}
    */
-  getById(id) {
+  getById (id) {
     return this.data.get(id) || null;
   }
 
   /**
    * @param {T} item
    */
-  setUsingId(item) {
+  setUsingId (item) {
     this.data.set(item.id, item);
   }
 
   /**
    * @param {T} id
    */
-  deleteById(id) {
+  deleteById (id) {
     this.data.delete(id);
   }
-  
+
   /**
    * @return {T[]}
    */
-  getDataAsArray() {
+  getDataAsArray () {
     return Array.from(this.data.values());
   }
 }

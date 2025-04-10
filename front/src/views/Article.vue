@@ -52,7 +52,7 @@
 
             <b-card-text v-html="this.article.content"></b-card-text>
 
-            <UserSignature :username="this.article.author.name" :date="this.article.created_at"/>
+            <UserSignature :username="this.article.author.name" :date="this.article.created_at" variant="danger"/>
           </b-card>
 
           <b-card

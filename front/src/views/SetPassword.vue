@@ -70,28 +70,28 @@
 <script>
 import Navbar from '@/components/Navbar';
 import auth from '@/Model/AuthInstance';
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 
 export default {
   name: 'SetPassword',
   computed: {
-    Path() {
-      return Path
+    Path () {
+      return Path;
     }
   },
 
-  data() {
+  data () {
     return {
       password: '',
       confirmPassword: '',
-      setPasswordError: null,
-    }
+      setPasswordError: null
+    };
   },
 
   components: {
     HorizontalStack,
-    Navbar,
+    Navbar
   },
 
   methods: {
@@ -115,10 +115,10 @@ export default {
             this.$bvModal.show('passwordSetModal');
           })
           .catch((error) => {
-            this.setPasswordError = 
+            this.setPasswordError =
                 'Wystąpił błąd podczas ustawiania hasła: ' + error.body.message.error?.password?.[0];
           });
-    },
+    }
   }
-}
+};
 </script>

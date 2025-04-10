@@ -21,8 +21,7 @@ export default class InventoryItem extends Model {
   /** @var {boolean} */
   available = true;
 
-
-  constructor(name = '', amount = 0, category = new InventoryCategory(), unit = new Unit(), available = true) {
+  constructor (name = '', amount = 0, category = new InventoryCategory(), unit = new Unit(), available = true) {
     super();
 
     this.name = name;
@@ -36,7 +35,7 @@ export default class InventoryItem extends Model {
    * @param {{id: number, name: string, amount: number, category: {id: number, name: string}, unit: {id: number, name: string}, available: number}} data
    * @return InventoryItem
    */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.name = data.name;
     this.amount = data.amount;
@@ -50,7 +49,7 @@ export default class InventoryItem extends Model {
   /**
    * @return {{name: string, amount: number, category_id: number, unit_id: number, available: boolean}}
    */
-  dehydrate() {
+  dehydrate () {
     return {
       name: this.name,
       amount: this.amount,

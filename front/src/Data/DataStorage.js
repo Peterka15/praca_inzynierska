@@ -21,10 +21,10 @@ export default class DataStorage {
 
   /** @type {DataContainer<Role>} */
   roles;
-  
+
   /** @type {DataContainer<InventoryCategory>} */
   inventoryCategories;
-  
+
   /** @type {DataContainer<InventoryItem>} */
   inventoryItems;
 

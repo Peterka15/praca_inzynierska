@@ -227,7 +227,7 @@ export default {
   },
 
   methods: {
-    async printInventoryReport() {
+    async printInventoryReport () {
       Bridge.downloadFile('inventory/pdf').catch((err) => {
         console.error('Błąd podczas pobierania PDF:', err);
       });

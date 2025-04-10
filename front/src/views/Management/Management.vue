@@ -143,9 +143,11 @@ export default {
   name: 'Management',
   components: {
     Guard,
-    HorizontalStack, VerticalStack},
+    HorizontalStack,
+    VerticalStack
+  },
 
-  data() {
+  data () {
     return {
       updateTick: 0,
 
@@ -159,11 +161,11 @@ export default {
       addManagementUnitId: null,
 
       validationError: null,
-      confirmationMessage: null,
+      confirmationMessage: null
     };
   },
 
-  created() {
+  created () {
     Promise.all([
       dataStorage.managements.load(),
       dataStorage.units.load()
@@ -173,7 +175,7 @@ export default {
   },
 
   methods: {
-    saveManagementEntry() {
+    saveManagementEntry () {
       const managementEntry = new Management(
           this.addManagementName,
           this.addManagementFunction,
@@ -195,7 +197,7 @@ export default {
       });
     },
 
-    removeManagementEntry(entry) {
+    removeManagementEntry (entry) {
       if (!window.confirm('Czy na pewno chcesz usunąć ten wpis?')) {
         return;
       }
@@ -214,7 +216,7 @@ export default {
       });
     },
 
-    openManagementEntryEditModal(entry) {
+    openManagementEntryEditModal (entry) {
       const managementEntity = dataStorage.managements.getById(entry.id);
 
       this.addManagementId = managementEntity.id;
@@ -227,20 +229,20 @@ export default {
       });
     },
 
-    clearManagementEntryPopup() {
+    clearManagementEntryPopup () {
       this.addManagementId = null;
       this.addManagementName = '';
       this.addManagementFunction = '';
       this.addManagementUnitId = null;
     },
 
-    forceUpdate() {
+    forceUpdate () {
       this.updateTick++;
     }
   },
 
   computed: {
-    tableFields() {
+    tableFields () {
       const fields = [
         {
           key: 'name',
@@ -271,7 +273,7 @@ export default {
       return fields;
     },
 
-    filteredEntries() {
+    filteredEntries () {
       void this.updateTick;
 
       const query = this.searchQuery.toLowerCase();
@@ -300,7 +302,7 @@ export default {
           );
     },
 
-    selectUnits() {
+    selectUnits () {
       void this.updateTick;
 
       return [
@@ -317,7 +319,7 @@ export default {
       ];
     },
 
-    selectManagementFunctions() {
+    selectManagementFunctions () {
       void this.updateTick;
 
       return [
@@ -339,6 +341,6 @@ export default {
         return carry;
       }, []);
     }
-  },
+  }
 };
 </script>

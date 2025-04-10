@@ -4,7 +4,7 @@ import ApiUrls from '@/api/ApiUrls';
 
 export default class Role extends Model {
   endpoint = ApiUrls.roles;
-  
+
   /** @var {string} */
   name;
 

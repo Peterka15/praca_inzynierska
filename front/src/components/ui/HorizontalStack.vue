@@ -11,9 +11,9 @@ export default {
     start: Boolean
   },
   computed: {
-    justifyClass() {
+    justifyClass () {
       return this.start ? 'justify-content-start' : 'justify-content-end';
     }
   }
-}
+};
 </script>

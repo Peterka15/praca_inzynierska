@@ -18,7 +18,7 @@ export default class Management extends Model {
    * @param {string} func
    * @param {Unit} unit
    */
-  constructor(name = '', func = '', unit = new Unit()) {
+  constructor (name = '', func = '', unit = new Unit()) {
     super();
     this.name = name;
     this.function = func;
@@ -29,7 +29,7 @@ export default class Management extends Model {
    * @param {{id: number, name: string, function: string, unit: {id: number, name: string}}} data
    * @return {Management}
    */
-  hydrate(data) {
+  hydrate (data) {
     this.id = data.id;
     this.name = data.name;
     this.function = data.function;
@@ -40,7 +40,7 @@ export default class Management extends Model {
   /**
    * @return {{name: string, function: string, unit: object}}
    */
-  dehydrate() {
+  dehydrate () {
     return {
       name: this.name,
       function: this.function,

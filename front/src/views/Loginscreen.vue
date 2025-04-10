@@ -52,33 +52,32 @@
 import auth from '@/Model/AuthInstance';
 import Navbar from '@/components/Navbar';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
-import Path, {getPath} from '@/enum/Path';
+import Path, { getPath } from '@/enum/Path';
 
 export default {
   computed: {
-    Path() {
-      return Path
+    Path () {
+      return Path;
     }
   },
   components: {
     HorizontalStack,
-    Navbar,
+    Navbar
   },
-  data() {
+  data () {
     return {
       email: '',
       password: '',
-      loginError: null,
+      loginError: null
     };
   },
 
-
   methods: {
     getPath,
-    login() {
+    login () {
       auth.login(this.email, this.password)
           .then(() => {
-            this.$router.push({path: Path.home});
+            this.$router.push({ path: Path.home });
           })
           .catch((error) => {
             if (error.body) {
@@ -89,8 +88,8 @@ export default {
               this.loginError = 'Wystąpił błąd podczas logowania. Spróbuj ponownie później.';
             }
           });
-    },
-  },
+    }
+  }
 };
 
 </script>

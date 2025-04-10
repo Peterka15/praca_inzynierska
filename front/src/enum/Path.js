@@ -8,13 +8,13 @@ export default {
   article_Id: '/article/:articleId',
   addArticle: '/addarticle',
   addArticle_Id: '/addarticle/:id?',
-  
+
   materials: '/materials',
   management: '/management',
   inventory: '/inventory',
-  users: '/users',
+  users: '/users'
 };
 
-export function getPath(...path) {
+export function getPath (...path) {
   return path.join('/');
 }
