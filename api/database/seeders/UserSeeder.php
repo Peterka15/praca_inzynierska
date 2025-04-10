@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
                 User::ID => 4,
                 User::NAME => 'Strażak Sam',
                 User::EMAIL => 'user@localhost',
-                User::PASSWORD => Hash::make('user123'),
+                User::PASSWORD => Hash::make('user1234'),
                 User::ROLE_ID => UserRole::USER()->getValue(),
                 User::UNIT_ID => 2,
                 User::CREATED_AT => Carbon::now(),

@@ -32,7 +32,7 @@ Konta te należy usunąć, zanim aplikacja zostanie udostępniona publicznie.
 | Admin     | admin@localhost     | admin123     |
 | Moderator | moderator@localhost | moderator123 |
 | Komandant | komandant@localhost | komandant123 |
-| User      | user@localhost      | user123      |
+| User      | user@localhost      | user1234     |
 
 # Detale techniczne
 
