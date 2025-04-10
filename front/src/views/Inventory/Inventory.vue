@@ -72,8 +72,18 @@
             >
               <template #cell(edit)="row">
                 <HorizontalStack>
-                  <b-button @click="openInventoryEditModal(row.item)" variant="primary">Edytuj</b-button>
-                  <b-button @click="removeInventory(row.item)" variant="danger">Usuń</b-button>
+                  <b-button
+                      @click="openInventoryEditModal(row.item)"
+                      :variant="row.item.shouldBeEditable ? 'primary' : 'secondary'"
+                      :disabled="!row.item.shouldBeEditable"
+                  >
+                    Edytuj
+                  </b-button>
+                  <b-button
+                      @click="removeInventory(row.item)"
+                      :variant="row.item.shouldBeEditable ? 'danger' : 'secondary'"
+                      :disabled="!row.item.shouldBeEditable">Usuń
+                  </b-button>
                 </HorizontalStack>
               </template>
               <template #cell(available)="row">
@@ -185,6 +195,7 @@ import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import InventoryItem from '@/Model/InventoryItem';
 import Guard from '@/components/guards/Guard';
 import auth from '@/Model/AuthInstance';
+import authInstance from '@/Model/AuthInstance';
 import Bridge from '@/api/Bridge';
 
 export default {
@@ -227,6 +238,9 @@ export default {
   },
 
   methods: {
+    authInstance () {
+      return authInstance;
+    },
     async printInventoryReport () {
       Bridge.downloadFile('inventory/pdf').catch((err) => {
         console.error('Błąd podczas pobierania PDF:', err);
@@ -366,6 +380,7 @@ export default {
                 name: item.name,
                 category: item.category.name,
                 unit: item.unit.name,
+                shouldBeEditable: authInstance.user.unit.id === item.unit.id || authInstance.user.role.isAdmin(),
                 amount: item.amount,
                 available: item.available
               })
