@@ -102,6 +102,7 @@ body {
 // Better card radius
 .card, .card-img {
     border-radius: 1rem;
+    overflow: hidden;
 }
 
 .card-body {

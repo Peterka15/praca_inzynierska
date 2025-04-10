@@ -20,7 +20,7 @@
                 />
               </b-form-group>
 
-              <b-form-group label-for="input-unit" label="Filtruj jednostki">
+              <b-form-group label-for="input-unit" label="Wybierz jednostkę">
                 <b-form-select
                     id="filter-unit"
                     v-model="selectedUnit"
@@ -29,12 +29,12 @@
                 />
               </b-form-group>
 
-              <b-form-group label-for="input-management-function" label="Filtruj role">
+              <b-form-group label-for="input-management-function" label="Wybierz rolę">
                 <b-form-select
                     id="filter-management-function"
                     v-model="selectedRole"
                     :options="selectRoles"
-                    placeholder="Wybierz funkcje"
+                    placeholder="Wybierz rolę"
                 />
               </b-form-group>
             </b-card>
@@ -42,6 +42,7 @@
             <Guard admin>
               <b-card title="Edycja">
                 <b-button variant="primary" v-b-modal.addEditUserModal class="w-100">
+                  <b-icon-plus class="mr-1" scale="1.3"/>
                   Dodaj użytkownika
                 </b-button>
               </b-card>
@@ -59,8 +60,12 @@
             >
               <template #cell(edit)="row">
                 <HorizontalStack>
-                  <b-button @click="openUserEditModal(row.item)" variant="primary">Edytuj</b-button>
-                  <b-button @click="removeUser(row.item)" variant="danger">Usuń</b-button>
+                  <b-button @click="openUserEditModal(row.item)" variant="primary">
+                    <b-icon-pencil-fill/>
+                  </b-button>
+                  <b-button @click="removeUser(row.item)" variant="danger">
+                    <b-icon-trash-fill/>
+                  </b-button>
                 </HorizontalStack>
               </template>
             </b-table>
@@ -78,8 +83,6 @@
       <b-modal
           id="addEditUserModal"
           :title="this.addUserId ? 'Edytuj użytkownika' : 'Dodaj użytkownika'"
-          :ok-title="this.addUserId ? 'Zapisz' : 'Dodaj'"
-          cancel-title="Anuluj"
           @ok="saveNewUserEntry"
           @close="clearUserEntryPopup"
           @cancel="clearUserEntryPopup"
@@ -140,13 +143,22 @@
               required
           />
         </b-form-group>
+
+        <template #modal-footer>
+          <b-button variant="secondary" @click="$bvModal.hide('addEditUserModal')">
+            <b-icon-x class="mr-1" scale="1.3" shift-v="-2"/>
+            Anuluj
+          </b-button>
+          <b-button variant="primary" @click="saveNewUserEntry">
+            <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/>
+            {{ addUserId ? 'Zapisz' : 'Dodaj' }}
+          </b-button>
+        </template>
       </b-modal>
 
       <b-modal
           id="userAddedModal"
           title="Link do aktywacji konta użytkownika"
-          ok-title="Zamknij"
-          cancel-title="Anuluj"
           cancel-disabled
       >
         <p>Poniżej podany został jednorazowy link do aktywacji konta. Przekaż go w bezpieczny sposób do użytkownika.</p>
@@ -180,6 +192,13 @@
         <b-alert show variant="warning" class="mt-3 text-center">
           Skopiuj ten link przed zamknięciem okna. Jego ponowne wyświetlenie jest niemożliwe!
         </b-alert>
+
+        <template #modal-footer>
+          <b-button variant="primary" @click="$bvModal.hide('userAddedModal')">
+            <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/>
+            Zamknij
+          </b-button>
+        </template>
       </b-modal>
     </b-container>
   </Guard>
@@ -281,10 +300,13 @@ export default {
         const user = dataStorage.users.getById(savedEntry.id);
         this.addUserPasswordSetUrl = user.password_change_url;
         this.addUserPasswordSetEmail = user.email;
+        this.$bvModal.hide('addEditUserModal');
 
-        this.$nextTick(() => {
-          this.$bvModal.show('userAddedModal');
-        });
+        if (user.password_change_is_required) {
+          this.$nextTick(() => {
+            this.$bvModal.show('userAddedModal');
+          });
+        }
 
         this.clearUserEntryPopup();
         this.forceUpdate();

@@ -49,7 +49,7 @@ Vue.use(BootstrapVue, {
     tableVariant: 'dark',
     striped: true,
     hover: true
-  }
+  },
 });
 
 Vue.use(BootstrapVueIcons);

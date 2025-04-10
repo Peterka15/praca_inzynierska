@@ -21,7 +21,7 @@
               <VerticalStack>
                 <p class="m-0">Edycja jest dostępna dla moderatorów i administratora portalu.</p>
                 <b-button variant="secondary" class="w-100" :to="getPath(Path.addArticle)">
-                  Dodaj nowy artykuł
+                  <b-icon-plus class="mr-1" scale="1.3"/> Dodaj nowy artykuł
                 </b-button>
               </VerticalStack>
             </b-card>
@@ -32,7 +32,7 @@
               <VerticalStack>
                 <p class="m-0">Tu znajdziesz listę skrótów do funkcji administracyjnych.</p>
                 <b-button variant="secondary" class="w-100" :to="getPath(Path.users)">
-                  Dodaj użytkownika
+                  <b-icon-plus class="mr-1" scale="1.3"/>  Dodaj użytkownika
                 </b-button>
               </VerticalStack>
             </b-card>

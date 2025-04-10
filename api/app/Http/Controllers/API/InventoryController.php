@@ -80,9 +80,17 @@ class InventoryController extends Controller
         return $this->successResponse();
     }
 
-    public function downloadPdf(): Response
+    public function downloadPdf(Request $request): Response
     {
-        $inventories = Inventory::with(['category', 'unit'])->get();
+        $unitId = $request->query('unit_id');
+        $query = Inventory::with(['category', 'unit']);
+
+        if ($unitId !== null) {
+            $query->where(Inventory::UNIT_ID, (int) $unitId);
+        }
+
+        $inventories = $query->get();
+
         return Pdf::loadView('pdf.inventory_report', compact('inventories'))->download('raport_sprzetu.pdf');
     }
 }

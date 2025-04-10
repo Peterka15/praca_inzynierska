@@ -10,12 +10,15 @@
               <VerticalStack>
                 <p class="m-0">Edycja jest dostępna dla moderatorów i administratora portalu.</p>
                 <b-button variant="secondary" class="w-100" :to="getPath(Path.addArticle)">
+                  <b-icon-plus class="mr-1" scale="1.3"/>
                   Dodaj nowy artykuł
                 </b-button>
                 <b-button :to="getPath(Path.addArticle, this.article.id)" variant="secondary">
+                  <b-icon-pencil-fill class="mr-1" scale="0.8"/>
                   Edytuj artykuł
                 </b-button>
                 <b-button @click="removeArticle" variant="danger">
+                  <b-icon-trash-fill class="mr-1" scale="0.8"/>
                   Usuń artykuł
                 </b-button>
               </VerticalStack>
@@ -98,7 +101,10 @@
                       v-model="newCommentAuthor"
                   />
                 </b-form-group>
-                <b-button variant="primary" type="submit">Dodaj komentarz</b-button>
+                <b-button variant="primary" type="submit">
+                  <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/>
+                  Dodaj komentarz
+                </b-button>
               </VerticalStack>
             </b-form>
           </b-card>

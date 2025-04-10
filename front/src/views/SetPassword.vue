@@ -40,9 +40,13 @@
         </b-form-group>
         <HorizontalStack class="mt-4">
           <b-button variant="secondary" type="button" @click="$router.push({path: getPath(Path.home)})">
+            <b-icon-x class="mr-1" scale="1.3" shift-v="-2"/>
             Wróć do strony głównej
           </b-button>
-          <b-button variant="primary" type="submit">Potwierdź zmianę hasła</b-button>
+          <b-button variant="primary" type="submit">
+            <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/>
+            Potwierdź zmianę hasła
+          </b-button>
         </HorizontalStack>
       </b-form>
       <template #footer>

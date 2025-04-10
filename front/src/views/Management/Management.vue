@@ -19,7 +19,7 @@
               />
             </b-form-group>
 
-            <b-form-group label-for="input-unit" label="Filtruj jednostki">
+            <b-form-group label-for="input-unit" label="Wybierz jednostkę">
               <b-form-select
                   id="filter-unit"
                   v-model="selectedUnit"
@@ -28,12 +28,12 @@
               />
             </b-form-group>
 
-            <b-form-group label-for="input-management-function" label="Filtruj funkcje">
+            <b-form-group label-for="input-management-function" label="Wybierz rolę">
               <b-form-select
                   id="filter-management-function"
                   v-model="selectedManagementFunction"
                   :options="selectManagementFunctions"
-                  placeholder="Wybierz funkcje"
+                  placeholder="Wybierz rolę"
               />
             </b-form-group>
           </b-card>
@@ -41,7 +41,7 @@
           <Guard admin moderator>
             <b-card title="Edycja">
               <b-button variant="primary" v-b-modal.addEditManagementModal class="w-100">
-                Dodaj członka zarządu
+                <b-icon-plus class="mr-1" scale="1.3"/> Dodaj członka zarządu
               </b-button>
             </b-card>
           </Guard>
@@ -58,8 +58,8 @@
           >
             <template #cell(edit)="row">
               <HorizontalStack>
-                <b-button @click="openManagementEntryEditModal(row.item)" variant="primary">Edytuj</b-button>
-                <b-button @click="removeManagementEntry(row.item)" variant="danger">Usuń</b-button>
+                <b-button @click="openManagementEntryEditModal(row.item)" variant="primary"><b-icon-pencil-fill/></b-button>
+                <b-button @click="removeManagementEntry(row.item)" variant="danger"><b-icon-trash-fill/></b-button>
               </HorizontalStack>
             </template>
           </b-table>
@@ -78,8 +78,6 @@
       <b-modal
           id="addEditManagementModal"
           :title="this.addManagementId ? 'Edytuj członka zarządu' : 'Dodaj członka zarządu'"
-          :ok-title="this.addManagementId ? 'Zapisz' : 'Dodaj'"
-          cancel-title="Anuluj"
           @ok="saveManagementEntry"
           @close="clearManagementEntryPopup"
           @cancel="clearManagementEntryPopup"
@@ -126,6 +124,15 @@
               required
           />
         </b-form-group>
+
+        <template #modal-footer>
+          <b-button variant="secondary" @click="$bvModal.hide('addEditManagementModal')">
+            <b-icon-x class="mr-1" scale="1.3" shift-v="-2"/> Anuluj
+          </b-button>
+          <b-button variant="primary" @click="saveManagementEntry">
+            <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/> {{ addManagementId ? 'Zapisz' : 'Dodaj' }}
+          </b-button>
+        </template>
       </b-modal>
     </Guard>
   </b-container>
@@ -138,6 +145,7 @@ import Management from '@/Model/Management';
 import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import auth from '@/Model/AuthInstance';
 import Guard from '@/components/guards/Guard';
+import authInstance from '@/Model/AuthInstance';
 
 export default {
   name: 'Management',
@@ -152,7 +160,7 @@ export default {
       updateTick: 0,
 
       searchQuery: '',
-      selectedUnit: null,
+      selectedUnit: authInstance?.user?.unit?.id ?? null,
       selectedManagementFunction: null,
 
       addManagementId: null,

@@ -20,7 +20,7 @@
                 />
               </b-form-group>
 
-              <b-form-group label-for="input-unit" label="Filtruj jednostki">
+              <b-form-group label-for="input-unit" label="Wybierz jednostkę">
                 <b-form-select
                     id="filter-unit"
                     v-model="selectedUnit"
@@ -29,7 +29,7 @@
                 />
               </b-form-group>
 
-              <b-form-group label-for="input-category" label="Filtruj kategorię">
+              <b-form-group label-for="input-category" label="Wybierz kategorię">
                 <b-form-select
                     id="filter-category"
                     v-model="selectedCategory"
@@ -42,19 +42,20 @@
             <Guard admin moderator>
               <b-card title="Edycja">
                 <b-button variant="primary" v-b-modal.addEditInventoryModal class="w-100">
-                  Dodaj sprzęt
+                  <b-icon-plus class="mr-1" scale="1.3"/> Dodaj sprzęt
                 </b-button>
               </b-card>
             </Guard>
 
             <Guard admin moderator commandant>
               <b-card title="Raport">
+                <p>Do wygenerowania raportu zostanie użyty filtr jednostki OSP z okna "Szukaj".</p>
                 <b-button
                     variant="primary"
                     @click="printInventoryReport"
                     class="w-100"
                 >
-                  Wydrukuj raport sprzętu
+                  <b-icon-printer-fill class="mr-1"/> {{ printReportButtonName }}
                 </b-button>
               </b-card>
             </Guard>
@@ -77,12 +78,13 @@
                       :variant="row.item.shouldBeEditable ? 'primary' : 'secondary'"
                       :disabled="!row.item.shouldBeEditable"
                   >
-                    Edytuj
+                    <b-icon-pencil-fill/>
                   </b-button>
                   <b-button
                       @click="removeInventory(row.item)"
                       :variant="row.item.shouldBeEditable ? 'danger' : 'secondary'"
-                      :disabled="!row.item.shouldBeEditable">Usuń
+                      :disabled="!row.item.shouldBeEditable">
+                    <b-icon-trash-fill/>
                   </b-button>
                 </HorizontalStack>
               </template>
@@ -106,8 +108,6 @@
         <b-modal
             id="addEditInventoryModal"
             :title="this.addInventoryId ? 'Edytuj sprzęt' : 'Dodaj sprzęt'"
-            :ok-title="this.addInventoryId ? 'Zapisz' : 'Dodaj'"
-            cancel-title="Anuluj"
             @ok="saveNewInventoryEntry"
             @close="clearInventoryEntryPopup"
             @cancel="clearInventoryEntryPopup"
@@ -179,9 +179,19 @@
                 v-model="addInventoryUnitId"
                 :options="selectUnits"
                 placeholder="OSP PSZÓW"
+                :disabled="!authInstance().user.role.isAdmin()"
                 required
             />
           </b-form-group>
+
+          <template #modal-footer>
+            <b-button variant="secondary" @click="$bvModal.hide('addEditInventoryModal')">
+              <b-icon-x class="mr-1" scale="1.3" shift-v="-2"/> Anuluj
+            </b-button>
+            <b-button variant="primary" @click="saveNewInventoryEntry">
+              <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/> {{ addInventoryId ? 'Zapisz' : 'Dodaj' }}
+            </b-button>
+          </template>
         </b-modal>
       </Guard>
     </b-container>
@@ -211,7 +221,7 @@ export default {
       updateTick: 0,
 
       searchQuery: '',
-      selectedUnit: null,
+      selectedUnit: authInstance?.user?.unit?.id ?? null,
       selectedCategory: null,
 
       addInventoryId: null,
@@ -219,7 +229,7 @@ export default {
       addInventoryAmount: 1,
       addInventoryAvailability: true,
       addInventoryCategoryId: 1,
-      addInventoryUnitId: null,
+      addInventoryUnitId: authInstance?.user?.unit?.id ?? null,
 
       validationError: null,
       confirmationMessage: null
@@ -241,8 +251,15 @@ export default {
     authInstance () {
       return authInstance;
     },
+
     async printInventoryReport () {
-      Bridge.downloadFile('inventory/pdf').catch((err) => {
+      let endpoint = 'inventory/pdf';
+
+      if (this.selectedUnit !== null) {
+        endpoint += '?unit_id=' + this.selectedUnit;
+      }
+
+      Bridge.downloadFile(endpoint).catch((err) => {
         console.error('Błąd podczas pobierania PDF:', err);
       });
     },
@@ -306,7 +323,7 @@ export default {
     clearInventoryEntryPopup () {
       this.addInventoryId = null;
       this.addInventoryName = '';
-      this.addInventoryUnitId = null;
+      this.addInventoryUnitId = authInstance?.user?.unit?.id ?? null;
       this.addInventoryCategoryId = 1;
       this.addInventoryAmount = 1;
     },
@@ -380,7 +397,7 @@ export default {
                 name: item.name,
                 category: item.category.name,
                 unit: item.unit.name,
-                shouldBeEditable: authInstance.user.unit.id === item.unit.id || authInstance.user.role.isAdmin(),
+                shouldBeEditable: authInstance?.user?.unit?.id === item.unit.id || authInstance.user.role.isAdmin(),
                 amount: item.amount,
                 available: item.available
               })
@@ -432,6 +449,14 @@ export default {
           text: 'NIE'
         }
       ];
+    },
+
+    printReportButtonName () {
+      if (this.selectedUnit !== null) {
+        return 'Drukuj raport dla jednostki ' + dataStorage.units.getById(this.selectedUnit).name;
+      }
+
+      return 'Drukuj raport';
     }
   }
 };

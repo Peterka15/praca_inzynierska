@@ -85,7 +85,7 @@
               Anuluj edycję
             </b-button>
             <b-button variant="primary" type="submit" class="d-inline">
-              {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
+              <b-icon-check2 class="mr-1" scale="1" shift-v="-2"/> {{ this.id ? 'Zapisz zmiany' : 'Dodaj artykuł' }}
             </b-button>
           </HorizontalStack>
         </b-form>

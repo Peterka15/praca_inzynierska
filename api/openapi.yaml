@@ -351,6 +351,32 @@ paths:
         404:
           description: Inventory entry not found
 
+  /inventory/pdf:
+    get:
+      summary: Download inventory report as PDF
+      operationId: downloadInventoryPdf
+      tags:
+        - Inventory
+      parameters:
+        - name: unit_id
+          in: query
+          description: Filter inventory by unit ID
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: PDF file containing inventory report
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        401:
+          description: Unauthorized – valid auth token required
+        500:
+          description: Server error during PDF generation
+
   /inventoryCategory:
     get:
       summary: Get list of inventory categories
