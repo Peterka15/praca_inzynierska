@@ -15,17 +15,15 @@ export default class File extends Model {
   name;
   /** @var {string} */
   mime_type;
+  /** @var {string} */
+  extension;
   /** @var {Date} */
   created_at;
   /** @var {Date} */
   updated_at;
 
-  constructor (uuid, name, mime_type) {
+  constructor () {
     super();
-
-    this.uuid = uuid;
-    this.name = name;
-    this.mime_type = mime_type;
   }
 
   /** @return File */
@@ -36,21 +34,10 @@ export default class File extends Model {
     this.user = (new User()).hydrate(data.user);
     this.name = data.name;
     this.mime_type = data.mime_type;
+    this.extension = data.extension;
     this.created_at = new Date(Date.parse(data.created_at));
     this.updated_at = new Date(Date.parse(data.updated_at));
 
     return this;
-  }
-
-  /** @return {{author: string, title: string, content: string}} */
-  dehydrate () {
-    return (
-      {
-        uuid: this.uuid,
-        user_id: this.user.id,
-        name: this.name,
-        mime_type: this.mime_type
-      }
-    );
   }
 }

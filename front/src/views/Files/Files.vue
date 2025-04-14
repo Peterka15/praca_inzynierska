@@ -60,8 +60,7 @@
                   <Guard admin moderator>
                     <b-button
                         @click="removeFile(row.item)"
-                        :variant="row.item.shouldBeEditable ? 'danger' : 'secondary'"
-                        :disabled="!row.item.shouldBeEditable">
+                        variant='danger'>
                       <b-icon-trash-fill/>
                     </b-button>
                   </Guard>
@@ -69,9 +68,6 @@
               </template>
             </b-table>
 
-            <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">
-              {{ validationError }}
-            </b-alert>
             <b-alert show v-if="confirmationMessage" variant="success" class="mt-3 text-center">
               {{ confirmationMessage }}
             </b-alert>
@@ -88,6 +84,10 @@
             @cancel="clearFileEntryPopup"
             @hide="clearFileEntryPopup"
         >
+          <b-alert show v-if="validationError" variant="danger" class="mt-3 text-center">
+            {{ validationError }}
+          </b-alert>
+
           <b-form-group
               label="Nazwa pliku"
               label-for="input-add-file-name"
@@ -138,6 +138,7 @@ import HorizontalStack from '@/components/ui/HorizontalStack.vue';
 import Guard from '@/components/guards/Guard';
 import authInstance from '@/Model/AuthInstance';
 import Bridge from '@/api/Bridge';
+import File from '@/Model/File';
 
 export default {
   name: 'Files',
@@ -147,12 +148,12 @@ export default {
     VerticalStack
   },
 
-  data() {
+  data () {
     return {
       updateTick: 0,
 
       searchQuery: '',
-      selectedUser: authInstance?.user?.unit?.id ?? null,
+      selectedUser: authInstance?.user?.id ?? null,
       selectedCategory: null,
 
       addFileName: '',
@@ -163,9 +164,9 @@ export default {
     };
   },
 
-  created() {
+  created () {
     Promise.all([
-      dataStorage.files.load(),
+      dataStorage.files.load()
     ]).then(() => {
       this.isReady = true;
       this.forceUpdate();
@@ -173,16 +174,20 @@ export default {
   },
 
   methods: {
-    saveNewFileEntry() {
+    saveNewFileEntry () {
+      if(this.addFileName.length < 3) {
+        this.validationError = 'Nazwa pliku jest za krotka.';
+        return;
+      }
+
       const formData = new FormData();
       formData.append('name', this.addFileName);
       formData.append('file', this.addFile);
 
       Bridge.uploadFile('files', formData)
-          .then((uploaded) => {
-            console.log(uploaded);
+          .then((response) => {
             this.confirmationMessage = 'Plik został przesłany.';
-            // dataStorage.files.data.set(uploaded.id, uploaded);
+            dataStorage.files.data.set(response.data.id, (new File()).hydrate(response.data));
 
             this.$bvModal.hide('addFileModal');
 
@@ -190,48 +195,56 @@ export default {
             this.forceUpdate();
           })
           .catch((error) => {
-            this.validationError = 'Wystąpił błąd podczas dodawania pliku. ' + error.body.message;
+            this.validationError = 'Wystąpił błąd podczas dodawania pliku. ' + error;
+            throw error;
           });
     },
 
-    removeFile(entry) {
+    removeFile (entry) {
       if (!window.confirm('Czy na pewno chcesz usunąć ten plik?')) {
         return;
       }
 
-      const item = dataStorage.inventoryItems.getById(entry.id);
-      if (!item) {
+      const file = dataStorage.files.getById(entry.id);
+      if (!file) {
         return;
       }
 
-      item.delete().then(() => {
-        dataStorage.inventoryItems.deleteById(entry.id);
+      // Removing file is available only via UUID
+      file.id = file.uuid;
+      file.delete().then(() => {
+        dataStorage.files.deleteById(entry.id);
         this.confirmationMessage = 'Usunięto wpis.';
         this.forceUpdate();
       }).catch((error) => {
         this.validationError = 'Wystąpił błąd podczas usuwania wpisu. ' + error.body.message;
       });
     },
-    
-    downloadFile(entry) {
+
+    downloadFile (entry) {
       window.open(entry.url, '_blank');
     },
 
-    clearFileEntryPopup() {
+    clearFileEntryPopup () {
       this.addFileName = '';
     },
 
-    forceUpdate() {
+    forceUpdate () {
       this.updateTick++;
     }
   },
 
   computed: {
-    tableFields() {
+    tableFields () {
       return [
         {
           key: 'name',
           label: 'Nazwa',
+          sortable: true
+        },
+        {
+          key: 'type',
+          label: 'Typ',
           sortable: true
         },
         {
@@ -258,13 +271,11 @@ export default {
 
       const query = this.searchQuery.toLowerCase();
 
-      console.log(dataStorage.files.getDataAsArray());
-
       return dataStorage.files
           .getDataAsArray()
           .filter(item =>
               this.selectedUser === null
-              || item.id === this.selectedUser
+              || item.user.id === this.selectedUser
           )
           .filter(item => item.name.toLowerCase().includes(query))
           .map(item =>
@@ -273,6 +284,7 @@ export default {
                 name: item.name,
                 user: item.user.name,
                 url: item.url,
+                type: item.extension,
                 createdAt: new Date(item.created_at).toLocaleString(
                     'pl-PL',
                     {
@@ -287,22 +299,29 @@ export default {
           );
     },
 
-    selectUsers() {
+    selectUsers () {
       void this.updateTick;
 
       return [
-        ...dataStorage.units
+        ...dataStorage.files
             .getDataAsArray()
-            .map(unit => ({
-              value: unit.id,
-              text: unit.name
-            })),
+            .map(file => ({
+              value: file.user.id,
+              text: file.user.name
+            }))
+            .reduce((carry, currentValue) => {
+              if (carry.findIndex(item => item.value === currentValue.value) === -1) {
+                carry.push(currentValue);
+              }
+
+              return carry;
+            }, []),
         {
           value: null,
           text: 'Brak'
         }
       ];
-    },
+    }
   }
 };
 </script>

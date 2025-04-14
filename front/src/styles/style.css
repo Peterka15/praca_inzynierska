@@ -1,17 +1,116 @@
-/* Error: expected selector.
- *     ,
- * 110 | },
- *     |  ^
- *     '
- *   style.scss 110:2  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: expected selector.\a     \2577 \a 110 \2502  },\d\a     \2502   ^\a     \2575 \a   style.scss 110:2  root stylesheet";
+body {
+  min-height: 100vh;
+  background-color: #262626 !important;
 }
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.form-control, .custom-select {
+  background: #555 !important;
+  color: #fff !important;
+  border: none !important;
+  border-bottom: 2px solid #999 !important;
+}
+.form-control.custom-select, .custom-select.custom-select {
+  width: 100% !important;
+  padding: 0.375rem 0.5rem !important;
+}
+
+.logo {
+  font: 300 2em "Source Sans Pro", Helvetica, Arial, sans-serif;
+  text-align: center;
+  padding: 0;
+  margin: -20;
+}
+.logo a {
+  display: block;
+  padding: 1em 0;
+  color: #DFDBD9;
+  text-decoration: none;
+  transition: 0.15s linear color;
+}
+.logo a:hover {
+  color: #fff;
+}
+.logo a:hover span {
+  color: #a1203a;
+}
+.logo span {
+  font-weight: 700;
+  transition: 0.15s linear color;
+}
+
+.quillWrapper .ql-fill {
+  fill: #fff !important;
+}
+.quillWrapper .ql-stroke {
+  stroke: #fff !important;
+}
+.quillWrapper .ql-picker.ql-header, .quillWrapper .ql-picker-label.ql-active {
+  color: #fff !important;
+}
+.quillWrapper .ql-picker-options {
+  background: #262626 !important;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.gap-4_5 {
+  gap: 2rem;
+}
+
+.mt-4_5 {
+  margin-top: 2rem;
+}
+
+.badge {
+  font-size: 0.85rem;
+}
+
+.card, .card-img {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-body {
+  border-radius: 1rem;
+  overflow: scroll;
+}
+
+.card-banner-bg {
+  aspect-ratio: 5/1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  font-weight: bolder;
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+  padding-left: 0.4em;
+  font-size: 3em;
+}
+.card-banner-bg > span {
+  text-shadow: rgba(0, 0, 0, 0.3764705882) 5px 5px 10px, rgba(0, 0, 0, 0.3764705882) 5px 5px 5px;
+}
+
+.card-logo-bg {
+  max-height: 255px;
+  max-width: 255px;
+  aspect-ratio: 1/1;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
+}
+
+/*# sourceMappingURL=style.css.map */
