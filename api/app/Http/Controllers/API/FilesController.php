@@ -41,12 +41,14 @@ class FilesController extends Controller
 
         $fileHandle = $request->file('file');
         if ($fileHandle) {
-            $fileHandle->storeAs('files', $file->uuid);
+            $extension = $fileHandle->getClientOriginalExtension();
+            $file->extension = $extension;
+            $fileHandle->storeAs('files', $file->uuid . '.' . $extension);
+            $file->mime_type = $fileHandle->getMimeType();
         } else {
             return $this->errorResponse('Cannot store file.');
         }
 
-        $file->mime_type = $fileHandle->getMimeType();
         $file->save();
 
         return $this->successResponse(new FileResource($file));
@@ -64,9 +66,8 @@ class FilesController extends Controller
             return $this->notFoundResponse();
         }
 
-        $path = "files/$file->uuid";
-
-        return Storage::download($path, $file->name);
+        $path = "files/{$file->uuid}.{$file->extension}";
+        return Storage::download($path, "{$file->name}.{$file->extension}");
     }
 
     public function destroy(string $uuid): JsonResponse

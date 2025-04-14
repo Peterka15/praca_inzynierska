@@ -26,6 +26,7 @@ class FileResource extends JsonResource
             File::USER => new UserResource($file->user),
             File::NAME => $file->name,
             File::MIME_TYPE => $file->mime_type,
+            File::EXTENSION => $file->extension,
             File::CREATED_AT => $file->created_at,
             File::UPDATED_AT => $file->updated_at,
         ];

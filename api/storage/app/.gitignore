@@ -1,3 +1,11 @@
+# Ignore everything
 *
-!public/
+
+# Do not ignore directories
+!*/
+
+# Keep .gitkeep files (optional marker files)
+!**/.gitkeep
+
+# Keep .gitignore
 !.gitignore

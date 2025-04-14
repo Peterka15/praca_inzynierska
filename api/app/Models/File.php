@@ -17,6 +17,7 @@ use Illuminate\Support\Carbon;
  * @property int $user_id
  * @property string $name
  * @property string $mime_type
+ * @property string $extension
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read User|null $user
@@ -44,12 +45,14 @@ final class File extends ApiModel
     public const URL = 'url';
     public const NAME = 'name';
     public const MIME_TYPE = 'mime_type';
+    public const EXTENSION = 'extension';
 
     protected $fillable = [
         self::USER_ID,
         self::UUID,
         self::NAME,
         self::MIME_TYPE,
+        self::EXTENSION,
         self::CREATED_AT,
         self::UPDATED_AT,
     ];

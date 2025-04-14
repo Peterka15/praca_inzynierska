@@ -19,6 +19,7 @@ class CreateFilesTable extends Migration
             $table->foreignId(File::USER_ID)->references(User::ID)->on(User::TABLE_NAME);
             $table->string(File::NAME);
             $table->string(File::MIME_TYPE);
+            $table->string(File::EXTENSION);
             $table->timestamps();
         });
     }
