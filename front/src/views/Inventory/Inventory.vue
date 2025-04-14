@@ -209,7 +209,7 @@ import authInstance from '@/Model/AuthInstance';
 import Bridge from '@/api/Bridge';
 
 export default {
-  name: 'Users',
+  name: 'Inventory',
   components: {
     Guard,
     HorizontalStack,

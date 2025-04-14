@@ -10,7 +10,7 @@
           </b-nav-item>
 
           <Guard loggedIn>
-            <b-nav-item :to="getPath(Path.materials)">Materiały szkoleniowe</b-nav-item>
+            <b-nav-item :to="getPath(Path.files)">Materiały szkoleniowe</b-nav-item>
             <b-nav-item :to="getPath(Path.inventory)">Lista sprzętu</b-nav-item>
           </Guard>
 

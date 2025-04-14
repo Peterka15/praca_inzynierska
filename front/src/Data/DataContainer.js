@@ -8,6 +8,7 @@ import Unit from '@/Model/Unit';
 import Role from '@/Model/Role';
 import InventoryItem from '@/Model/InventoryItem';
 import InventoryCategory from '@/Model/InventoryCategory';
+import File from '@/Model/File';
 
 /**
  * @template T
@@ -31,6 +32,8 @@ export default class DataContainer {
   static TYPE_INVENTORY_ITEM = 'inventory_item';
   @readonly
   static TYPE_INVENTORY_CATEGORY = 'inventory_category';
+  @readonly
+  static TYPE_FILE = 'file';
 
   /** @type {?string} */
   type = null;
@@ -78,7 +81,8 @@ export default class DataContainer {
       Unit: DataContainer.TYPE_UNIT,
       Role: DataContainer.TYPE_ROLE,
       InventoryItem: DataContainer.TYPE_INVENTORY_ITEM,
-      InventoryCategory: DataContainer.TYPE_INVENTORY_CATEGORY
+      InventoryCategory: DataContainer.TYPE_INVENTORY_CATEGORY,
+      File: DataContainer.TYPE_FILE
     };
   }
 
@@ -97,7 +101,8 @@ export default class DataContainer {
       [DataContainer.TYPE_UNIT]: Unit,
       [DataContainer.TYPE_ROLE]: Role,
       [DataContainer.TYPE_INVENTORY_ITEM]: InventoryItem,
-      [DataContainer.TYPE_INVENTORY_CATEGORY]: InventoryCategory
+      [DataContainer.TYPE_INVENTORY_CATEGORY]: InventoryCategory,
+      [DataContainer.TYPE_FILE]: File
     };
 
     if (!(type in typesMap)) {

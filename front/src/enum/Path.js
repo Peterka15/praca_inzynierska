@@ -9,7 +9,7 @@ export default {
   addArticle: '/addarticle',
   addArticle_Id: '/addarticle/:id?',
 
-  materials: '/materials',
+  files: '/files',
   management: '/management',
   inventory: '/inventory',
   users: '/users'

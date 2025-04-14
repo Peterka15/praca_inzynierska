@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Loginscreen from '@/views/Loginscreen';
 import Mainpage from '@/views/Mainpage';
 import Article from '@/views/Article';
-import TeachingMaterials from '@/views/TeachingMaterials.vue';
+import Files from '@/views/Files/Files.vue';
 import Addarticle from '@/views/AddArticle.vue';
 import Inventory from '@/views/Inventory/Inventory.vue';
 import Management from '@/views/Management/Management.vue';
@@ -35,9 +35,9 @@ const routes = [
     component: Addarticle
   },
   {
-    path: Path.materials,
-    name: 'materials',
-    component: TeachingMaterials
+    path: Path.files,
+    name: 'files',
+    component: Files
   },
   {
     path: Path.setPassword_Token,

@@ -6,6 +6,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property string $mime_type
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read User|null $user
  * @method static Builder|File newModelQuery()
  * @method static Builder|File newQuery()
  * @method static Builder|File query()
@@ -37,6 +39,7 @@ final class File extends ApiModel
     public const TABLE_NAME = 'files';
 
     public const USER_ID = 'user_id';
+    public const USER = 'user';
     public const UUID = 'uuid';
     public const URL = 'url';
     public const NAME = 'name';
@@ -59,5 +62,10 @@ final class File extends ApiModel
     public function path(): string
     {
         return env('APP_URL') . "/api/files/$this->uuid";
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, User::ID, self::USER_ID);
     }
 }

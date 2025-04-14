@@ -1314,8 +1314,8 @@ components:
           type: integer
         uuid:
           type: string
-        user_id:
-          type: integer
+        user:
+          $ref: '#/components/schemas/User'
         name:
           type: string
         mime_type:

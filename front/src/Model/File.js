@@ -1,13 +1,16 @@
 import Model from '@/Model/Model';
 import ApiUrls from '@/api/ApiUrls';
+import User from '@/Model/User';
 
 export default class File extends Model {
-  endpoint = ApiUrls.articles;
+  endpoint = ApiUrls.files;
 
   /** @var {number} */
   uuid;
-  /** @var {number} */
-  user_id;
+  /** @var {User} */
+  user;
+  /** @var {string} */
+  url;
   /** @var {string} */
   name;
   /** @var {string} */
@@ -17,11 +20,10 @@ export default class File extends Model {
   /** @var {Date} */
   updated_at;
 
-  constructor (uuid = '', user_id = '', name = '', mime_type = '') {
+  constructor (uuid, name, mime_type) {
     super();
 
     this.uuid = uuid;
-    this.user_id = user_id;
     this.name = name;
     this.mime_type = mime_type;
   }
@@ -30,7 +32,8 @@ export default class File extends Model {
   hydrate (data) {
     this.id = data.id;
     this.uuid = data.uuid;
-    this.user_id = data.user_id;
+    this.url = data.url;
+    this.user = (new User()).hydrate(data.user);
     this.name = data.name;
     this.mime_type = data.mime_type;
     this.created_at = new Date(Date.parse(data.created_at));
@@ -44,7 +47,7 @@ export default class File extends Model {
     return (
       {
         uuid: this.uuid,
-        user_id: this.user_id,
+        user_id: this.user.id,
         name: this.name,
         mime_type: this.mime_type
       }

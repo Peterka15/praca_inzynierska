@@ -27,6 +27,9 @@ export default class DataStorage {
 
   /** @type {DataContainer<InventoryItem>} */
   inventoryItems;
+  
+  /** @type {DataContainer<File>} */
+  files;
 
   /** @type {Boolean} */
   ready = false;
@@ -41,6 +44,7 @@ export default class DataStorage {
     this.roles = new DataContainer(DataContainer.TYPE_ROLE);
     this.inventoryCategories = new DataContainer(DataContainer.TYPE_INVENTORY_CATEGORY);
     this.inventoryItems = new DataContainer(DataContainer.TYPE_INVENTORY_ITEM);
+    this.files = new DataContainer(DataContainer.TYPE_FILE);
   }
 
   loadBasicData () {
